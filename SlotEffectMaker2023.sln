@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33027.164
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlotEffectMaker2023", "SlotEffectMaker2023\SlotEffectMaker2023.csproj", "{DAEE6C2C-384E-4F50-BD02-90AF154D5341}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DAEE6C2C-384E-4F50-BD02-90AF154D5341}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAEE6C2C-384E-4F50-BD02-90AF154D5341}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAEE6C2C-384E-4F50-BD02-90AF154D5341}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAEE6C2C-384E-4F50-BD02-90AF154D5341}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1F0AD2C0-300F-4BFB-AED9-5114960ED812}
+	EndGlobalSection
+EndGlobal
