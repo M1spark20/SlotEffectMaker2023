@@ -13,14 +13,14 @@ namespace SlotEffectMaker2023
     public partial class MainForm : Form
     {
         // エフェクトデータインスタンス
-        EffectDataManagerSingleton effect;
+        Singleton.EffectDataManagerSingleton effect;
 
         public MainForm()
         {
             InitializeComponent();
 
             // エフェクトデータデータ読み込み
-            effect = EffectDataManagerSingleton.GetInstance();
+            effect = Singleton.EffectDataManagerSingleton.GetInstance();
             effect.ReadData();
 
             // 終了時に保存処理を入れる

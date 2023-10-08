@@ -46,7 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILocalDataInterface.cs" />
+    <Compile Include="Data\ColorMaps.cs" />
+    <Compile Include="Data\DataList.cs" />
+    <Compile Include="Data\ILocalDataInterface.cs" />
+    <Compile Include="Data\LocalDataSet.cs" />
+    <Compile Include="Data\ReelBasicData.cs" />
+    <Compile Include="Data\SlotBasicData.cs" />
+    <Compile Include="Data\SlotSounds.cs" />
+    <Compile Include="Data\SlotTimer.cs" />
+    <Compile Include="Data\SlotValManager.cs" />
+    <Compile Include="Data\SlotVariable.cs" />
     <Compile Include="ListBuilderBase.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -54,10 +63,13 @@
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="EffectDataManagerSingleton.cs" />
+    <Compile Include="Data\MainReelManager.GetCastResult.cs" />
+    <Compile Include="Singleton\EffectDataManagerSingleton.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgressReadWrite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Singleton\SlotDataSingleton.cs" />
+    <Compile Include="Singleton\SlotTimerManagerSingleton.cs" />
     <Compile Include="UserControl.cs" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

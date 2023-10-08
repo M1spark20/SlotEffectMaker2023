@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SlotEffectMaker2023
+namespace SlotEffectMaker2023.Singleton
 {
     // メインROMデータ管理
     // データ上に1つだけ存在させたいためSingletonパターンを採用
