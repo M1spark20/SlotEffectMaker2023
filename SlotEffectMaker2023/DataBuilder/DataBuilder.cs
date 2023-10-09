@@ -109,7 +109,7 @@ namespace SlotEffectMaker2023.DataBuilder
         }
         private void Format(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            // データが存在しない場合赤太字で文字を書く
+            // データが存在しない場合赤背景にする
             DataGridView dgv = (DataGridView)sender;
             var ef = Singleton.EffectDataManagerSingleton.GetInstance();
             if (e.ColumnIndex == 1 && ef.TimerList.GetTimer(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
