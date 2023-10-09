@@ -31,9 +31,6 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
-                // 初期定義データは編集不可
-                if (row.Index == 0) { ModifyDeny(); return; }
-
                 DataForm.MakeSoundIDElem form = new DataForm.MakeSoundIDElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 

@@ -32,5 +32,12 @@ namespace SlotEffectMaker2023
         {
             effect.SaveData();
         }
+
+        private void StartModSoundID(object sender, EventArgs e)
+        {
+            DataForm.MakeSoundID form = new DataForm.MakeSoundID();
+            form.Show();
+            //form.Dispose();
+        }
     }
 }

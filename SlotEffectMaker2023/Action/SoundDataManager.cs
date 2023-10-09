@@ -76,66 +76,6 @@ namespace SlotEffectMaker2023.Action
 		// 音源データを仮生成する
 		public void DataStab(ref TimerList timerList)
 		{
-			// 音のデータ
-			SoundID sid = new SoundID();
-			sid.DataName = "None";
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "Bet";
-			sid.ShotResName = "SE_Bet";
-			sid.LoopBegin = 0;
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "Start";
-			sid.ShotResName = "SE_Start";
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "StopDef";
-			sid.ShotResName = "SE_Stop";
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "ReplayIn";
-			sid.ShotResName = "SE_ReplayIn";
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "PayoutCherry";
-			sid.ShotResName = "SE_Payout";
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "Wait";
-			sid.LoopResName = "SE_Wait";
-			sid.LoopBegin = 0;
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "PayoutBell";
-			sid.LoopResName = "SE_Payout";
-			sid.LoopBegin = 0;
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "PayoutGrape";
-			sid.LoopResName = "SE_PayoutGrape";
-			sid.LoopBegin = 0;
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "PayoutJac";
-			sid.LoopResName = "SE_PayoutJac";
-			sid.LoopBegin = 0;
-			AddID(sid);
-
-			sid = new SoundID();
-			sid.DataName = "PayoutTech";
-			sid.ShotResName = "SE_PayoutTech";
-			AddID(sid);
-
 			// 再生側のデータ
 			SoundPlayData pid = new SoundPlayData();
 			pid.PlayerName = "Bet";

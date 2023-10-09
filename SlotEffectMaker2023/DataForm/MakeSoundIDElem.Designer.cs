@@ -37,8 +37,8 @@ namespace SlotEffectMaker2023.DataForm
             this.tbShotRes = new System.Windows.Forms.TextBox();
             this.tbLoopRes = new System.Windows.Forms.TextBox();
             this.numLoopTime = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.BtnOK = new System.Windows.Forms.Button();
+            this.BtnCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numLoopTime)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,14 +90,14 @@ namespace SlotEffectMaker2023.DataForm
             this.tbShotRes.Location = new System.Drawing.Point(145, 35);
             this.tbShotRes.Name = "tbShotRes";
             this.tbShotRes.Size = new System.Drawing.Size(150, 19);
-            this.tbShotRes.TabIndex = 1;
+            this.tbShotRes.TabIndex = 2;
             // 
             // tbLoopRes
             // 
             this.tbLoopRes.Location = new System.Drawing.Point(145, 60);
             this.tbLoopRes.Name = "tbLoopRes";
             this.tbLoopRes.Size = new System.Drawing.Size(150, 19);
-            this.tbLoopRes.TabIndex = 1;
+            this.tbLoopRes.TabIndex = 3;
             // 
             // numLoopTime
             // 
@@ -114,7 +114,7 @@ namespace SlotEffectMaker2023.DataForm
             -2147483648});
             this.numLoopTime.Name = "numLoopTime";
             this.numLoopTime.Size = new System.Drawing.Size(150, 19);
-            this.numLoopTime.TabIndex = 2;
+            this.numLoopTime.TabIndex = 4;
             this.numLoopTime.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numLoopTime.Value = new decimal(new int[] {
             1,
@@ -122,23 +122,25 @@ namespace SlotEffectMaker2023.DataForm
             0,
             -2147483648});
             // 
-            // button1
+            // BtnOK
             // 
-            this.button1.Location = new System.Drawing.Point(225, 110);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(70, 23);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "OK";
-            this.button1.UseVisualStyleBackColor = true;
+            this.BtnOK.Location = new System.Drawing.Point(225, 110);
+            this.BtnOK.Name = "BtnOK";
+            this.BtnOK.Size = new System.Drawing.Size(70, 23);
+            this.BtnOK.TabIndex = 11;
+            this.BtnOK.Text = "OK";
+            this.BtnOK.UseVisualStyleBackColor = true;
+            this.BtnOK.Click += new System.EventHandler(this.OK);
             // 
-            // button2
+            // BtnCancel
             // 
-            this.button2.Location = new System.Drawing.Point(145, 110);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(70, 23);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "Cancel";
-            this.button2.UseVisualStyleBackColor = true;
+            this.BtnCancel.Location = new System.Drawing.Point(145, 110);
+            this.BtnCancel.Name = "BtnCancel";
+            this.BtnCancel.Size = new System.Drawing.Size(70, 23);
+            this.BtnCancel.TabIndex = 10;
+            this.BtnCancel.Text = "Cancel";
+            this.BtnCancel.UseVisualStyleBackColor = true;
+            this.BtnCancel.Click += new System.EventHandler(this.Cancel);
             // 
             // MakeSoundIDElem
             // 
@@ -146,8 +148,9 @@ namespace SlotEffectMaker2023.DataForm
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(305, 142);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ControlBox = false;
+            this.Controls.Add(this.BtnCancel);
+            this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.numLoopTime);
             this.Controls.Add(this.tbLoopRes);
             this.Controls.Add(this.tbShotRes);
@@ -156,7 +159,11 @@ namespace SlotEffectMaker2023.DataForm
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "MakeSoundIDElem";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MakeSoundID";
             ((System.ComponentModel.ISupportInitialize)(this.numLoopTime)).EndInit();
             this.ResumeLayout(false);
@@ -174,7 +181,7 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.TextBox tbShotRes;
         private System.Windows.Forms.TextBox tbLoopRes;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numLoopTime;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button BtnOK;
+        private System.Windows.Forms.Button BtnCancel;
     }
 }

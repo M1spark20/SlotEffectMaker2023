@@ -49,16 +49,17 @@ namespace SlotEffectMaker2023
             this.btnSoundID.Location = new System.Drawing.Point(10, 90);
             this.btnSoundID.Name = "btnSoundID";
             this.btnSoundID.Size = new System.Drawing.Size(140, 30);
-            this.btnSoundID.TabIndex = 0;
+            this.btnSoundID.TabIndex = 2;
             this.btnSoundID.Text = "音源設定";
             this.btnSoundID.UseVisualStyleBackColor = true;
+            this.btnSoundID.Click += new System.EventHandler(this.StartModSoundID);
             // 
             // btnSoundPlayData
             // 
             this.btnSoundPlayData.Location = new System.Drawing.Point(10, 130);
             this.btnSoundPlayData.Name = "btnSoundPlayData";
             this.btnSoundPlayData.Size = new System.Drawing.Size(140, 30);
-            this.btnSoundPlayData.TabIndex = 0;
+            this.btnSoundPlayData.TabIndex = 3;
             this.btnSoundPlayData.Text = "音再生タイミング設定";
             this.btnSoundPlayData.UseVisualStyleBackColor = true;
             // 
@@ -67,7 +68,7 @@ namespace SlotEffectMaker2023
             this.btnUserTimer.Location = new System.Drawing.Point(10, 50);
             this.btnUserTimer.Name = "btnUserTimer";
             this.btnUserTimer.Size = new System.Drawing.Size(140, 30);
-            this.btnUserTimer.TabIndex = 0;
+            this.btnUserTimer.TabIndex = 1;
             this.btnUserTimer.Text = "ユーザタイマ設定";
             this.btnUserTimer.UseVisualStyleBackColor = true;
             // 
@@ -84,6 +85,7 @@ namespace SlotEffectMaker2023
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.ResumeLayout(false);
 
