@@ -10,7 +10,7 @@ namespace SlotEffectMaker2023.Singleton {
 		// エフェクト用変数
 		public Action.SlotValManager		valManager { get; set; }
 		// 音源データ
-		public Action.SoundDataList			soundData { get; set; }
+		public Action.SoundDataManager			soundData { get; set; }
 	
 		// Singletonインスタンス
 		private static SlotDataSingleton ins = new SlotDataSingleton();
@@ -24,7 +24,7 @@ namespace SlotEffectMaker2023.Singleton {
 			reelData = new List<Action.ReelBasicData>();
 			basicData = new Action.SlotBasicData();
 			valManager = new Action.SlotValManager();
-			soundData = new Action.SoundDataList();
+			soundData = new Action.SoundDataManager();
 		}
 
 		public void Init(List<Data.SoundID> pSound, List<Data.SoundPlayData> pPlayData, Data.TimerList pTimer)

@@ -90,5 +90,29 @@ namespace SlotEffectMaker2023.Singleton
         }
 
         /* プログラム内共通機能(全体での共有事項をここで定義) */
+        public string[] GetSoundIDNameList()
+        {
+            string[] ans = new string[SoundIDList.Count];
+            for (int i = 0; i < ans.Length; ++i) ans[i] = SoundIDList[i].DataName;
+            return ans;
+        }
+        public string[] GetSoundPlayerNameList()
+        {
+            string[] ans = new string[SoundPlayList.Count];
+            for (int i = 0; i < ans.Length; ++i) ans[i] = SoundPlayList[i].PlayerName;
+            return ans;
+        }
+        public Data.SoundID GetSoundID(string pSoundIDName)
+        {
+            foreach (var item in SoundIDList)
+                if (item.DataName.Equals(pSoundIDName)) return item;
+            return null;
+        }
+        public Data.SoundPlayData GetSoundPlayer(string pPlayerName)
+        {
+            foreach (var item in SoundPlayList)
+                if (item.PlayerName.Equals(pPlayerName)) return item;
+            return null;
+        }
     }
 }
