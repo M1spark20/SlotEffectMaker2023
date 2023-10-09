@@ -52,7 +52,6 @@ namespace SlotEffectMaker2023.Singleton {
 			}
 		
 			// soundData
-			soundData.DataStab(ref timerList);
 		
 			return true;
 		}

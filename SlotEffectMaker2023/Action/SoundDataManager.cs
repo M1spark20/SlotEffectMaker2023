@@ -71,40 +71,5 @@ namespace SlotEffectMaker2023.Action
 			if (pPlayID < 0 || pPlayID >= SoundID.Count) return;
 			SoundID[pPlayID] = pSoundID;
 		}
-
-		// 音源データを仮生成する
-		public void DataStab(ref TimerList timerList)
-		{
-			/*// 再生側のデータ
-			SoundPlayData pid = new SoundPlayData();
-			pid.PlayerName = "Bet";
-			pid.UseTimerName = "betShot";
-			pid.DefaultSoundID = 1;
-			AddPlayData(pid, timerList);
-
-			pid = new SoundPlayData();
-			pid.PlayerName = "Wait";
-			pid.UseTimerName = "waitStart";
-			pid.DefaultSoundID = 6;
-			AddPlayData(pid, timerList);
-
-			pid = new SoundPlayData();
-			pid.PlayerName = "Start";
-			pid.UseTimerName = "reelStart";
-			pid.DefaultSoundID = 2;
-			AddPlayData(pid, timerList);
-
-			pid = new SoundPlayData();
-			pid.PlayerName = "Stop";
-			pid.UseTimerName = "anyReelPush";
-			pid.DefaultSoundID = 3;
-			AddPlayData(pid, timerList);
-
-			pid = new SoundPlayData();
-			pid.PlayerName = "Payout";
-			pid.UseTimerName = "payoutTime";
-			pid.DefaultSoundID = 4;
-			AddPlayData(pid, timerList);*/
-		}
 	}
 }
