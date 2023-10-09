@@ -51,7 +51,7 @@ namespace SlotEffectMaker2023.Data
 		public string UseTimerName { get; set; }    // 制御に使用するタイマー名
 		public int BeginTime { get; set; }  // 鳴動開始時間[ms]
 		public int StopTime { get; set; }   // 鳴動終了時間[ms] (※UseTimer基準)
-		public int DefaultSoundID { get; set; } // デフォルトで鳴らすサウンドのID: 外部から変更可能
+		public string DefaultSoundID { get; set; } // デフォルトで鳴らすサウンドのID: 外部から変更可能
 
 		public SoundPlayData()
 		{
@@ -59,7 +59,7 @@ namespace SlotEffectMaker2023.Data
 			UseTimerName = string.Empty;
 			BeginTime = 0;
 			StopTime = -1;
-			DefaultSoundID = 0;
+			DefaultSoundID = string.Empty;
 		}
 
 		public bool StoreData(ref BinaryWriter fs, int version)
@@ -77,7 +77,7 @@ namespace SlotEffectMaker2023.Data
 			UseTimerName = fs.ReadString();
 			BeginTime = fs.ReadInt32();
 			StopTime = fs.ReadInt32();
-			DefaultSoundID = fs.ReadInt32();
+			DefaultSoundID = fs.ReadString();
 			return true;
 		}
 

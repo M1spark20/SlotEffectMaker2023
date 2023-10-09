@@ -10,13 +10,13 @@ namespace SlotEffectMaker2023.Action
 		// 変数
 		List<SoundID> IDList;
 		List<SoundPlayData> PlayList;
-		public List<int> SoundID { get; set; }
+		public List<string> SoundID { get; set; }
 
 		public SoundDataManager()
 		{
 			IDList = new List<SoundID>();
 			PlayList = new List<SoundPlayData>();
-			SoundID = new List<int>();
+			SoundID = new List<string>();
 		}
 		// Sysからデータを作成する
 		public void Init(List<SoundID> pIDs, List<SoundPlayData> pPlayData, TimerList pTimer)
@@ -66,17 +66,16 @@ namespace SlotEffectMaker2023.Action
 			PlayList.Add(data);
 			SoundID.Add(data.DefaultSoundID);
 		}
-		public void ChangeSoundID(int pPlayID, int pSoundID)
+		public void ChangeSoundID(int pPlayID, string pSoundID)
 		{
 			if (pPlayID < 0 || pPlayID >= SoundID.Count) return;
-			if (pSoundID < 0 || pSoundID >= IDList.Count) return;
 			SoundID[pPlayID] = pSoundID;
 		}
 
 		// 音源データを仮生成する
 		public void DataStab(ref TimerList timerList)
 		{
-			// 再生側のデータ
+			/*// 再生側のデータ
 			SoundPlayData pid = new SoundPlayData();
 			pid.PlayerName = "Bet";
 			pid.UseTimerName = "betShot";
@@ -105,7 +104,7 @@ namespace SlotEffectMaker2023.Action
 			pid.PlayerName = "Payout";
 			pid.UseTimerName = "payoutTime";
 			pid.DefaultSoundID = 4;
-			AddPlayData(pid, timerList);
+			AddPlayData(pid, timerList);*/
 		}
 	}
 }

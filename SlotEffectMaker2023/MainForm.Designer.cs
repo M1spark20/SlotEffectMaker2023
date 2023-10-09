@@ -62,6 +62,7 @@ namespace SlotEffectMaker2023
             this.btnSoundPlayData.TabIndex = 3;
             this.btnSoundPlayData.Text = "音再生タイミング設定";
             this.btnSoundPlayData.UseVisualStyleBackColor = true;
+            this.btnSoundPlayData.Click += new System.EventHandler(this.StartModSoundPlay);
             // 
             // btnUserTimer
             // 

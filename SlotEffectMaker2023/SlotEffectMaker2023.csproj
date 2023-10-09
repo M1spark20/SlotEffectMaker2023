@@ -63,6 +63,15 @@
     <Compile Include="DataForm\MakeSoundIDElem.Designer.cs">
       <DependentUpon>MakeSoundIDElem.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\MakeSoundPlay.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeSoundPlayElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeSoundPlayElem.Designer.cs">
+      <DependentUpon>MakeSoundPlayElem.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\ColorMaps.cs" />
     <Compile Include="Data\DataList.cs" />
     <Compile Include="Data\ILocalDataInterface.cs" />
@@ -94,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeSoundIDElem.resx">
       <DependentUpon>MakeSoundIDElem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeSoundPlayElem.resx">
+      <DependentUpon>MakeSoundPlayElem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

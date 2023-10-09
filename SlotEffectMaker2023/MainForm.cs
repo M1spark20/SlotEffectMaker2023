@@ -36,8 +36,13 @@ namespace SlotEffectMaker2023
         private void StartModSoundID(object sender, EventArgs e)
         {
             DataForm.MakeSoundID form = new DataForm.MakeSoundID();
-            form.Show();
-            //form.Dispose();
+            form.ShowDialog();
+        }
+
+        private void StartModSoundPlay(object sender, EventArgs e)
+        {
+            DataForm.MakeSoundPlay form = new DataForm.MakeSoundPlay();
+            form.ShowDialog();
         }
     }
 }
