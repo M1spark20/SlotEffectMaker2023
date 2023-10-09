@@ -5,10 +5,10 @@ using System.IO;
 using SlotMaker2022;
 using SlotMaker2022.main_function;
 
-namespace SlotEffectMaker2023.Data
+namespace SlotEffectMaker2023.Action
 {
 	public class SlotBasicData : ILocalDataInterface
-	{
+	{	// スロットの内部データを管理する(Sav)
 		// 定数
 		public const byte CREDIT_MAX = 50;
 
@@ -136,14 +136,14 @@ namespace SlotEffectMaker2023.Data
 												// ゲーム数更新(あとで)
 		}
 		// フラグ設定
-		public void SetCastFlag(byte pBonusFlag, byte pCastFlag, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc)
+		public void SetCastFlag(byte pBonusFlag, byte pCastFlag, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, SlotTimerManager tm)
 		{
 			if (bonusFlag == 0 && pBonusFlag > 0)
 			{
 				// ボーナス初当たり時はRT遷移を確認する
 				bonusFlag = pBonusFlag;
 				uint hitRT = rtc.MoveByBonus.GetData((uint)(pBonusFlag - 1));
-				if (hitRT < LocalDataSet.RTMODE_MAX) SetRT((byte)hitRT, false, false, cc, rtc);
+				if (hitRT < LocalDataSet.RTMODE_MAX) SetRT((byte)hitRT, false, false, cc, rtc, tm);
 			}
 			castFlag = pCastFlag;
 			// Debug.Log("FlagSet: bonus->" + bonusFlag.ToString() + " cast->" + castFlag.ToString());
@@ -193,7 +193,7 @@ namespace SlotEffectMaker2023.Data
 			creditShow = (byte)Math.Min(creditShow + 1, CREDIT_MAX);
 		}
 		// モード移行処理(入賞による) modeChangeとRTChangeで状態変化結果を返す
-		public void ModeChange(MainReelManager.GetCastResult castResult, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, List<LocalDataSet.RTMoveData> rmList)
+		public void ModeChange(MainReelManager.GetCastResult castResult, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, List<LocalDataSet.RTMoveData> rmList, SlotTimerManager tm)
 		{
 			for (int castC = 0; castC < castResult.matchCast.Count; ++castC)
 			{
@@ -202,35 +202,33 @@ namespace SlotEffectMaker2023.Data
 				if (checkData.ChangeGameModeFlag)
 				{
 					bonusFlag = 0;
-					SetMode(checkData.ChangeGameModeDest, checkData.BonusPayoutMaxID, checkData.BonusGameMaxID, cc, rtc, rmList);
+					SetMode(checkData.ChangeGameModeDest, checkData.BonusPayoutMaxID, checkData.BonusGameMaxID, cc, rtc, rmList, tm);
 				}
 				// 入賞に伴うRT更新
 				if (RTOverride && checkData.ChangeRTFlag)
-					SetRT(checkData.ChangeRTDest, checkData.CanOverwriteRT, false, cc, rtc);
+					SetRT(checkData.ChangeRTDest, checkData.CanOverwriteRT, false, cc, rtc, tm);
 			}
 		}
 		// モードリセット処理
-		public void ModeReset(LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, List<LocalDataSet.RTMoveData> rmList)
+		public void ModeReset(LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, List<LocalDataSet.RTMoveData> rmList, SlotTimerManager tm)
 		{
 			if (gameMode != 0)
 			{
 				// モードのリセット: 払出残数=0または残ゲーム数=0orJAC数=0
-				if (modeMedalCount == 0) SetMode(0, 0, 0, cc, rtc, rmList);
-				if (modeMedalCount < 0 && (modeGameCount <= 0 || modeJacCount <= 0)) SetMode(0, 0, 0, cc, rtc, rmList);
+				if (modeMedalCount == 0) SetMode(0, 0, 0, cc, rtc, rmList, tm);
+				if (modeMedalCount < 0 && (modeGameCount <= 0 || modeJacCount <= 0)) SetMode(0, 0, 0, cc, rtc, rmList, tm);
 				// Debug.Log("ModeChk: Mode=" + gameMode + " Limit(Game/Jac/Medal)=" + modeGameCount + "/" + modeJacCount + "/" + modeMedalCount);
 			}
 			if (RTMode != 0)
 			{
 				// RTのリセット: 残ゲーム数=0
-				if (RTGameCount == 0) SetRT(0, true, true, cc, rtc);
+				if (RTGameCount == 0) SetRT(0, true, true, cc, rtc, tm);
 				// Debug.Log("RTChk: RT=" + RTMode + " Game=" + RTGameCount);
 			}
 		}
 		// 内部mode移行処理
-		private void SetMode(byte ModeDest, byte payIndex, byte gameIndex, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, List<LocalDataSet.RTMoveData> rmList)
+		private void SetMode(byte ModeDest, byte payIndex, byte gameIndex, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, List<LocalDataSet.RTMoveData> rmList, SlotTimerManager tm)
 		{
-			var timer = Singleton.SlotTimerManagerSingleton.GetInstance();
-
 			byte lastMode = gameMode;
 			gameMode = ModeDest;
 			// 条件装置指定
@@ -250,22 +248,20 @@ namespace SlotEffectMaker2023.Data
 				else modeJacCount = (byte)cc.BonusPayData.GetData((uint)(payIndex - 1));
 			}
 			// タイマ作動
-			timer.GetTimer("changeMode").Activate();
-			timer.GetTimer("changeMode").Reset();
+			tm.GetTimer("changeMode").Activate();
+			tm.GetTimer("changeMode").Reset();
 			// Debug.Log("ModeSet: Mode=" + ModeDest + " Limit(Game/Jac/Medal)=" + modeGameCount + "/" + modeJacCount + "/" + modeMedalCount);
 			// モード移行によるRT移行チェック
 			foreach (var item in rmList)
 			{
 				if (item.ModeSrc != lastMode || item.ModeDst != gameMode) continue;
-				SetRT(item.Destination, item.CanOverride, true, cc, rtc);
+				SetRT(item.Destination, item.CanOverride, true, cc, rtc, tm);
 				break;
 			}
 		}
 		// 内部RT移行処理(ret:RTを上書きしたか)
-		private void SetRT(byte RTDest, bool ovrDef, bool ovrGame, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc)
+		private void SetRT(byte RTDest, bool ovrDef, bool ovrGame, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, SlotTimerManager tm)
 		{
-			var timer = Singleton.SlotTimerManagerSingleton.GetInstance();
-
 			// 移行処理
 			RTMode = RTDest;
 			RTOverride = ovrDef;
@@ -277,8 +273,8 @@ namespace SlotEffectMaker2023.Data
 				RTGameCount = (int)cc.GameNumData.GetData(gameIdx - 1u);
 			}
 			// タイマ作動
-			timer.GetTimer("changeRT").Activate();
-			timer.GetTimer("changeRT").Reset();
+			tm.GetTimer("changeRT").Activate();
+			tm.GetTimer("changeRT").Reset();
 			// Debug.Log("RTSet: RT=" + RTDest + " Game=" + RTGameCount);
 		}
 	}

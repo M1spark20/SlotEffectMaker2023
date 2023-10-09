@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using SlotEffectMaker2023.Data;
 
 namespace SlotEffectMaker2023.Data
 {
-	// サウンドID情報。IDにより管理する
+	// サウンドID情報。IDにより管理する(Sys)
 	public class SoundID : SlotMaker2022.ILocalDataInterface
 	{
 		public string DataName { get; set; }    // サウンド定義名
@@ -38,7 +39,7 @@ namespace SlotEffectMaker2023.Data
 		}
 	}
 
-	// 音を鳴らす単体データ
+	// 音を鳴らす単体データ(Sys)
 	public class SoundPlayData : SlotMaker2022.ILocalDataInterface
 	{
 		// 定数
@@ -83,7 +84,7 @@ namespace SlotEffectMaker2023.Data
 		}
 
 		// データに対する同期用タイマを作成する
-		public void MakeTimer(ref TimerList pList)
+		public void MakeTimer(TimerList pList)
 		{
 			pList.CreateTimer(GetShotTimerName(), false);
 			pList.CreateTimer(GetLoopTimerName(), true);
@@ -92,13 +93,16 @@ namespace SlotEffectMaker2023.Data
 		public string GetShotTimerName() { return SHOT_HEADER + PlayerName; }
 		public string GetLoopTimerName() { return LOOP_HEADER + PlayerName; }
 	}
+}
 
-	// サウンドデータ管理クラス
+namespace SlotEffectMaker2023.Action
+{
+	// サウンドデータ管理クラス(Sav)
 	public class SoundDataList : SlotMaker2022.ILocalDataInterface
 	{
 		// 変数
-		public List<SoundID> IDList { get; set; }
-		public List<SoundPlayData> PlayList { get; set; }
+		List<SoundID> IDList;
+		List<SoundPlayData> PlayList;
 		public List<int> SoundID { get; set; }
 
 		public SoundDataList()
@@ -107,6 +111,12 @@ namespace SlotEffectMaker2023.Data
 			PlayList = new List<SoundPlayData>();
 			SoundID = new List<int>();
 		}
+		// Sysからデータを作成する
+		public void Init(List<SoundID> pIDs, List<SoundPlayData> pPlayData, TimerList pTimer)
+        {   // 引数はデータ入力済みであること
+			foreach (var item in pIDs) AddID(item);
+			foreach (var item in pPlayData) AddPlayData(item, pTimer);
+        }
 
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
@@ -143,9 +153,9 @@ namespace SlotEffectMaker2023.Data
 
 		// データ編集用関数
 		public void AddID(SoundID data) { IDList.Add(data); }
-		public void AddPlayData(SoundPlayData data, ref TimerList timerList)
+		public void AddPlayData(SoundPlayData data, TimerList timerList)
 		{
-			data.MakeTimer(ref timerList);
+			data.MakeTimer(timerList);
 			PlayList.Add(data);
 			SoundID.Add(data.DefaultSoundID);
 		}
@@ -224,31 +234,31 @@ namespace SlotEffectMaker2023.Data
 			pid.PlayerName = "Bet";
 			pid.UseTimerName = "betShot";
 			pid.DefaultSoundID = 1;
-			AddPlayData(pid, ref timerList);
+			AddPlayData(pid, timerList);
 
 			pid = new SoundPlayData();
 			pid.PlayerName = "Wait";
 			pid.UseTimerName = "waitStart";
 			pid.DefaultSoundID = 6;
-			AddPlayData(pid, ref timerList);
+			AddPlayData(pid, timerList);
 
 			pid = new SoundPlayData();
 			pid.PlayerName = "Start";
 			pid.UseTimerName = "reelStart";
 			pid.DefaultSoundID = 2;
-			AddPlayData(pid, ref timerList);
+			AddPlayData(pid, timerList);
 
 			pid = new SoundPlayData();
 			pid.PlayerName = "Stop";
 			pid.UseTimerName = "anyReelPush";
 			pid.DefaultSoundID = 3;
-			AddPlayData(pid, ref timerList);
+			AddPlayData(pid, timerList);
 
 			pid = new SoundPlayData();
 			pid.PlayerName = "Payout";
 			pid.UseTimerName = "payoutTime";
 			pid.DefaultSoundID = 4;
-			AddPlayData(pid, ref timerList);
+			AddPlayData(pid, timerList);
 		}
 	}
 }

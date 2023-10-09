@@ -3,15 +3,14 @@ using System.Collections.Generic;
 
 namespace SlotEffectMaker2023.Singleton {
 	public sealed class SlotDataSingleton
-	{
-		public List<Data.ReelBasicData>	reelData  { get; set; }
-		public Data.SlotBasicData		basicData { get; set; }
-	
+	{	// スロット上で動くデータを定義する
+		public List<Action.ReelBasicData>	reelData  { get; set; }
+		public Action.SlotBasicData			basicData { get; set; }
+		public Action.SlotTimerManager		timerData { get; set; }
 		// エフェクト用変数
-		public Data.SlotValManager		valManager { get; set; }
-	
+		public Action.SlotValManager		valManager { get; set; }
 		// 音源データ
-		public Data.SoundDataList		soundData { get; set; }
+		public Action.SoundDataList			soundData { get; set; }
 	
 		// Singletonインスタンス
 		private static SlotDataSingleton ins = new SlotDataSingleton();
@@ -21,11 +20,18 @@ namespace SlotEffectMaker2023.Singleton {
 		/// </summary>
 		private SlotDataSingleton()
 		{
-			reelData = new List<Data.ReelBasicData>();
-			basicData = new Data.SlotBasicData();
-			valManager = new Data.SlotValManager();
-			soundData = new Data.SoundDataList();
+			timerData = new Action.SlotTimerManager();
+			reelData = new List<Action.ReelBasicData>();
+			basicData = new Action.SlotBasicData();
+			valManager = new Action.SlotValManager();
+			soundData = new Action.SoundDataList();
 		}
+
+		public void Init(List<Data.SoundID> pSound, List<Data.SoundPlayData> pPlayData, Data.TimerList pTimer)
+        {   // 各データへの初期値設定を行う
+			timerData.Init(pTimer);
+			soundData.Init(pSound, pPlayData, pTimer);
+        }
 	
 		/// <summary>
 		/// インスタンスの取得を行います。
@@ -41,7 +47,7 @@ namespace SlotEffectMaker2023.Singleton {
 			// データが読み込めなかった場合にリール情報を新規生成する
 			if (reelData.Count == 0){
 				for (int i=0; i<SlotMaker2022.LocalDataSet.REEL_MAX; ++i){
-					reelData.Add(new Data.ReelBasicData(12));
+					reelData.Add(new Action.ReelBasicData(12));
 				}
 			}
 		

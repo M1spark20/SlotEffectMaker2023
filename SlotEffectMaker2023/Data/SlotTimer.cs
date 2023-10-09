@@ -4,7 +4,7 @@ using System.IO;
 
 namespace SlotEffectMaker2023.Data
 {
-	// ユーザが作成するタイマデータ
+	// ユーザが作成するタイマデータ(Sys: TimerListから読み書き)
 	public class UserTimerData : SlotMaker2022.ILocalDataInterface
 	{
 		public string UserTimerName { get; set; }   // タイマ名
@@ -24,10 +24,10 @@ namespace SlotEffectMaker2023.Data
 		}
 	}
 
-	// タイマ一覧を管理するクラス
-	public class TimerList
+	// タイマ一覧を管理するクラス(Sys)
+	public class TimerList : SlotMaker2022.ILocalDataInterface
 	{
-		// タイマのリストを生成。システムタイマ/ユーザタイマ/サウンドタイマ
+		// タイマのリストを生成。システムタイマ(識別子なし)/ユーザタイマ($)/サウンドタイマ(#)
 		public List<UserTimerData> TData { get; private set; }
 
 		// システムタイマを登録する
@@ -62,16 +62,55 @@ namespace SlotEffectMaker2023.Data
 				CreateTimer("reelStopOrder[" + i + "]", true);  // 第n停止からの定義時間
 			}
 		}
+		public bool StoreData(ref BinaryWriter fs, int version)
+		{
+			// ユーザタイマ($から始まるデータ)のみ保存
+			int dataCount = 0;
+			foreach (var item in TData)
+				if (item.UserTimerName.StartsWith("$")) ++dataCount;
+			// 保存処理
+			fs.Write(dataCount);
+			foreach (var item in TData)
+			{
+				if (!item.UserTimerName.StartsWith("$")) continue;
+				item.StoreData(ref fs, version);
+			}
+			return true;
+		}
+		public bool ReadData(ref BinaryReader fs, int version)
+		{
+			int dataCount = fs.ReadInt32();
+			for(int i=0; i<dataCount; ++i)
+            {
+				UserTimerData ut = new UserTimerData();
+				ut.ReadData(ref fs, version);
+				CreateTimer(ut);
+            }
+			return true;
+		}
 
 		public void CreateTimer(string name, bool storeActivation)
 		{
-			UserTimerData data = new UserTimerData();
-			data.UserTimerName = name;
-			data.StoreActivation = storeActivation;
-			TData.Add(data);
+            UserTimerData data = new UserTimerData
+            {
+                UserTimerName = name,
+                StoreActivation = storeActivation
+            };
+			CreateTimer(data);
 		}
-
-		public string[] GetTimerName()
+		public void CreateTimer(UserTimerData pData)
+        {
+			TData.Add(pData);
+        }
+		public UserTimerData GetTimer(string name)
+        {
+			foreach (var item in TData)
+            {
+				if (item.UserTimerName.Equals(name)) return item;
+            }
+			return null;
+		}
+		public string[] GetTimerNameList()
 		{
 			string[] ans = new string[TData.Count];
 			for (int i = 0; i < TData.Count; ++i) ans[i] = TData[i].UserTimerName;

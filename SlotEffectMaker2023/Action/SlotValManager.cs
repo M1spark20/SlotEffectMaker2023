@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using SlotEffectMaker2023.Data;
 
-namespace SlotEffectMaker2023.Data
+namespace SlotEffectMaker2023.Action
 {
 	public class SlotValManager
-	{
+	{	// ゲームで使用される変数の管理を行う(Sav)
 		// 変数
 		List<SlotVariable> valData;
 
@@ -15,29 +16,31 @@ namespace SlotEffectMaker2023.Data
 		{
 			valData = new List<SlotVariable>();
 		}
-
-		// valDataの読み込みを行う
+		// valDataの初期化(変数データ作成)を行う
+		public void Init(VarList vl)
+		{
+			foreach (var item in vl.VData) CreateVariable(item);
+		}
+		// valDataの読み込みを行う(セーブデータ)
 		public bool ReadData()
 		{
 			// 読み込み処理(あとで実装)
 
-			// システム変数を新規作成する。読み込み処理で作成済みの場合は重複定義しない
-			AddSystemVal();
 			return true;
 		}
 
 		// 名前に重複がないことを確認して変数を新規作成する。
 		// [ret]変数を追加したか
-		public bool CreateVariable(string pValName)
+		public bool CreateVariable(SlotVariable sv)
 		{
 			for (int i = 0; i < valData.Count; ++i)
 			{
-				if (valData[i].name == pValName) return false;
+				if (valData[i].name.Equals(sv.name)) return false;
 			}
-			valData.Add(new SlotVariable(pValName));
+			valData.Add(sv);
 			return true;
 		}
-		// 名前に一致したタイマを取得する
+		// 名前に一致した変数を取得する
 		// [ret]タイマのインスタンス, 見つからない場合はnull
 		public SlotVariable GetVariable(string pValName)
 		{
@@ -46,15 +49,6 @@ namespace SlotEffectMaker2023.Data
 				if (valData[i].name == pValName) return valData[i];
 			}
 			return null;
-		}
-
-		// システム変数作成
-		private void AddSystemVal()
-		{
-			CreateVariable("_betCount");
-			CreateVariable("_creditCount");
-			CreateVariable("_payoutCount");
-			CreateVariable("_isReplay");
 		}
 	}
 }

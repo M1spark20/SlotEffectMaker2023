@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace SlotEffectMaker2023.Singleton
+namespace SlotEffectMaker2023.Action
 {
 	public class SlotTimer
-	{
+	{	// タイマ制御データ(Sav)
 		public string timerName { get; private set; }   // タイマーの名前、呼び出し時の識別子になる
 		public float? elapsedTime { get; private set; } // 経過時間、Time.deltaTimeの積算で表現する。無効時:null
 		public bool isActivate { get; private set; }    // このタイマーが有効か
@@ -71,43 +71,36 @@ namespace SlotEffectMaker2023.Singleton
 		}
 	}
 
-	public class SlotTimerManagerSingleton
-	{
+	public class SlotTimerManager
+	{	// タイマ管理クラス(Sav)
 		// タイマ一覧データ
 		Data.TimerList timerList;
 		// ゲーム上タイマデータ
 		public List<SlotTimer> timerData { get; set; }
 
-		// Singletonインスタンス
-		private static SlotTimerManagerSingleton ins = new SlotTimerManagerSingleton();
-
 		/// <summary>
-		/// インスタンスの初期化を行います。Singletonであるためprivateメンバです
+		/// インスタンスの初期化を行います。
+		/// timerDataの読み込みをpListから行います
 		/// </summary>
-		private SlotTimerManagerSingleton()
+		public SlotTimerManager()
 		{
 			timerData = new List<SlotTimer>();
-			timerList = null;
 		}
-
-		/// <summary>
-		/// インスタンスの取得を行います。
-		/// </summary>
-		public static SlotTimerManagerSingleton GetInstance() { return ins; }
-
-		// timerDataの読み込みをTimerListから行う
-		public bool ReadData(Data.TimerList pList)
-		{
-			// リストをインポートしてタイマを作成する
+		// タイマの初期化を行う
+		public void Init(Data.TimerList pList)
+        {	// リストをインポートしてタイマを作成する
 			timerList = pList;
 			foreach (var data in timerList.TData)
 			{
 				CreateTimer(data.UserTimerName, data.StoreActivation);
 			}
 
-			// generalのみActivateする
+        }
+		// 前回終了時に有効だったタイマをActivateする(セーブデータ)
+		public bool ReadData()
+		{
+			// generalのみ無条件でActivateする
 			GetTimer("general")?.Activate();
-
 			return true;
 		}
 

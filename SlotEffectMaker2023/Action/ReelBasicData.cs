@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System;
 using System.IO;
 
-namespace SlotEffectMaker2023.Data
+namespace SlotEffectMaker2023.Action
 {
 	public class ReelBasicData : SlotMaker2022.ILocalDataInterface
-	{
+	{	// ゲーム中のリール状態を定義する(Sav)
 		// 定数定義
 		public const byte REEL_NPOS = byte.MaxValue;
 		const float acc = 160.0f;   // リール加速度[rpm]
