@@ -9,6 +9,63 @@ using System.Drawing;
 
 namespace SlotEffectMaker2023.DataBuilder
 {
+    class SlotVariableBuilder : ListBuilderBase<Data.SlotVariable, InfoSlotVariable>
+    {
+        public SlotVariableBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.SlotVariable> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "DataID";
+            DGView.Columns[1].HeaderText = "VarName";
+            DGView.Columns[2].HeaderText = "DefaultVal";
+            UpdateIndicator(0);
+            SwapLock(false);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeVariableElem form = new DataForm.MakeVariableElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                if (Data[row.Index].name.StartsWith("_")) { ModifyDeny(); return; }
+                DataForm.MakeVariableElem form = new DataForm.MakeVariableElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void StartDel(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                if (Data[row.Index].name.StartsWith("_")) { ModifyDeny(); return; }
+            }
+            base.StartDel(sender, e);
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            int id = 0;
+            foreach (var item in Data)
+            {
+                InfoSlotVariable info = new InfoSlotVariable
+                {
+                    DataID = id++,
+                    DataName = item.name,
+                    DefValue = item.val
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+    }
     class SoundIDBuilder : ListBuilderBase<Data.SoundID, InfoSoundID>
     {   // サウンドID生成フォーム操作
         public SoundIDBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.SoundID> pData)

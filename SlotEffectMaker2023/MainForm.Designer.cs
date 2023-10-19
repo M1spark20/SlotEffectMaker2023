@@ -43,6 +43,7 @@ namespace SlotEffectMaker2023
             this.btnValSet.TabIndex = 0;
             this.btnValSet.Text = "ユーザ変数設定";
             this.btnValSet.UseVisualStyleBackColor = true;
+            this.btnValSet.Click += new System.EventHandler(this.StartModVariable);
             // 
             // btnSoundID
             // 

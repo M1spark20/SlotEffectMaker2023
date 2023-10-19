@@ -181,7 +181,6 @@ namespace SlotMaker2022
         }
         protected void SwapLock(bool enabled)
         {
-            DelButton.Enabled = enabled;
             SeekUpButton.Enabled = enabled;
             SeekDownButton.Enabled = enabled;
         }

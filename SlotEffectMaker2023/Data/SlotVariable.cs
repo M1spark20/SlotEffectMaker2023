@@ -9,12 +9,12 @@ namespace SlotEffectMaker2023.Data
 
 	public class SlotVariable : SlotMaker2022.ILocalDataInterface
 	{	// 変数要素データ(Sys/Sav)(valは直接アクセスすることが可能)
-		public string name { get; private set; } // 変数名(読み取り専用)
-		public int val { get; set; }             // 変数値(Sysでは初期値)
+		public string name { get; set; } // 変数名
+		public int val { get; set; }     // 変数値(Sysでは初期値)
 
 		// 読み込み関連処理
 		// データを外部から読み込んだ時のコンストラクタ: ReadData関数を直接動かしてデータを読む必要あり
-		public SlotVariable() { /* None */ }
+		public SlotVariable() { name = string.Empty; val = 0; }
 		public SlotVariable(string pValName)
 		{
 			// 変数を新規に作成するときのコンストラクタ: 変数を指定して新規作成する。
