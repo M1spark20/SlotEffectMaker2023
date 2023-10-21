@@ -36,12 +36,14 @@ namespace SlotEffectMaker2023.Data
 		{
 			fs.Write(name);
 			fs.Write(val);
+			fs.Write(usage);
 			return true;
 		}
 		public bool ReadData(ref BinaryReader fs, int version)
 		{
 			name = fs.ReadString();
 			val = fs.ReadInt32();
+			usage = fs.ReadString();
 			return true;
 		}
 
