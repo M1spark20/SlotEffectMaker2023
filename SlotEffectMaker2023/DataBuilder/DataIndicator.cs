@@ -8,9 +8,9 @@ namespace SlotEffectMaker2023.DataBuilder
 {
     class InfoSlotVariable
     {
-       public int DataID { get; set; }
-       public string DataName { get; set; }
-       public int DefValue { get; set; }
+        public string DataName { get; set; }
+        public int DefValue { get; set; }
+        public string DataUsage { get; set; }
     }
     class InfoSoundID
     {

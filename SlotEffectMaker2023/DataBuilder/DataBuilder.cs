@@ -14,9 +14,9 @@ namespace SlotEffectMaker2023.DataBuilder
         public SlotVariableBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.SlotVariable> pData)
             : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
         {
-            DGView.Columns[0].HeaderText = "DataID";
-            DGView.Columns[1].HeaderText = "VarName";
-            DGView.Columns[2].HeaderText = "DefaultVal";
+            DGView.Columns[0].HeaderText = "VarName";
+            DGView.Columns[1].HeaderText = "DefaultVal";
+            DGView.Columns[2].HeaderText = "Usage";
             UpdateIndicator(0);
             SwapLock(false);
         }
@@ -52,14 +52,13 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             InitIndicator();
 
-            int id = 0;
             foreach (var item in Data)
             {
                 InfoSlotVariable info = new InfoSlotVariable
                 {
-                    DataID = id++,
                     DataName = item.name,
-                    DefValue = item.val
+                    DefValue = item.val,
+                    DataUsage = item.usage
                 };
                 Indicator.Add(info);
             }

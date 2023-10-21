@@ -22,11 +22,13 @@ namespace SlotEffectMaker2023.DataForm
             tbDataName.Text = sv.name;
             numLoopTime.Maximum = int.MaxValue;
             numLoopTime.Value = sv.val;
+            tbUsage.Text = sv.usage;
         }
         public bool SetData(Data.SlotVariable sv)
         {
             sv.name = tbDataName.Text;
             sv.val = decimal.ToInt32(numLoopTime.Value);
+            sv.usage = tbUsage.Text;
             return true;
         }
         protected override void BtnOK_Click(object sender, EventArgs e)

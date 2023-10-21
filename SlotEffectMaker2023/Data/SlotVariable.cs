@@ -11,16 +11,18 @@ namespace SlotEffectMaker2023.Data
 	{	// 変数要素データ(Sys/Sav)(valは直接アクセスすることが可能)
 		public string name { get; set; } // 変数名
 		public int val { get; set; }     // 変数値(Sysでは初期値)
+		public string usage { get; set; }// 用途(メモのみ)
 
 		// 読み込み関連処理
 		// データを外部から読み込んだ時のコンストラクタ: ReadData関数を直接動かしてデータを読む必要あり
-		public SlotVariable() { name = string.Empty; val = 0; }
+		public SlotVariable() { name = string.Empty; val = 0; usage = string.Empty; }
 		public SlotVariable(string pValName)
 		{
 			// 変数を新規に作成するときのコンストラクタ: 変数を指定して新規作成する。
 			// 呼び出し前に変数名が重複しないことを確認すること
 			name = pValName;
 			val = 0;
+			usage = string.Empty;
 		}
 		public SlotVariable(string pValName, int pInitVal)
 		{
@@ -28,6 +30,7 @@ namespace SlotEffectMaker2023.Data
 			// 呼び出し前に変数名が重複しないことを確認すること
 			name = pValName;
 			val = pInitVal;
+			usage = string.Empty;
 		}
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
