@@ -12,7 +12,13 @@ namespace SlotEffectMaker2023.DataBuilder
         public int DefValue { get; set; }
         public string DataUsage { get; set; }
     }
-    class InfoSoundID
+     class InfoTimer
+    {
+        public string DataName { get; set; }
+        public bool SaveFlag { get; set; }
+        public string DataUsage { get; set; }
+    }
+   class InfoSoundID
     {
         public string DataName { get; set; }
         public string Shot { get; set; }

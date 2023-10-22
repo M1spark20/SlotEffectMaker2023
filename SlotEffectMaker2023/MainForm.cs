@@ -38,6 +38,11 @@ namespace SlotEffectMaker2023
             DataForm.MakeVariable form = new DataForm.MakeVariable();
             form.ShowDialog();
         }
+        private void StartModTimer(object sender, EventArgs e)
+        {
+            DataForm.MakeTimer form = new DataForm.MakeTimer();
+            form.ShowDialog();
+        }
         private void StartModSoundID(object sender, EventArgs e)
         {
             DataForm.MakeSoundID form = new DataForm.MakeSoundID();
@@ -49,6 +54,5 @@ namespace SlotEffectMaker2023
             DataForm.MakeSoundPlay form = new DataForm.MakeSoundPlay();
             form.ShowDialog();
         }
-
     }
 }

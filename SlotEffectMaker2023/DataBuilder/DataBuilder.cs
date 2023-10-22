@@ -65,6 +65,62 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
+    class SlotTimerBuilder : ListBuilderBase<Data.UserTimerData, InfoTimer>
+    {
+        public SlotTimerBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.UserTimerData> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "TimerName";
+            DGView.Columns[1].HeaderText = "SaveFlag";
+            DGView.Columns[2].HeaderText = "Usage";
+            UpdateIndicator(0);
+            SwapLock(false);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeTimerElem form = new DataForm.MakeTimerElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                if (!Data[row.Index].UserTimerName.StartsWith("$")) { ModifyDeny(); return; }
+                DataForm.MakeTimerElem form = new DataForm.MakeTimerElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void StartDel(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                if (!Data[row.Index].UserTimerName.StartsWith("$")) { ModifyDeny(); return; }
+            }
+            base.StartDel(sender, e);
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoTimer info = new InfoTimer
+                {
+                    DataName = item.UserTimerName,
+                    SaveFlag = item.StoreActivation,
+                    DataUsage = item.Usage
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+    }
     class SoundIDBuilder : ListBuilderBase<Data.SoundID, InfoSoundID>
     {   // サウンドID生成フォーム操作
         public SoundIDBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.SoundID> pData)

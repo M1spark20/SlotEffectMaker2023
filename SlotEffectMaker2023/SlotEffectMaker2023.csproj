@@ -54,11 +54,20 @@
     <Compile Include="DataBuilder\GeneralDataBuilder.Designer.cs">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\MakeTimer.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataForm\MakeVariable.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DataForm\MakeSoundID.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeTimerElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeTimerElem.Designer.cs">
+      <DependentUpon>MakeTimerElem.cs</DependentUpon>
     </Compile>
     <Compile Include="DataForm\MakeVariableElem.cs">
       <SubType>Form</SubType>
@@ -109,6 +118,9 @@
     <Compile Include="UserControl.cs" />
     <EmbeddedResource Include="DataBuilder\GeneralDataBuilder.resx">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeTimerElem.resx">
+      <DependentUpon>MakeTimerElem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeVariableElem.resx">
       <DependentUpon>MakeVariableElem.cs</DependentUpon>

@@ -9,17 +9,26 @@ namespace SlotEffectMaker2023.Data
 	{
 		public string UserTimerName { get; set; }   // タイマ名
 		public bool StoreActivation { get; set; }   // 有効状況を保存するか
+		public string Usage { get; set; }		    // 用途
 
+		public UserTimerData()
+        {
+			UserTimerName = "$";
+			StoreActivation = true;
+			Usage = string.Empty;
+        }
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
 			fs.Write(UserTimerName);
 			fs.Write(StoreActivation);
+			fs.Write(Usage);
 			return true;
 		}
 		public bool ReadData(ref BinaryReader fs, int version)
 		{
 			UserTimerName = fs.ReadString();
 			StoreActivation = fs.ReadBoolean();
+			Usage = fs.ReadString();
 			return true;
 		}
 	}

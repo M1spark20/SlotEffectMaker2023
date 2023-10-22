@@ -73,6 +73,7 @@ namespace SlotEffectMaker2023
             this.btnUserTimer.TabIndex = 1;
             this.btnUserTimer.Text = "ユーザタイマ設定";
             this.btnUserTimer.UseVisualStyleBackColor = true;
+            this.btnUserTimer.Click += new System.EventHandler(this.StartModTimer);
             // 
             // MainForm
             // 
