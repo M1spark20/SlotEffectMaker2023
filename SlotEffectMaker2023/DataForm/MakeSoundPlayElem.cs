@@ -25,7 +25,7 @@ namespace SlotEffectMaker2023.DataForm
             defDataName = sp.PlayerName;
             // コントロール初期化
             tbPlayerName.Text = sp.PlayerName;
-            if (ed.TimerList.GetTimer(sp.UseTimerName) != null) cbUseTimer.SelectedItem = sp.UseTimerName;
+            if (ed.TimerList.CheckTimerExist(sp.UseTimerName)) cbUseTimer.SelectedItem = sp.UseTimerName;
             numStartTime.Value = sp.BeginTime;
             numStopTime.Value = sp.StopTime;
             if (ed.GetSoundID(sp.DefaultSoundID) != null) cbDefSound.SelectedItem = sp.DefaultSoundID;

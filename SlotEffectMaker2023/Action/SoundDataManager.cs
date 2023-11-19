@@ -8,33 +8,27 @@ namespace SlotEffectMaker2023.Action
     public class SoundDataManager : SlotMaker2022.ILocalDataInterface
 	{
 		// 変数
-		List<SoundID> IDList;
-		List<SoundPlayData> PlayList;
-		public List<string> SoundID { get; set; }
+		List<(string playName, string soundName)> SoundID { get; set; }	// 鳴り分けデータ(PlayList, IDList)
 
 		public SoundDataManager()
 		{
-			IDList = new List<SoundID>();
-			PlayList = new List<SoundPlayData>();
-			SoundID = new List<string>();
+			SoundID = new List<(string, string)>();
 		}
-		// Sysからデータを作成する
-		public void Init(List<SoundID> pIDs, List<SoundPlayData> pPlayData, TimerList pTimer)
-        {   // 引数はデータ入力済みであること
-			foreach (var item in pIDs) AddID(item);
-			foreach (var item in pPlayData) AddPlayData(item, pTimer);
-        }
-
+		// 最初に鳴り分け要素を作成しておく
+		public void Init(List<Data.SoundPlayData> pPlayData)
+        {
+			foreach (var item in pPlayData)
+				SoundID.Add( (item.PlayerName, item.DefaultSoundID) );
+		}
+		// 現在の鳴り分け状況を保存する
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
-			fs.Write(IDList.Count);
-			for (int i = 0; i < IDList.Count; ++i)
-				if (!IDList[i].StoreData(ref fs, version)) return false;
-
-			fs.Write(PlayList.Count);
-			for (int i = 0; i < PlayList.Count; ++i)
-				if (!PlayList[i].StoreData(ref fs, version)) return false;
-
+			fs.Write(SoundID.Count);
+			for (int i = 0; i < SoundID.Count; ++i)
+            {
+				fs.Write(SoundID[i].playName);
+				fs.Write(SoundID[i].soundName);
+            }
 			return true;
 		}
 		public bool ReadData(ref BinaryReader fs, int version)
@@ -42,34 +36,23 @@ namespace SlotEffectMaker2023.Action
 			int dataSize = fs.ReadInt32();
 			for (int i = 0; i < dataSize; ++i)
 			{
-				var newData = new SoundID();
-				if (!newData.ReadData(ref fs, version)) return false;
-				IDList.Add(newData);
+				(string playName, string soundName) newData;
+				newData.playName = fs.ReadString();
+				newData.soundName = fs.ReadString();
+				SoundID.Add(newData);
 			}
-
-			dataSize = fs.ReadInt32();
-			for (int i = 0; i < dataSize; ++i)
-			{
-				var newData = new SoundPlayData();
-				if (!newData.ReadData(ref fs, version)) return false;
-				PlayList.Add(newData);
-			}
-
 			return true;
 		}
 
 		// データ編集用関数
-		public void AddID(SoundID data) { IDList.Add(data); }
-		public void AddPlayData(SoundPlayData data, TimerList timerList)
+		public void ChangeSoundID(string pPlayerID, string pSoundID)
 		{
-			data.MakeTimer(timerList);
-			PlayList.Add(data);
-			SoundID.Add(data.DefaultSoundID);
-		}
-		public void ChangeSoundID(int pPlayID, string pSoundID)
-		{
-			if (pPlayID < 0 || pPlayID >= SoundID.Count) return;
-			SoundID[pPlayID] = pSoundID;
+			for (int i = 0; i < SoundID.Count; ++i)
+			{
+                if (SoundID[i].playName == pPlayerID) { SoundID[i] = (pPlayerID, pSoundID); return; }
+			}
+			// データがない場合の追加
+			SoundID.Add( (pPlayerID, pSoundID) );
 		}
 	}
 }

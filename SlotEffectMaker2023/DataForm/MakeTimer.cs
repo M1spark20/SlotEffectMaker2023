@@ -13,7 +13,7 @@ namespace SlotEffectMaker2023.DataForm
         public MakeTimer() : base("ユーザタイマデータ")
         {
             var tl = SlotEffectMaker2023.Singleton.EffectDataManagerSingleton.GetInstance().TimerList;
-            builder = new DataBuilder.SlotTimerBuilder(btnAdd, btnMod, btnDel, btnSeekUp, btnSeekDn, dgvShow, tl.TData);
+            builder = new DataBuilder.SlotTimerBuilder(btnAdd, btnMod, btnDel, btnSeekUp, btnSeekDn, dgvShow, tl.UserData);
         }
     }
 }

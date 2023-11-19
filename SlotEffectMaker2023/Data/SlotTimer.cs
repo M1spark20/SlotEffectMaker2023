@@ -37,53 +37,48 @@ namespace SlotEffectMaker2023.Data
 	public class TimerList : SlotMaker2022.ILocalDataInterface
 	{
 		// タイマのリストを生成。システムタイマ(識別子なし)/ユーザタイマ($)/サウンドタイマ(#)
-		public List<UserTimerData> TData { get; private set; }
+		public List<UserTimerData> SysTimer { get; private set; }
+		public List<UserTimerData> UserData { get; private set; }
 
 		// システムタイマを登録する
 		public TimerList()
 		{
-			TData = new List<UserTimerData>();      // タイマ一覧のインスタンス生成
+			SysTimer = new List<UserTimerData>(); 
+			UserData = new List<UserTimerData>();      // タイマ一覧のインスタンス生成
 
-			CreateTimer("general", true);   // ゲーム開始からの経過時間
-			CreateTimer("betWait", true);   // BET待ち開始からの経過時間
-			CreateTimer("betInput", true);  // BET開始からの経過時間
-			CreateTimer("betShot", true);   // 1BET処理からの経過時間
-			CreateTimer("leverAvailable", true);    // レバー有効化からの経過時間
-			CreateTimer("waitStart", true); // wait開始からの経過時間
-			CreateTimer("waitEnd", true);   // wait終了からの経過時間(次Gのwait算出に使用)
-			CreateTimer("reelStart", true); // リール始動からの経過時間
-			CreateTimer("anyReelPush", true);   // いずれかの停止ボタン押下からの経過時間
-			CreateTimer("anyReelStop", true);   // いずれかのリール停止からの経過時間
-			CreateTimer("allReelStop", true);   // 全リール停止、ねじり終了からの経過時間
-			CreateTimer("payoutTime", true);    // ペイアウト開始からの経過時間(pay完了まで有効)
-			CreateTimer("Pay-Bet", true);   // ペイアウト開始からの経過時間(次回BETまで有効)
-			CreateTimer("Pay-Lever", true); // ペイアウト開始からの経過時間(次ゲームレバーオンまで有効)
-			CreateTimer("changeMode", true);    // モード移行からの経過時間
-			CreateTimer("changeRT", true);  // RT移行からの経過時間
-			CreateTimer("resetMode", true); // モードリセットからの経過時間
-			CreateTimer("resetRT", true);   // RTリセットからの経過時間
+			CreateSysTimer("general", true);   // ゲーム開始からの経過時間
+			CreateSysTimer("betWait", true);   // BET待ち開始からの経過時間
+			CreateSysTimer("betInput", true);  // BET開始からの経過時間
+			CreateSysTimer("betShot", true);   // 1BET処理からの経過時間
+			CreateSysTimer("leverAvailable", true);    // レバー有効化からの経過時間
+			CreateSysTimer("waitStart", true); // wait開始からの経過時間
+			CreateSysTimer("waitEnd", true);   // wait終了からの経過時間(次Gのwait算出に使用)
+			CreateSysTimer("reelStart", true); // リール始動からの経過時間
+			CreateSysTimer("anyReelPush", true);   // いずれかの停止ボタン押下からの経過時間
+			CreateSysTimer("anyReelStop", true);   // いずれかのリール停止からの経過時間
+			CreateSysTimer("allReelStop", true);   // 全リール停止、ねじり終了からの経過時間
+			CreateSysTimer("payoutTime", true);    // ペイアウト開始からの経過時間(pay完了まで有効)
+			CreateSysTimer("Pay-Bet", true);   // ペイアウト開始からの経過時間(次回BETまで有効)
+			CreateSysTimer("Pay-Lever", true); // ペイアウト開始からの経過時間(次ゲームレバーオンまで有効)
+			CreateSysTimer("changeMode", true);    // モード移行からの経過時間
+			CreateSysTimer("changeRT", true);  // RT移行からの経過時間
+			CreateSysTimer("resetMode", true); // モードリセットからの経過時間
+			CreateSysTimer("resetRT", true);   // RTリセットからの経過時間
 
 			for (int i = 0; i < SlotMaker2022.LocalDataSet.REEL_MAX; ++i)
 			{
-				CreateTimer("reelPushPos[" + i + "]", true);    // 特定リール[0-reelMax)停止ボタン押下からの定義時間
-				CreateTimer("reelStopPos[" + i + "]", true);    // 特定リール[0-reelMax)停止からの定義時間
-				CreateTimer("reelPushOrder[" + i + "]", true);  // 第n停止ボタン押下からの定義時間
-				CreateTimer("reelStopOrder[" + i + "]", true);  // 第n停止からの定義時間
+				CreateSysTimer("reelPushPos[" + i + "]", true);    // 特定リール[0-reelMax)停止ボタン押下からの定義時間
+				CreateSysTimer("reelStopPos[" + i + "]", true);    // 特定リール[0-reelMax)停止からの定義時間
+				CreateSysTimer("reelPushOrder[" + i + "]", true);  // 第n停止ボタン押下からの定義時間
+				CreateSysTimer("reelStopOrder[" + i + "]", true);  // 第n停止からの定義時間
 			}
 		}
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
 			// ユーザタイマ($から始まるデータ)のみ保存
-			int dataCount = 0;
-			foreach (var item in TData)
-				if (item.UserTimerName.StartsWith("$")) ++dataCount;
-			// 保存処理
-			fs.Write(dataCount);
-			foreach (var item in TData)
-			{
-				if (!item.UserTimerName.StartsWith("$")) continue;
+			fs.Write(UserData.Count);
+			foreach (var item in UserData)
 				item.StoreData(ref fs, version);
-			}
 			return true;
 		}
 		public bool ReadData(ref BinaryReader fs, int version)
@@ -109,21 +104,52 @@ namespace SlotEffectMaker2023.Data
 		}
 		public void CreateTimer(UserTimerData pData)
         {
-			TData.Add(pData);
+			UserData.Add(pData);
         }
-		public UserTimerData GetTimer(string name)
+		private void CreateSysTimer(string name, bool storeActivation)
         {
-			foreach (var item in TData)
-            {
-				if (item.UserTimerName.Equals(name)) return item;
-            }
-			return null;
+			UserTimerData data = new UserTimerData
+			{
+				UserTimerName = name,
+				StoreActivation = storeActivation
+			};
+			SysTimer.Add(data);
+		}
+		public bool CheckTimerExist(string name)
+        {
+			foreach (var item in SysTimer)
+				if (item.UserTimerName.Equals(name)) return true;
+
+			foreach (var item in UserData)
+				if (item.UserTimerName.Equals(name)) return true;
+
+			// 音源関係のタイマを引っ張ってくる
+			var soundPlay = Singleton.EffectDataManagerSingleton.GetInstance().SoundPlayList;
+			foreach (var item in soundPlay)
+			{
+				if (item.GetShotTimerName().Equals(name)) return true;
+				if (item.GetLoopTimerName().Equals(name)) return true;
+			}
+
+			return false;
 		}
 		public string[] GetTimerNameList()
 		{
-			string[] ans = new string[TData.Count];
-			for (int i = 0; i < TData.Count; ++i) ans[i] = TData[i].UserTimerName;
-			return ans;
+			List<string> ans = new List<string>();
+			foreach (var item in SysTimer)
+				ans.Add(item.UserTimerName);
+
+			foreach (var item in UserData)
+				ans.Add(item.UserTimerName);
+
+			// 音源関係のタイマを引っ張ってくる
+			var soundPlay = Singleton.EffectDataManagerSingleton.GetInstance().SoundPlayList;
+			foreach (var item in soundPlay) {
+				ans.Add(item.GetShotTimerName());
+				ans.Add(item.GetLoopTimerName());
+			}
+
+			return ans.ToArray();
 		}
 	}
 }

@@ -5,7 +5,7 @@ using System.IO;
 namespace SlotEffectMaker2023.Data
 {
 	// 計算式オペランド
-	public enum ECalcOperand { eAdd, eSub, eMul, eDiv, eMod }
+	public enum ECalcOperand { eAdd, eSub, eMul, eDiv, eMod, eNone }
 
 	public class SlotVariable : SlotMaker2022.ILocalDataInterface
 	{	// 変数要素データ(Sys/Sav)(valは直接アクセスすることが可能)
@@ -56,20 +56,6 @@ namespace SlotEffectMaker2023.Data
 		{
 			if (inclBorder && (val == min || val == max)) return true;
 			return val > min && val < max;
-		}
-		// 引数で指定した数値に対し計算した結果を返す。自身は計算式の右辺となる
-		// 除数が0で計算できない場合、計算結果は0を返す
-		public int Operate(ECalcOperand operand, int opLeft)
-		{
-			if (operand == ECalcOperand.eAdd) return opLeft + val;
-			if (operand == ECalcOperand.eSub) return opLeft - val;
-			if (operand == ECalcOperand.eMul) return opLeft * val;
-			// 以降は除数のため、valを確認
-			if (val == 0) return 0;
-			if (operand == ECalcOperand.eDiv) return opLeft / val;
-			if (operand == ECalcOperand.eMod) return opLeft % val;
-			// 何も引っかからなかった時
-			return 0;
 		}
 	}
 

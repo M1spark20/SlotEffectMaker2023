@@ -49,8 +49,6 @@ namespace SlotEffectMaker2023.Singleton
                 // バックアップ生成(Unity側では削除すること)
                 BackupData();
             }
-            // SoundPlayList関連のタイマを生成する
-            foreach (var item in SoundPlayList) item.MakeTimer(TimerList);
             return ans;
         }
         public bool SaveData()

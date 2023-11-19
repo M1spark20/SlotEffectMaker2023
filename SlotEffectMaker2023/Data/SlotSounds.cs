@@ -81,12 +81,6 @@ namespace SlotEffectMaker2023.Data
 			return true;
 		}
 
-		// データに対する同期用タイマを作成する
-		public void MakeTimer(TimerList pList)
-		{
-			pList.CreateTimer(GetShotTimerName(), false);
-			pList.CreateTimer(GetLoopTimerName(), true);
-		}
 		// タイマ名を取得する
 		public string GetShotTimerName() { return SHOT_HEADER + PlayerName; }
 		public string GetLoopTimerName() { return LOOP_HEADER + PlayerName; }

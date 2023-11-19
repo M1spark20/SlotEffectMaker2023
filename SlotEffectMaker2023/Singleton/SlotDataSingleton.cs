@@ -27,10 +27,10 @@ namespace SlotEffectMaker2023.Singleton {
 			soundData = new Action.SoundDataManager();
 		}
 
-		public void Init(List<Data.SoundID> pSound, List<Data.SoundPlayData> pPlayData, Data.TimerList pTimer)
+		public void Init(List<Data.SoundPlayData> pPlayData, Data.TimerList pTimer)
         {   // 各データへの初期値設定を行う
 			timerData.Init(pTimer);
-			soundData.Init(pSound, pPlayData, pTimer);
+			soundData.Init(pPlayData);
         }
 	
 		/// <summary>

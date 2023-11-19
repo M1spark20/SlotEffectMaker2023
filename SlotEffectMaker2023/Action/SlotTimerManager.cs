@@ -7,6 +7,7 @@ namespace SlotEffectMaker2023.Action
 	{	// タイマ制御データ(Sav)
 		public string timerName { get; private set; }   // タイマーの名前、呼び出し時の識別子になる
 		public float? elapsedTime { get; private set; } // 経過時間、Time.deltaTimeの積算で表現する。無効時:null
+		public float? lastElapsed { get; private set; } // 前回経過時間。無効時:null
 		public bool isActivate { get; private set; }    // このタイマーが有効か
 		public bool isPaused { get; private set; }  // このタイマーを一時停止しているか
 
@@ -19,6 +20,7 @@ namespace SlotEffectMaker2023.Action
 			// 呼び出し前にタイマ名が重複しないことを確認すること
 			timerName = pTimerName;
 			elapsedTime = null;
+			lastElapsed = null;
 			isActivate = false;
 			isPaused = false;
 			isStoreFlag = pStoreActivate;
@@ -39,6 +41,7 @@ namespace SlotEffectMaker2023.Action
 			if (!isActivate) return;
 			elapsedTime = 0f;
 			if (offset > 0f) elapsedTime = offset;
+			lastElapsed = float.MinValue;
 		}
 		public void Reset() { Reset(0f); }
 
@@ -55,14 +58,26 @@ namespace SlotEffectMaker2023.Action
 			isActivate = false;
 			isPaused = false;
 			elapsedTime = null;
+			lastElapsed = null;
 		}
 
 		// タイマを更新する
 		public void Update(float deltaTime)
 		{
 			if (!isActivate || isPaused) return;
+			lastElapsed = elapsedTime;
 			elapsedTime += deltaTime;
 		}
+
+		// タイマの経過判定結果を取得する
+		public bool GetActionFlag(float judgeTime)
+        {
+			if (!isActivate) return false;
+			if (!(judgeTime > 0f)) judgeTime = 0.001f;
+			// 比較演算子を揃えることで2回Trueになることがないようにする
+			// 完全な==時に遅延が生じるが許容する
+			return elapsedTime > judgeTime && !(lastElapsed > judgeTime);
+        }
 
 		// タイマの保存条件「タイマが稼働しており、保存フラグが有効か」を確認する
 		public bool GetStoreFlag()
@@ -90,12 +105,17 @@ namespace SlotEffectMaker2023.Action
 		public void Init(Data.TimerList pList)
         {	// リストをインポートしてタイマを作成する
 			timerList = pList;
-			foreach (var data in timerList.TData)
-			{
+			foreach (var data in timerList.SysTimer)
 				CreateTimer(data.UserTimerName, data.StoreActivation);
+			foreach (var data in timerList.UserData)
+				CreateTimer(data.UserTimerName, data.StoreActivation);
+			var soundPlay = Singleton.EffectDataManagerSingleton.GetInstance().SoundPlayList;
+			foreach (var item in soundPlay)
+			{
+				CreateTimer(item.GetShotTimerName(), false);
+				CreateTimer(item.GetLoopTimerName(), true);
 			}
-
-        }
+		}
 		// 前回終了時に有効だったタイマをActivateする(セーブデータ)
 		public bool ReadData()
 		{
