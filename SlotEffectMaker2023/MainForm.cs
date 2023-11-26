@@ -54,5 +54,11 @@ namespace SlotEffectMaker2023
             DataForm.MakeSoundPlay form = new DataForm.MakeSoundPlay();
             form.ShowDialog();
         }
+
+        private void StartModActChangeSound(object sender, EventArgs e)
+        {
+            DataForm.MakeActChangeSound form = new DataForm.MakeActChangeSound();
+            form.ShowDialog();
+        }
     }
 }

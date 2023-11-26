@@ -33,6 +33,11 @@ namespace SlotEffectMaker2023
             this.btnSoundID = new System.Windows.Forms.Button();
             this.btnSoundPlayData = new System.Windows.Forms.Button();
             this.btnUserTimer = new System.Windows.Forms.Button();
+            this.btnTL_ValCond = new System.Windows.Forms.Button();
+            this.btnTL_TimerCond = new System.Windows.Forms.Button();
+            this.btnTL_ValCtrl = new System.Windows.Forms.Button();
+            this.btnTL_TimerCtrl = new System.Windows.Forms.Button();
+            this.btnTL_SoundChange = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -75,6 +80,56 @@ namespace SlotEffectMaker2023
             this.btnUserTimer.UseVisualStyleBackColor = true;
             this.btnUserTimer.Click += new System.EventHandler(this.StartModTimer);
             // 
+            // btnTL_ValCond
+            // 
+            this.btnTL_ValCond.Location = new System.Drawing.Point(160, 10);
+            this.btnTL_ValCond.Name = "btnTL_ValCond";
+            this.btnTL_ValCond.Size = new System.Drawing.Size(140, 30);
+            this.btnTL_ValCond.TabIndex = 0;
+            this.btnTL_ValCond.Text = "[TL]変数条件設定";
+            this.btnTL_ValCond.UseVisualStyleBackColor = true;
+            this.btnTL_ValCond.Click += new System.EventHandler(this.StartModVariable);
+            // 
+            // btnTL_TimerCond
+            // 
+            this.btnTL_TimerCond.Location = new System.Drawing.Point(160, 50);
+            this.btnTL_TimerCond.Name = "btnTL_TimerCond";
+            this.btnTL_TimerCond.Size = new System.Drawing.Size(140, 30);
+            this.btnTL_TimerCond.TabIndex = 0;
+            this.btnTL_TimerCond.Text = "[TL]タイマ条件設定";
+            this.btnTL_TimerCond.UseVisualStyleBackColor = true;
+            this.btnTL_TimerCond.Click += new System.EventHandler(this.StartModVariable);
+            // 
+            // btnTL_ValCtrl
+            // 
+            this.btnTL_ValCtrl.Location = new System.Drawing.Point(160, 90);
+            this.btnTL_ValCtrl.Name = "btnTL_ValCtrl";
+            this.btnTL_ValCtrl.Size = new System.Drawing.Size(140, 30);
+            this.btnTL_ValCtrl.TabIndex = 0;
+            this.btnTL_ValCtrl.Text = "[TL]変数制御設定";
+            this.btnTL_ValCtrl.UseVisualStyleBackColor = true;
+            this.btnTL_ValCtrl.Click += new System.EventHandler(this.StartModVariable);
+            // 
+            // btnTL_TimerCtrl
+            // 
+            this.btnTL_TimerCtrl.Location = new System.Drawing.Point(160, 130);
+            this.btnTL_TimerCtrl.Name = "btnTL_TimerCtrl";
+            this.btnTL_TimerCtrl.Size = new System.Drawing.Size(140, 30);
+            this.btnTL_TimerCtrl.TabIndex = 0;
+            this.btnTL_TimerCtrl.Text = "[TL]タイマ制御設定";
+            this.btnTL_TimerCtrl.UseVisualStyleBackColor = true;
+            this.btnTL_TimerCtrl.Click += new System.EventHandler(this.StartModVariable);
+            // 
+            // btnTL_SoundChange
+            // 
+            this.btnTL_SoundChange.Location = new System.Drawing.Point(160, 170);
+            this.btnTL_SoundChange.Name = "btnTL_SoundChange";
+            this.btnTL_SoundChange.Size = new System.Drawing.Size(140, 30);
+            this.btnTL_SoundChange.TabIndex = 0;
+            this.btnTL_SoundChange.Text = "[TL]音データ鳴り分け設定";
+            this.btnTL_SoundChange.UseVisualStyleBackColor = true;
+            this.btnTL_SoundChange.Click += new System.EventHandler(this.StartModActChangeSound);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -84,6 +139,11 @@ namespace SlotEffectMaker2023
             this.Controls.Add(this.btnSoundPlayData);
             this.Controls.Add(this.btnSoundID);
             this.Controls.Add(this.btnUserTimer);
+            this.Controls.Add(this.btnTL_SoundChange);
+            this.Controls.Add(this.btnTL_TimerCtrl);
+            this.Controls.Add(this.btnTL_ValCtrl);
+            this.Controls.Add(this.btnTL_TimerCond);
+            this.Controls.Add(this.btnTL_ValCond);
             this.Controls.Add(this.btnValSet);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
@@ -100,6 +160,11 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button btnSoundID;
         private System.Windows.Forms.Button btnSoundPlayData;
         private System.Windows.Forms.Button btnUserTimer;
+        private System.Windows.Forms.Button btnTL_ValCond;
+        private System.Windows.Forms.Button btnTL_TimerCond;
+        private System.Windows.Forms.Button btnTL_ValCtrl;
+        private System.Windows.Forms.Button btnTL_TimerCtrl;
+        private System.Windows.Forms.Button btnTL_SoundChange;
     }
 }
 

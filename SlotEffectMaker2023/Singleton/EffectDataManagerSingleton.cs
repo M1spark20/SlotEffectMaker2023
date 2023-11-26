@@ -19,6 +19,7 @@ namespace SlotEffectMaker2023.Singleton
         public List<Data.SoundPlayData> SoundPlayList { get; set; } // サウンド再生データ一覧
         public Data.VarList             VarList       { get; set; } // 生成変数一覧
         public Data.TimerList           TimerList     { get; set; } // 生成タイマ一覧
+        public Data.SlotTimeline        Timeline      { get; set; } // サブ基板処理内容
 
         private EffectDataManagerSingleton()
         {
@@ -27,6 +28,7 @@ namespace SlotEffectMaker2023.Singleton
             SoundPlayList = new List<Data.SoundPlayData>();
             VarList       = new Data.VarList();
             TimerList     = new Data.TimerList();
+            Timeline      = new Data.SlotTimeline();
         }
         public static EffectDataManagerSingleton GetInstance()
         {
@@ -44,6 +46,7 @@ namespace SlotEffectMaker2023.Singleton
                 if (!rd.ReadData(SoundPlayList)) return false;
                 if (!rd.ReadData(VarList)) return false;
                 if (!rd.ReadData(TimerList)) return false;
+                if (!rd.ReadData(Timeline)) return false;
                 rd.Close();
 
                 // バックアップ生成(Unity側では削除すること)
@@ -84,6 +87,7 @@ namespace SlotEffectMaker2023.Singleton
             sw.WriteData(SoundPlayList);
             sw.WriteData(VarList);
             sw.WriteData(TimerList);
+            sw.WriteData(Timeline);
             return true;
         }
 

@@ -18,7 +18,7 @@ namespace SlotEffectMaker2023.DataBuilder
         public bool SaveFlag { get; set; }
         public string DataUsage { get; set; }
     }
-   class InfoSoundID
+    class InfoSoundID
     {
         public string DataName { get; set; }
         public string Shot { get; set; }
@@ -32,5 +32,20 @@ namespace SlotEffectMaker2023.DataBuilder
         public int start { get; set; }
         public int stop { get; set; }
         public string defSID { get; set; }
+    }
+    class InfoActBase
+    {
+        public string DataName { get; set; }
+        public string DataUsage { get; set; }
+    }
+    class InfoActionSwitch
+    {
+        public int CondVal { get; set; }
+        public string ActName { get; set; }
+    }
+    class InfoActChangeSound : InfoActBase
+    {
+        public string SoundPlayDataName { get; set; }
+        public string VarRef { get; set; }
     }
 }
