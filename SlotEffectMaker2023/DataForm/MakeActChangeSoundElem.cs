@@ -15,6 +15,7 @@ namespace SlotEffectMaker2023.DataForm
         private static string dataNameHead = "ActCS";
         private DataBuilder.SoundSWBuilder builder;
         private List<Data.EfActionSwitch> switcher;
+        string defDataName;
 
         public MakeActChangeSoundElem(Data.EfActChangeSound si)
         {
@@ -26,6 +27,7 @@ namespace SlotEffectMaker2023.DataForm
             if (si == null) si = new Data.EfActChangeSound();
             else tbDataName.Text = si.dataName;
             tbUsage.Text = si.usage;
+            defDataName = si.dataName;
 
             // cb初期化
             cbPlay.Items.AddRange(data.GetSoundPlayerNameList());
@@ -49,11 +51,18 @@ namespace SlotEffectMaker2023.DataForm
         }
         protected override void BtnOK_Click(object sender, EventArgs e)
         {
+            var baseData = Singleton.EffectDataManagerSingleton.GetInstance().Timeline;
             if (!tbDataName.Text.StartsWith(dataNameHead))
             {
                 MessageBox.Show("データ名は"+dataNameHead+"から始めてください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            if (baseData.IsActNameExist(tbDataName.Text) && !defDataName.Equals(tbDataName.Text))
+            {
+                MessageBox.Show("データ名が他のデータと重複しています。\n他の名前を指定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (cbPlay.SelectedIndex < 0)
             {
                 MessageBox.Show("制御プレイヤーを選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);

@@ -33,5 +33,23 @@ namespace SlotEffectMaker2023.Data
 			}
 			return true;
 		}
+		// 全Actの名前を得る
+		public string[] GetAllActName()
+        {
+			List<string> vs = new List<string>();
+			foreach (var item in changeSound) vs.Add(item.dataName);
+			return vs.ToArray();
+        }
+		// Actのデータを得る
+		public IEfAct GetActionFromName(string name)
+        {
+			foreach (var item in changeSound) if (item.dataName.Equals(name)) return item;
+			return null;
+        }
+		// 指定した名前のActが存在するか確認する
+		public bool IsActNameExist(string name)
+        {
+			return GetActionFromName(name) != null;
+        }
 	}
 }
