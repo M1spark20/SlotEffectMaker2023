@@ -21,6 +21,7 @@ namespace SlotEffectMaker2023.DataForm
             // コントロール初期化
             tbDataName.Text = sv.name;
             numLoopTime.Maximum = int.MaxValue;
+            numLoopTime.Minimum = int.MinValue;
             numLoopTime.Value = sv.val;
             tbUsage.Text = sv.usage;
         }
