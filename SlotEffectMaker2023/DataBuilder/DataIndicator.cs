@@ -48,4 +48,21 @@ namespace SlotEffectMaker2023.DataBuilder
         public string SoundPlayDataName { get; set; }
         public string VarRef { get; set; }
     }
+    class InfoSingleValCond
+    {
+        public string CompValName { get; set; }
+        public string Range { get; set; }
+        public string InvFlag { get; set; }
+
+    }
+    class InfoValCondDS
+    {
+        public int No { get; set; }
+        public int CondCount { get; set; }
+    }
+    class InfoActValCond : InfoActBase
+    {
+        public int CondCount { get; set; }
+        public int ActCount { get; set; }
+    }
 }

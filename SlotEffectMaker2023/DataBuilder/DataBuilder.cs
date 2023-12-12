@@ -345,4 +345,154 @@ namespace SlotEffectMaker2023.DataBuilder
                 e.CellStyle.BackColor = Color.Red;
         }
     }
+    class ActValCondBuilderCondOR : ListBuilderBase<Data.EfValCond, InfoSingleValCond>
+    {
+        public ActValCondBuilderCondOR(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfValCond> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "ValName";
+            DGView.Columns[1].HeaderText = "Range";
+            DGView.Columns[2].HeaderText = "Invert";
+            DGView.CellFormatting += Format;
+            UpdateIndicator(0);
+        }
+        private void Format(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // データが存在しない場合赤背景にする
+            DataGridView dgv = (DataGridView)sender;
+            var ef = Singleton.EffectDataManagerSingleton.GetInstance();
+            if (e.ColumnIndex == 0 && ef.VarList.GetData(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+                e.CellStyle.BackColor = Color.Red;
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeSingleValCond form = new DataForm.MakeSingleValCond(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeSingleValCond form = new DataForm.MakeSingleValCond(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoSingleValCond info = new InfoSingleValCond
+                {
+                    CompValName = item.valName,
+                    Range = item.min.ToString() + " ～ " + item.max.ToString(),
+                    InvFlag = item.invFlag ? "Invert" : ""
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+    }
+    class ActValCondBuilderCondAND :  ListBuilderBase<List<Data.EfValCond>, InfoValCondDS>
+    {
+        public ActValCondBuilderCondAND(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<List<Data.EfValCond>> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "No";
+            DGView.Columns[1].HeaderText = "ConditionNum";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            var tryData = new List<Data.EfValCond>();
+            DataForm.MakeValCondDataSetOR form = new DataForm.MakeValCondDataSetOR(tryData);
+            form.ShowDialog();
+            if (tryData.Count > 0) Data.Add(tryData);
+            UpdateIndicator(0);
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeValCondDataSetOR form = new DataForm.MakeValCondDataSetOR(Data[row.Index]);
+                form.ShowDialog();
+                UpdateIndicator(0);
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            int index = 1;
+            foreach (var item in Data)
+            {
+                InfoValCondDS info = new InfoValCondDS
+                {
+                    No = index++,
+                    CondCount = item.Count
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+        public List<List<Data.EfValCond>> GetData() { return Data; }
+    }
+    class ActValCondBuilder : ListBuilderBase<Data.EfActValCond, InfoActValCond>
+    {
+        public ActValCondBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActValCond> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "CondNum";
+            DGView.Columns[1].HeaderText = "ActNum";
+            DGView.Columns[2].HeaderText = "EffectName";
+            DGView.Columns[3].HeaderText = "Usage";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeActValCondElem form = new DataForm.MakeActValCondElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeActValCondElem form = new DataForm.MakeActValCondElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActValCond info = new InfoActValCond
+                {
+                    DataName = item.dataName,
+                    DataUsage = item.usage,
+                    CondCount = item.conds.Count,
+                    ActCount = item.actionList.Count
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+    }
 }

@@ -84,6 +84,29 @@ namespace SlotEffectMaker2023.Data
             return true;
         }
     }
+    public class EfCondTrig : SlotMaker2022.ILocalDataInterface
+    {
+        public string actName { get; set; }
+        public bool cdEnable { get; set; }
+        public EfCondTrig()
+        {
+            actName = string.Empty;
+            cdEnable = true;
+        }
+        public bool StoreData(ref BinaryWriter fs, int version)
+        {
+            fs.Write(actName);
+            fs.Write(cdEnable);
+            return true;
+        }
+        public bool ReadData(ref BinaryReader fs, int version)
+        {
+            actName = fs.ReadString();
+            cdEnable = fs.ReadBoolean();
+            return true;
+        }
+
+    }
 
     //// タイムライン用IF ////
     public abstract class IEfAct : SlotMaker2022.ILocalDataInterface
@@ -107,13 +130,11 @@ namespace SlotEffectMaker2023.Data
     public class EfActValCond : IEfAct
     {   // 変数による条件分岐を行う
         public List<List<EfValCond>> conds { get; set; }
-        public List<string> actionTrue { get; set; }
-        public List<string> actionFalse { get; set; }
+        public List<EfCondTrig> actionList { get; set; }
         public EfActValCond()
         {
             conds = new List<List<EfValCond>>();
-            actionTrue = new List<string>();
-            actionFalse = new List<string>();
+            actionList = new List<EfCondTrig>();
         }
         public override void Action()
         {
@@ -132,10 +153,13 @@ namespace SlotEffectMaker2023.Data
                 if (!actionOR) { actionFlag = false; break; }
             }
             // 処理の実行
-            List<string> action = actionFlag ? actionTrue : actionFalse;
-            foreach (var actName in action)
+            foreach (var item in actionList)
             {
                 // Singletonからデータを呼び出して実行
+                if (actionFlag != item.cdEnable) continue;
+                var actItem = Singleton.EffectDataManagerSingleton.GetInstance().Timeline.GetActionFromName(item.actName);
+                if (actItem == null) continue;
+                actItem.Action();
             }
         }
         public override bool StoreData(ref BinaryWriter fs, int version)
@@ -147,10 +171,8 @@ namespace SlotEffectMaker2023.Data
                 fs.Write(conds[a].Count);
                 for (int r = 0; r < conds[a].Count; ++r) conds[a][r].StoreData(ref fs, version);
             }
-            fs.Write(actionTrue.Count);
-            fs.Write(actionFalse.Count);
-            for (int i = 0; i < actionTrue.Count ; ++i) fs.Write(actionTrue[i]);
-            for (int i = 0; i < actionFalse.Count; ++i) fs.Write(actionFalse[i]);
+            fs.Write(actionList.Count);
+            for (int i = 0; i < actionList.Count; ++i) actionList[i].StoreData(ref fs, version);
             return true;
         }
         public override bool ReadData(ref BinaryReader fs, int version)
@@ -160,13 +182,21 @@ namespace SlotEffectMaker2023.Data
             for (int a = 0; a < andCount; ++a)
             {
                 int orCount = fs.ReadInt32();
-                conds.Add(new List<EfValCond>(orCount));
-                for (int r = 0; r < orCount; ++r) conds[a][r].ReadData(ref fs, version);
+                conds.Add(new List<EfValCond>());
+                for (int r = 0; r < orCount; ++r)
+                {
+                    var vc = new EfValCond();
+                    vc.ReadData(ref fs, version);
+                    conds[a].Add(vc);
+                }
             }
-            int actTNum = fs.ReadInt32();
-            int actFNum = fs.ReadInt32();
-            for (int i = 0; i < actTNum; ++i) actionTrue .Add(fs.ReadString());
-            for (int i = 0; i < actFNum; ++i) actionFalse.Add(fs.ReadString());
+            int actNum = fs.ReadInt32();
+            for (int i = 0; i < actNum; ++i)
+            {
+                var ad = new EfCondTrig();
+                ad.ReadData(ref fs, version);
+                actionList.Add(ad);
+            }
             return true;
         }
     }

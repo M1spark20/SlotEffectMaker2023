@@ -108,7 +108,7 @@ namespace SlotEffectMaker2023
             this.btnTL_ValCtrl.TabIndex = 0;
             this.btnTL_ValCtrl.Text = "[TL]変数制御設定";
             this.btnTL_ValCtrl.UseVisualStyleBackColor = true;
-            this.btnTL_ValCtrl.Click += new System.EventHandler(this.StartModVariable);
+            this.btnTL_ValCtrl.Click += new System.EventHandler(this.StartModActValCond);
             // 
             // btnTL_TimerCtrl
             // 
