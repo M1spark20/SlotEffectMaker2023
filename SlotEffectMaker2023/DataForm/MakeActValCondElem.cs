@@ -15,6 +15,7 @@ namespace SlotEffectMaker2023.DataForm
         private static string dataNameHead = "ActVC";
         string defDataName;
         DataBuilder.ActValCondBuilderCondAND builderAND;
+        DataBuilder.ActCondTrigBuilder builderAction;
 
         public MakeActValCondElem(Data.EfActValCond ac)
         {
@@ -26,13 +27,15 @@ namespace SlotEffectMaker2023.DataForm
             defDataName = ac.dataName;
             tbUsage.Text = ac.usage;
 
-            builderAND = new DataBuilder.ActValCondBuilderCondAND(btnAddCd, btnModCd, btnSeekUpCd, btnSeekDnCd, btnDelCd, dgvShowCd, ac.conds);
+            builderAND = new DataBuilder.ActValCondBuilderCondAND(btnAddCd, btnModCd, btnDelCd, btnSeekUpCd, btnSeekDnCd, dgvShowCd, ac.conds);
+            builderAction = new DataBuilder.ActCondTrigBuilder(btnAddAc, btnModAc, btnDelAc, btnSeekUpAc, btnSeekDnAc, dgvShowAc, ac.actionList);
         }
         public bool SetData(Data.EfActValCond ac)
         {
             ac.dataName = tbDataName.Text;
             ac.usage = tbUsage.Text;
             ac.conds = builderAND.GetData();
+            ac.actionList = builderAction.GetData();
             return true;
         }
         protected override void BtnOK_Click(object sender, EventArgs e)

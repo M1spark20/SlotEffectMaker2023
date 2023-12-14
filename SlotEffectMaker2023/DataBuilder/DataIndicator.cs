@@ -65,4 +65,9 @@ namespace SlotEffectMaker2023.DataBuilder
         public int CondCount { get; set; }
         public int ActCount { get; set; }
     }
+    class InfoActCondTrig
+    {
+        public string Cond { get; set; }
+        public string ActName { get; set; }
+    }
 }

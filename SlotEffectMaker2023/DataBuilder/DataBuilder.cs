@@ -495,4 +495,59 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
+    class ActCondTrigBuilder : ListBuilderBase<Data.EfCondTrig, InfoActCondTrig>
+    {
+        public ActCondTrigBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfCondTrig> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "Cond";
+            DGView.Columns[1].HeaderText = "Action";
+            UpdateIndicator(0);
+            DGView.CellFormatting += Format;
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeEfCondTrig form = new DataForm.MakeEfCondTrig(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeEfCondTrig form = new DataForm.MakeEfCondTrig(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActCondTrig info = new InfoActCondTrig
+                {
+                    Cond = item.cdEnable ? "TRUE" : "FALSE",
+                    ActName = item.actName
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+        private void Format(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // データが存在しない場合赤背景にする
+            DataGridView dgv = (DataGridView)sender;
+            var ef = Singleton.EffectDataManagerSingleton.GetInstance();
+            if (e.ColumnIndex == 1 && ef.Timeline.GetActionFromName(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+                e.CellStyle.BackColor = Color.Red;
+        }
+        public List<Data.EfCondTrig> GetData() { return Data; }
+    }
 }

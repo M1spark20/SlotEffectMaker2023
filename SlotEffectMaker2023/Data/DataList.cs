@@ -86,8 +86,8 @@ namespace SlotEffectMaker2023.Data
     }
     public class EfCondTrig : SlotMaker2022.ILocalDataInterface
     {
-        public string actName { get; set; }
-        public bool cdEnable { get; set; }
+        public string actName { get; set; } // 実行データ名
+        public bool cdEnable { get; set; }  // 条件成立or不成立で実行性格付け
         public EfCondTrig()
         {
             actName = string.Empty;
@@ -105,7 +105,6 @@ namespace SlotEffectMaker2023.Data
             cdEnable = fs.ReadBoolean();
             return true;
         }
-
     }
 
     //// タイムライン用IF ////
