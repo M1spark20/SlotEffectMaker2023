@@ -70,6 +70,7 @@ namespace SlotEffectMaker2023.Data
         {
 			foreach (var item in changeSound) if (item.dataName.Equals(name)) return item;
 			foreach (var item in condData) if (item.dataName.Equals(name)) return item;
+			foreach (var item in timerData) if (item.dataName.Equals(name)) return item;
 			return null;
         }
 		// 指定した名前のActが存在するか確認する
