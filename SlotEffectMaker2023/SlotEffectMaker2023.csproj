@@ -63,6 +63,15 @@
     <Compile Include="DataForm\MakeActChangeSound.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DataForm\MakeActTimerCond.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeActTimerCondElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeActTimerCondElem.Designer.cs">
+      <DependentUpon>MakeActTimerCondElem.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataForm\MakeEfCondTrig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -161,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeActChangeSoundElem.resx">
       <DependentUpon>MakeActChangeSoundElem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeActTimerCondElem.resx">
+      <DependentUpon>MakeActTimerCondElem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeEfCondTrig.resx">
       <DependentUpon>MakeEfCondTrig.cs</DependentUpon>

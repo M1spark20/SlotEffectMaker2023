@@ -34,10 +34,10 @@ namespace SlotEffectMaker2023.DataForm
             this.BtnCancel = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.cbActName = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.rbTrue = new System.Windows.Forms.RadioButton();
+            this.pnCond = new System.Windows.Forms.Panel();
             this.rbFalse = new System.Windows.Forms.RadioButton();
-            this.panel1.SuspendLayout();
+            this.rbTrue = new System.Windows.Forms.RadioButton();
+            this.pnCond.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -88,14 +88,24 @@ namespace SlotEffectMaker2023.DataForm
             this.cbActName.Size = new System.Drawing.Size(150, 20);
             this.cbActName.TabIndex = 5;
             // 
-            // panel1
+            // pnCond
             // 
-            this.panel1.Controls.Add(this.rbFalse);
-            this.panel1.Controls.Add(this.rbTrue);
-            this.panel1.Location = new System.Drawing.Point(145, 13);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(150, 16);
-            this.panel1.TabIndex = 1;
+            this.pnCond.Controls.Add(this.rbFalse);
+            this.pnCond.Controls.Add(this.rbTrue);
+            this.pnCond.Location = new System.Drawing.Point(145, 13);
+            this.pnCond.Name = "pnCond";
+            this.pnCond.Size = new System.Drawing.Size(150, 16);
+            this.pnCond.TabIndex = 1;
+            // 
+            // rbFalse
+            // 
+            this.rbFalse.AutoSize = true;
+            this.rbFalse.Location = new System.Drawing.Point(92, 0);
+            this.rbFalse.Name = "rbFalse";
+            this.rbFalse.Size = new System.Drawing.Size(58, 16);
+            this.rbFalse.TabIndex = 2;
+            this.rbFalse.Text = "FALSE";
+            this.rbFalse.UseVisualStyleBackColor = true;
             // 
             // rbTrue
             // 
@@ -109,16 +119,6 @@ namespace SlotEffectMaker2023.DataForm
             this.rbTrue.Text = "TRUE";
             this.rbTrue.UseVisualStyleBackColor = true;
             // 
-            // rbFalse
-            // 
-            this.rbFalse.AutoSize = true;
-            this.rbFalse.Location = new System.Drawing.Point(92, 0);
-            this.rbFalse.Name = "rbFalse";
-            this.rbFalse.Size = new System.Drawing.Size(58, 16);
-            this.rbFalse.TabIndex = 2;
-            this.rbFalse.Text = "FALSE";
-            this.rbFalse.UseVisualStyleBackColor = true;
-            // 
             // MakeEfCondTrig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -126,7 +126,7 @@ namespace SlotEffectMaker2023.DataForm
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(305, 94);
             this.ControlBox = false;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pnCond);
             this.Controls.Add(this.cbActName);
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOK);
@@ -138,8 +138,8 @@ namespace SlotEffectMaker2023.DataForm
             this.Name = "MakeEfCondTrig";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "MakeEfCondTrig";
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.pnCond.ResumeLayout(false);
+            this.pnCond.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,7 +152,7 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cbActName;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel pnCond;
         private System.Windows.Forms.RadioButton rbFalse;
         private System.Windows.Forms.RadioButton rbTrue;
     }

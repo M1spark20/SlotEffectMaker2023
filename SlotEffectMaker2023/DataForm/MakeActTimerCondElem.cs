@@ -10,32 +10,37 @@ using System.Windows.Forms;
 
 namespace SlotEffectMaker2023.DataForm
 {
-    public partial class MakeActValCondElem : SlotMaker2022.UserControl.FormElemDecide
+    public partial class MakeActTimerCondElem : SlotMaker2022.UserControl.FormElemDecide
     {
-        private static string dataNameHead = "ActVC";
+        private static string dataNameHead = "ActTC";
         string defDataName;
-        DataBuilder.ActValCondBuilderCondAND builderAND;
         DataBuilder.ActCondTrigBuilder builderAction;
 
-        public MakeActValCondElem(Data.EfActValCond ac)
+        public MakeActTimerCondElem(Data.EfActTimerCond tc)
         {
             InitializeComponent();
             tbDataName.Text = dataNameHead;
-            if (ac == null) ac = new Data.EfActValCond();
-            else tbDataName.Text = ac.dataName;
+            if (tc == null) tc = new Data.EfActTimerCond();
+            else tbDataName.Text = tc.dataName;
             // コントロール初期化
-            defDataName = ac.dataName;
-            tbUsage.Text = ac.usage;
-
-            builderAND = new DataBuilder.ActValCondBuilderCondAND(btnAddCd, btnModCd, btnDelCd, btnSeekUpCd, btnSeekDnCd, dgvShowCd, ac.conds);
-            builderAction = new DataBuilder.ActCondTrigBuilder(btnAddAc, btnModAc, btnDelAc, btnSeekUpAc, btnSeekDnAc, dgvShowAc, ac.actionList, false);
+            defDataName = tc.dataName;
+            tbUsage.Text = tc.usage;
+            var tList = Singleton.EffectDataManagerSingleton.GetInstance().TimerList;
+            cbUseTimer.Items.AddRange(tList.GetTimerNameList());
+            cbUseTimer.Text = tc.cond.timerName;
+            numTrigTime.Maximum = int.MaxValue;
+            numTrigTime.Value = tc.cond.elapsed;
+            chkTrigHold.Checked = tc.cond.trigHold;
+            builderAction = new DataBuilder.ActCondTrigBuilder(btnAddAc, btnModAc, btnDelAc, btnSeekUpAc, btnSeekDnAc, dgvShowAc, tc.action, true);
         }
-        public bool SetData(Data.EfActValCond ac)
+        public bool SetData(Data.EfActTimerCond tc)
         {
-            ac.dataName = tbDataName.Text;
-            ac.usage = tbUsage.Text;
-            ac.conds = builderAND.GetData();
-            ac.actionList = builderAction.GetData();
+            tc.dataName = tbDataName.Text;
+            tc.usage = tbUsage.Text;
+            tc.action = builderAction.GetData();
+            tc.cond.timerName = cbUseTimer.Text;
+            tc.cond.elapsed = decimal.ToInt32(numTrigTime.Value);
+            tc.cond.trigHold = chkTrigHold.Checked;
             return true;
         }
         protected override void BtnOK_Click(object sender, EventArgs e)

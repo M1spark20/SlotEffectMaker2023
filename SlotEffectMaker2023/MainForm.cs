@@ -63,5 +63,10 @@ namespace SlotEffectMaker2023
             DataForm.MakeActValCond form = new DataForm.MakeActValCond();
             form.ShowDialog();
         }
+        private void StartModActTimerCond(object sender, EventArgs e)
+        {
+            DataForm.MakeActTimerCond form = new DataForm.MakeActTimerCond();
+            form.ShowDialog();
+        }
     }
 }

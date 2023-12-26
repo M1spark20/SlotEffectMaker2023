@@ -70,4 +70,11 @@ namespace SlotEffectMaker2023.DataBuilder
         public string Cond { get; set; }
         public string ActName { get; set; }
     }
+    class InfoActTimerCond : InfoActBase
+    {
+        public string UseTimer { get; set; }
+        public int Elapsed { get; set; }
+        public string TrigHold { get; set; }
+        public int ActCount { get; set; }
+    }
 }

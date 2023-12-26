@@ -11,11 +11,13 @@ namespace SlotEffectMaker2023.Data
     {
         public List<EfActChangeSound> changeSound;
 		public List<EfActValCond> condData;
+		public List<EfActTimerCond> timerData;
 
         public SlotTimeline()
         {
             changeSound = new List<EfActChangeSound>();
 			condData = new List<EfActValCond>();
+			timerData = new List<EfActTimerCond>();
         }
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
@@ -24,6 +26,9 @@ namespace SlotEffectMaker2023.Data
 				if (!item.StoreData(ref fs, version)) return false;
 			fs.Write(condData.Count);
 			foreach (var item in condData) 
+				if (!item.StoreData(ref fs, version)) return false;
+			fs.Write(timerData.Count);
+			foreach (var item in timerData) 
 				if (!item.StoreData(ref fs, version)) return false;
 			return true;
 		}
@@ -42,6 +47,13 @@ namespace SlotEffectMaker2023.Data
 				EfActValCond vc = new EfActValCond();
 				if (!vc.ReadData(ref fs, version)) return false;
 				condData.Add(vc);
+			}
+			dataCount = fs.ReadInt32();
+			for (int i = 0; i < dataCount; ++i)
+			{
+				EfActTimerCond tc = new EfActTimerCond();
+				if (!tc.ReadData(ref fs, version)) return false;
+				timerData.Add(tc);
 			}
 			return true;
 		}

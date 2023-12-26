@@ -43,22 +43,26 @@ namespace SlotEffectMaker2023.Data
     {   // 時間に関する条件を記載する
         public string timerName { get; set; }
         public int elapsed { get; set; }
+        public bool trigHold { get; set; }      // トリガを立てっぱなしにするか(true:立てっぱなし)
 
         public EfTimeCond()
         {
             timerName = string.Empty;
             elapsed = 0;
+            trigHold = false;
         }
         public bool StoreData(ref BinaryWriter fs, int version)
         {
             fs.Write(timerName);
             fs.Write(elapsed);
+            fs.Write(trigHold);
             return true;
         }
         public bool ReadData(ref BinaryReader fs, int version)
         {
             timerName = fs.ReadString();
             elapsed = fs.ReadInt32();
+            trigHold = fs.ReadBoolean();
             return true;
         }
     }
@@ -202,11 +206,11 @@ namespace SlotEffectMaker2023.Data
     public class EfActTimerCond : IEfAct
     {   // タイマによる条件分岐を行う
         public EfTimeCond cond { get; set; }
-        public List<string> action { get; set; }
+        public List<EfCondTrig> action { get; set; }
         public EfActTimerCond()
         {
             cond = new EfTimeCond();
-            action = new List<string>();
+            action = new List<EfCondTrig>();
         }
         public override void Action()
         {
@@ -214,11 +218,14 @@ namespace SlotEffectMaker2023.Data
             var timerList = Singleton.SlotDataSingleton.GetInstance().timerData;
             var checkT = timerList.GetTimer(cond.timerName);
             if (checkT == null) return;
-            if (!checkT.GetActionFlag(cond.elapsed)) return;
+            if (!checkT.GetActionFlag(cond.elapsed, cond.trigHold)) return;
             // 処理の実行
-            foreach (var actName in action)
+            foreach (var item in action)
             {
                 // Singletonからデータを呼び出して実行
+                var actItem = Singleton.EffectDataManagerSingleton.GetInstance().Timeline.GetActionFromName(item.actName);
+                if (actItem == null) continue;
+                actItem.Action();
             }
         }
         public override bool StoreData(ref BinaryWriter fs, int version)
@@ -226,7 +233,7 @@ namespace SlotEffectMaker2023.Data
             if (!base.StoreData(ref fs, version)) return false;
             cond.StoreData(ref fs, version);
             fs.Write(action.Count);
-            for (int i = 0; i < action.Count; ++i) fs.Write(action[i]);
+            for (int i = 0; i < action.Count; ++i) action[i].StoreData(ref fs, version);
             return true;
         }
         public override bool ReadData(ref BinaryReader fs, int version)
@@ -234,7 +241,12 @@ namespace SlotEffectMaker2023.Data
             if (!base.ReadData(ref fs, version)) return false;
             cond.ReadData(ref fs, version);
             int actSize = fs.ReadInt32();
-            for (int i = 0; i < actSize; ++i) action.Add(fs.ReadString());
+            for (int i = 0; i < actSize; ++i)
+            {
+                EfCondTrig ef = new EfCondTrig();
+                ef.ReadData(ref fs, version);
+                action.Add(ef);
+            }
             return true;
         }
     }

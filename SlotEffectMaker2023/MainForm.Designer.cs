@@ -116,9 +116,9 @@ namespace SlotEffectMaker2023
             this.btnTL_TimerCtrl.Name = "btnTL_TimerCtrl";
             this.btnTL_TimerCtrl.Size = new System.Drawing.Size(140, 30);
             this.btnTL_TimerCtrl.TabIndex = 0;
-            this.btnTL_TimerCtrl.Text = "[TL]タイマ制御設定";
+            this.btnTL_TimerCtrl.Text = "[TL]トリガ条件設定";
             this.btnTL_TimerCtrl.UseVisualStyleBackColor = true;
-            this.btnTL_TimerCtrl.Click += new System.EventHandler(this.StartModVariable);
+            this.btnTL_TimerCtrl.Click += new System.EventHandler(this.StartModActTimerCond);
             // 
             // btnTL_SoundChange
             // 

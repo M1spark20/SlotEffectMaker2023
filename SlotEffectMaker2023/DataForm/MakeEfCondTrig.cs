@@ -12,7 +12,7 @@ namespace SlotEffectMaker2023.DataForm
 {
     public partial class MakeEfCondTrig : SlotMaker2022.UserControl.FormElemDecide
     {
-        public MakeEfCondTrig(Data.EfCondTrig ct)
+        public MakeEfCondTrig(Data.EfCondTrig ct, bool condHold)
         {
             InitializeComponent();
             if (ct == null) ct = new Data.EfCondTrig();
@@ -23,6 +23,7 @@ namespace SlotEffectMaker2023.DataForm
             cbActName.Text = ct.actName;
             rbTrue.Checked = ct.cdEnable;
             rbFalse.Checked = !ct.cdEnable;
+            pnCond.Enabled = !condHold;
         }
         public bool SetData(Data.EfCondTrig ct)
         {

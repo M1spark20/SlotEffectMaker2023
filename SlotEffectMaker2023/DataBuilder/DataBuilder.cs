@@ -497,17 +497,20 @@ namespace SlotEffectMaker2023.DataBuilder
     }
     class ActCondTrigBuilder : ListBuilderBase<Data.EfCondTrig, InfoActCondTrig>
     {
-        public ActCondTrigBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfCondTrig> pData)
+        bool m_condHold;
+
+        public ActCondTrigBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfCondTrig> pData, bool condHold)
             : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
         {
             DGView.Columns[0].HeaderText = "Cond";
             DGView.Columns[1].HeaderText = "Action";
             UpdateIndicator(0);
             DGView.CellFormatting += Format;
+            m_condHold = condHold;
         }
         protected override void StartAdd(object sender, EventArgs e)
         {
-            DataForm.MakeEfCondTrig form = new DataForm.MakeEfCondTrig(null);
+            DataForm.MakeEfCondTrig form = new DataForm.MakeEfCondTrig(null, m_condHold);
             DialogResult res = form.ShowDialog();
 
             if (res == DialogResult.OK) SetData(-1, form.SetData);
@@ -517,7 +520,7 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
-                DataForm.MakeEfCondTrig form = new DataForm.MakeEfCondTrig(Data[row.Index]);
+                DataForm.MakeEfCondTrig form = new DataForm.MakeEfCondTrig(Data[row.Index], m_condHold);
                 DialogResult res = form.ShowDialog();
 
                 if (res == DialogResult.OK) SetData(row.Index, form.SetData);
@@ -549,5 +552,58 @@ namespace SlotEffectMaker2023.DataBuilder
                 e.CellStyle.BackColor = Color.Red;
         }
         public List<Data.EfCondTrig> GetData() { return Data; }
+    }
+    class ActTimerCondBuilder : ListBuilderBase<Data.EfActTimerCond, InfoActTimerCond>
+    {
+        public ActTimerCondBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActTimerCond> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "TimerName";
+            DGView.Columns[1].HeaderText = "Elapsed";
+            DGView.Columns[2].HeaderText = "TrigHold";
+            DGView.Columns[3].HeaderText = "ActNum";
+            DGView.Columns[4].HeaderText = "EffectName";
+            DGView.Columns[5].HeaderText = "Usage";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeActTimerCondElem form = new DataForm.MakeActTimerCondElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeActTimerCondElem form = new DataForm.MakeActTimerCondElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActTimerCond info = new InfoActTimerCond
+                {
+                    DataName = item.dataName,
+                    DataUsage = item.usage,
+                    ActCount = item.action.Count,
+                    UseTimer = item.cond.timerName,
+                    Elapsed = item.cond.elapsed,
+                    TrigHold = item.cond.trigHold ? "TRUE" : "FALSE"
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
     }
 }
