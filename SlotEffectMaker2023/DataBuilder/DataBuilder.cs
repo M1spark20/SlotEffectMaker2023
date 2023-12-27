@@ -606,4 +606,112 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
+    class EfVarOPBuilder : ListBuilderBase<Data.EfActCtrlVal.OP, InfoEfVarOP>
+    {
+        public EfVarOPBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActCtrlVal.OP> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "Operand";
+            DGView.Columns[1].HeaderText = "RightVal";
+            UpdateIndicator(0);
+            DGView.CellFormatting += Format;
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeEfVarOP form = new DataForm.MakeEfVarOP(null, Data.Count > 0);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeEfVarOP form = new DataForm.MakeEfVarOP(Data[row.Index], row.Index > 0);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+            string[] ops = { "+", "-", "*", "/", "%", "Err" };
+
+            bool topData = true;
+            foreach (var item in Data)
+            {
+                InfoEfVarOP info = new InfoEfVarOP
+                {
+                    OpRight = item.varName == string.Empty ? "Fix: " + item.fixVal.ToString() : item.varName,
+                    Operand = topData ? string.Empty : ops[(int)item.op]
+                };
+                Indicator.Add(info);
+                topData = false;
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+        private void Format(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // データが存在しない場合赤背景にする
+            DataGridView dgv = (DataGridView)sender;
+            var ef = Singleton.EffectDataManagerSingleton.GetInstance();
+            string cp = dgv[e.ColumnIndex, e.RowIndex].Value.ToString();
+            if (e.ColumnIndex == 1 && !cp.StartsWith("Fix: ") && ef.VarList.GetData(cp) == null)
+                e.CellStyle.BackColor = Color.Red;
+        }
+        public List<Data.EfActCtrlVal.OP> GetData() { return Data; }
+    }
+    class ActCtrlValBuilder : ListBuilderBase<Data.EfActCtrlVal, InfoActCtrlVal>
+    {
+        public ActCtrlValBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActCtrlVal> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "TargetVar";
+            DGView.Columns[1].HeaderText = "Operands";
+            DGView.Columns[2].HeaderText = "EffectName";
+            DGView.Columns[3].HeaderText = "Usage";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeEfVarCtrlElem form = new DataForm.MakeEfVarCtrlElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeEfVarCtrlElem form = new DataForm.MakeEfVarCtrlElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActCtrlVal info = new InfoActCtrlVal
+                {
+                    DataName = item.dataName,
+                    DataUsage = item.usage,
+                    OpCount = item.operands.Count,
+                    TargetVar = item.valInputFor
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+    }
 }

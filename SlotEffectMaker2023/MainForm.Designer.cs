@@ -86,9 +86,9 @@ namespace SlotEffectMaker2023
             this.btnTL_ValCond.Name = "btnTL_ValCond";
             this.btnTL_ValCond.Size = new System.Drawing.Size(140, 30);
             this.btnTL_ValCond.TabIndex = 0;
-            this.btnTL_ValCond.Text = "[TL]変数条件設定";
+            this.btnTL_ValCond.Text = "[TL]変数演算設定";
             this.btnTL_ValCond.UseVisualStyleBackColor = true;
-            this.btnTL_ValCond.Click += new System.EventHandler(this.StartModVariable);
+            this.btnTL_ValCond.Click += new System.EventHandler(this.StartModActValCtrl);
             // 
             // btnTL_TimerCond
             // 

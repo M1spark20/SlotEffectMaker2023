@@ -77,4 +77,14 @@ namespace SlotEffectMaker2023.DataBuilder
         public string TrigHold { get; set; }
         public int ActCount { get; set; }
     }
+    class InfoEfVarOP
+    {
+        public string Operand { get; set; }
+        public string OpRight { get; set; }
+    }
+    class InfoActCtrlVal : InfoActBase
+    {
+        public string TargetVar { get; set; }
+        public int OpCount { get; set; }
+    }
 }

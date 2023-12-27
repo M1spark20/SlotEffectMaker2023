@@ -116,5 +116,16 @@ namespace SlotEffectMaker2023.Data
 			for (int i = 0; i < ans.Length; ++i) ans[i] = VData[i].name;
 			return ans;
         }
+		public string[] GetUserVariableNameList()
+        {
+			List<string> ans = new List<string>();
+			for (int i = 0; i < VData.Count; ++i)
+			{
+				if (VData[i].name.StartsWith("_")) continue;
+				ans.Add(VData[i].name);
+			}
+			return ans.ToArray();
+
+        }
 	}
 }

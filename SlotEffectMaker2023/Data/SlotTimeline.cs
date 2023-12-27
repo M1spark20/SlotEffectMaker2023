@@ -12,12 +12,14 @@ namespace SlotEffectMaker2023.Data
         public List<EfActChangeSound> changeSound;
 		public List<EfActValCond> condData;
 		public List<EfActTimerCond> timerData;
+		public List<EfActCtrlVal> valOpData;
 
         public SlotTimeline()
         {
             changeSound = new List<EfActChangeSound>();
 			condData = new List<EfActValCond>();
 			timerData = new List<EfActTimerCond>();
+			valOpData = new List<EfActCtrlVal>();
         }
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
@@ -29,6 +31,9 @@ namespace SlotEffectMaker2023.Data
 				if (!item.StoreData(ref fs, version)) return false;
 			fs.Write(timerData.Count);
 			foreach (var item in timerData) 
+				if (!item.StoreData(ref fs, version)) return false;
+			fs.Write(valOpData.Count);
+			foreach (var item in valOpData) 
 				if (!item.StoreData(ref fs, version)) return false;
 			return true;
 		}
@@ -55,6 +60,13 @@ namespace SlotEffectMaker2023.Data
 				if (!tc.ReadData(ref fs, version)) return false;
 				timerData.Add(tc);
 			}
+			dataCount = fs.ReadInt32();
+			for (int i = 0; i < dataCount; ++i)
+			{
+				EfActCtrlVal cv = new EfActCtrlVal();
+				if (!cv.ReadData(ref fs, version)) return false;
+				valOpData.Add(cv);
+			}
 			return true;
 		}
 		// 全Actの名前を得る
@@ -63,6 +75,7 @@ namespace SlotEffectMaker2023.Data
 			List<string> vs = new List<string>();
 			foreach (var item in changeSound) vs.Add(item.dataName);
 			foreach (var item in condData) vs.Add(item.dataName);
+			foreach (var item in valOpData) vs.Add(item.dataName);
 			return vs.ToArray();
         }
 		// Actのデータを得る
@@ -71,6 +84,7 @@ namespace SlotEffectMaker2023.Data
 			foreach (var item in changeSound) if (item.dataName.Equals(name)) return item;
 			foreach (var item in condData) if (item.dataName.Equals(name)) return item;
 			foreach (var item in timerData) if (item.dataName.Equals(name)) return item;
+			foreach (var item in valOpData) if (item.dataName.Equals(name)) return item;
 			return null;
         }
 		// 指定した名前のActが存在するか確認する
