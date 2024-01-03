@@ -8,26 +8,26 @@ namespace SlotEffectMaker2023.Action
     public class SoundDataManager : SlotMaker2022.ILocalDataInterface
 	{
 		// 変数
-		List<(string playName, string soundName)> SoundID { get; set; }	// 鳴り分けデータ(PlayList, IDList)
+		List<(string playerName, string soundName)> SoundData { get; set; }	// 鳴り分けデータ(PlayList, IDList)
 
 		public SoundDataManager()
 		{
-			SoundID = new List<(string, string)>();
+			SoundData = new List<(string, string)>();
 		}
 		// 最初に鳴り分け要素を作成しておく
 		public void Init(List<Data.SoundPlayData> pPlayData)
         {
 			foreach (var item in pPlayData)
-				SoundID.Add( (item.PlayerName, item.DefaultSoundID) );
+				SoundData.Add( (item.PlayerName, item.DefaultSoundID) );
 		}
 		// 現在の鳴り分け状況を保存する
 		public bool StoreData(ref BinaryWriter fs, int version)
 		{
-			fs.Write(SoundID.Count);
-			for (int i = 0; i < SoundID.Count; ++i)
+			fs.Write(SoundData.Count);
+			for (int i = 0; i < SoundData.Count; ++i)
             {
-				fs.Write(SoundID[i].playName);
-				fs.Write(SoundID[i].soundName);
+				fs.Write(SoundData[i].playerName);
+				fs.Write(SoundData[i].soundName);
             }
 			return true;
 		}
@@ -36,10 +36,10 @@ namespace SlotEffectMaker2023.Action
 			int dataSize = fs.ReadInt32();
 			for (int i = 0; i < dataSize; ++i)
 			{
-				(string playName, string soundName) newData;
-				newData.playName = fs.ReadString();
+				(string playerName, string soundName) newData;
+				newData.playerName = fs.ReadString();
 				newData.soundName = fs.ReadString();
-				SoundID.Add(newData);
+				SoundData.Add(newData);
 			}
 			return true;
 		}
@@ -47,12 +47,22 @@ namespace SlotEffectMaker2023.Action
 		// データ編集用関数
 		public void ChangeSoundID(string pPlayerID, string pSoundID)
 		{
-			for (int i = 0; i < SoundID.Count; ++i)
+			for (int i = 0; i < SoundData.Count; ++i)
 			{
-                if (SoundID[i].playName == pPlayerID) { SoundID[i] = (pPlayerID, pSoundID); return; }
+                if (SoundData[i].playerName == pPlayerID) { SoundData[i] = (pPlayerID, pSoundID); return; }
 			}
 			// データがない場合の追加
-			SoundID.Add( (pPlayerID, pSoundID) );
+			SoundData.Add( (pPlayerID, pSoundID) );
 		}
+
+		// Unityへの音源データ出力
+		public string ExportSoundIDName(string pPlayerID)
+        {
+			for (int i = 0; i < SoundData.Count; ++i)
+			{
+                if (SoundData[i].playerName == pPlayerID) { return SoundData[i].soundName; }
+			}
+			return null;
+        }
 	}
 }
