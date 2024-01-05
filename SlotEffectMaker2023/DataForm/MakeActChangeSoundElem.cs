@@ -37,7 +37,7 @@ namespace SlotEffectMaker2023.DataForm
             switcher = si.switcher;
 
             // dgv初期化
-            builder = new DataBuilder.SoundSWBuilder(btnAdd, btnMod, btnSeekUp, btnSeekDn, btnDel, dgvShow, switcher);
+            builder = new DataBuilder.SoundSWBuilder(btnAdd, btnMod, btnDel, btnSeekUp, btnSeekDn, dgvShow, switcher);
         }
         public bool SetData(Data.EfActChangeSound si)
         {
