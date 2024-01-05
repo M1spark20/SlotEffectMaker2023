@@ -87,4 +87,10 @@ namespace SlotEffectMaker2023.DataBuilder
         public string TargetVar { get; set; }
         public int OpCount { get; set; }
     }
+    class InfoActCtrlTimer : InfoActBase
+    {
+        public string Timer { get; set; }
+        public string Action { get; set; }
+        public string ForceReset { get; set; }
+    }
 }

@@ -98,7 +98,7 @@ namespace SlotEffectMaker2023
             this.btnTL_TimerCond.TabIndex = 0;
             this.btnTL_TimerCond.Text = "[TL]タイマ動作・停止";
             this.btnTL_TimerCond.UseVisualStyleBackColor = true;
-            this.btnTL_TimerCond.Click += new System.EventHandler(this.StartModVariable);
+            this.btnTL_TimerCond.Click += new System.EventHandler(this.StartModActCtrlTimer);
             // 
             // btnTL_ValCtrl
             // 

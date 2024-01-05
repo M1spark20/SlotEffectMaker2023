@@ -714,4 +714,55 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
+    class ActCtrlTimerBuilder : ListBuilderBase<Data.EfActCtrlTimer, InfoActCtrlTimer>
+    {
+        public ActCtrlTimerBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActCtrlTimer> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "TargetTimer";
+            DGView.Columns[1].HeaderText = "Action";
+            DGView.Columns[2].HeaderText = "ForceReset";
+            DGView.Columns[3].HeaderText = "EffectName";
+            DGView.Columns[4].HeaderText = "Usage";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeEfCtrlTimerElem form = new DataForm.MakeEfCtrlTimerElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeEfCtrlTimerElem form = new DataForm.MakeEfCtrlTimerElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActCtrlTimer info = new InfoActCtrlTimer
+                {
+                    DataName = item.dataName,
+                    DataUsage = item.usage,
+                    Action = item.setActivate ? "Start" : "Stop",
+                    ForceReset = item.forceReset ? "TRUE" : "FALSE",
+                    Timer = item.defName
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+    }
 }
