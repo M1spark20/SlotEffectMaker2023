@@ -86,7 +86,7 @@ namespace SlotEffectMaker2023
             this.btnTL_ValCond.Name = "btnTL_ValCond";
             this.btnTL_ValCond.Size = new System.Drawing.Size(140, 30);
             this.btnTL_ValCond.TabIndex = 0;
-            this.btnTL_ValCond.Text = "[TL]変数演算設定";
+            this.btnTL_ValCond.Text = "[TL]変数演算";
             this.btnTL_ValCond.UseVisualStyleBackColor = true;
             this.btnTL_ValCond.Click += new System.EventHandler(this.StartModActValCtrl);
             // 
@@ -96,7 +96,7 @@ namespace SlotEffectMaker2023
             this.btnTL_TimerCond.Name = "btnTL_TimerCond";
             this.btnTL_TimerCond.Size = new System.Drawing.Size(140, 30);
             this.btnTL_TimerCond.TabIndex = 0;
-            this.btnTL_TimerCond.Text = "[TL]タイマ条件設定";
+            this.btnTL_TimerCond.Text = "[TL]タイマ動作・停止";
             this.btnTL_TimerCond.UseVisualStyleBackColor = true;
             this.btnTL_TimerCond.Click += new System.EventHandler(this.StartModVariable);
             // 
@@ -106,7 +106,7 @@ namespace SlotEffectMaker2023
             this.btnTL_ValCtrl.Name = "btnTL_ValCtrl";
             this.btnTL_ValCtrl.Size = new System.Drawing.Size(140, 30);
             this.btnTL_ValCtrl.TabIndex = 0;
-            this.btnTL_ValCtrl.Text = "[TL]変数制御設定";
+            this.btnTL_ValCtrl.Text = "[TL]変数条件設定";
             this.btnTL_ValCtrl.UseVisualStyleBackColor = true;
             this.btnTL_ValCtrl.Click += new System.EventHandler(this.StartModActValCond);
             // 
@@ -122,7 +122,7 @@ namespace SlotEffectMaker2023
             // 
             // btnTL_SoundChange
             // 
-            this.btnTL_SoundChange.Location = new System.Drawing.Point(160, 170);
+            this.btnTL_SoundChange.Location = new System.Drawing.Point(310, 10);
             this.btnTL_SoundChange.Name = "btnTL_SoundChange";
             this.btnTL_SoundChange.Size = new System.Drawing.Size(140, 30);
             this.btnTL_SoundChange.TabIndex = 0;
@@ -135,7 +135,7 @@ namespace SlotEffectMaker2023
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(434, 261);
+            this.ClientSize = new System.Drawing.Size(549, 261);
             this.Controls.Add(this.btnSoundPlayData);
             this.Controls.Add(this.btnSoundID);
             this.Controls.Add(this.btnUserTimer);
