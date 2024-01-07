@@ -41,6 +41,7 @@ namespace SlotEffectMaker2023.DataForm
             this.numFixVal = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             this.label4 = new System.Windows.Forms.Label();
             this.cbOperand = new System.Windows.Forms.ComboBox();
+            this.txtVarUsage = new System.Windows.Forms.Label();
             this.pnCond.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numFixVal)).BeginInit();
             this.SuspendLayout();
@@ -92,6 +93,7 @@ namespace SlotEffectMaker2023.DataForm
             this.cbVarName.Name = "cbVarName";
             this.cbVarName.Size = new System.Drawing.Size(150, 20);
             this.cbVarName.TabIndex = 3;
+            this.cbVarName.SelectedIndexChanged += new System.EventHandler(this.CBChanged);
             // 
             // pnCond
             // 
@@ -162,13 +164,23 @@ namespace SlotEffectMaker2023.DataForm
             this.cbOperand.Size = new System.Drawing.Size(150, 20);
             this.cbOperand.TabIndex = 5;
             // 
+            // txtVarUsage
+            // 
+            this.txtVarUsage.AutoSize = true;
+            this.txtVarUsage.Location = new System.Drawing.Point(10, 155);
+            this.txtVarUsage.Name = "txtVarUsage";
+            this.txtVarUsage.Size = new System.Drawing.Size(63, 12);
+            this.txtVarUsage.TabIndex = 24;
+            this.txtVarUsage.Text = "右辺データ: ";
+            // 
             // MakeEfVarOP
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(305, 159);
+            this.ClientSize = new System.Drawing.Size(305, 172);
             this.ControlBox = false;
+            this.Controls.Add(this.txtVarUsage);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.numFixVal);
             this.Controls.Add(this.pnCond);
@@ -207,5 +219,6 @@ namespace SlotEffectMaker2023.DataForm
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numFixVal;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox cbOperand;
+        private System.Windows.Forms.Label txtVarUsage;
     }
 }

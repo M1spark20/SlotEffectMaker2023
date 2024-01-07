@@ -29,6 +29,7 @@ namespace SlotEffectMaker2023.DataForm
             cbVarExport.Items.AddRange(tList.GetUserVariableNameList());
             cbVarExport.Text = cv.valInputFor;
             builderAction = new DataBuilder.EfVarOPBuilder(btnAddAc, btnModAc, btnDelAc, btnSeekUpAc, btnSeekDnAc, dgvShowAc, cv.operands);
+            CBChanged(null, null);
         }
         public bool SetData(Data.EfActCtrlVal cv)
         {
@@ -71,6 +72,12 @@ namespace SlotEffectMaker2023.DataForm
         private void OK(object sender, EventArgs e)
         {
             BtnOK_Click(sender, e);
+        }
+        private void CBChanged(object sender, EventArgs e)
+        {
+            var baseData = Singleton.EffectDataManagerSingleton.GetInstance();
+            string va = "代入先変数: " + baseData.VarList.GetData(cbVarExport.Text)?.usage;
+            txtVarUsage.Text = va;
         }
     }
 }

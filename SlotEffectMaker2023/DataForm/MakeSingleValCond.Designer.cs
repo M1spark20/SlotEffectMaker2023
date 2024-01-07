@@ -39,6 +39,7 @@ namespace SlotEffectMaker2023.DataForm
             this.label4 = new System.Windows.Forms.Label();
             this.chkInv = new System.Windows.Forms.CheckBox();
             this.cbVar = new System.Windows.Forms.ComboBox();
+            this.txtVarUsage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numRange1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numRange2)).BeginInit();
             this.SuspendLayout();
@@ -153,14 +154,25 @@ namespace SlotEffectMaker2023.DataForm
             this.cbVar.Name = "cbVar";
             this.cbVar.Size = new System.Drawing.Size(150, 20);
             this.cbVar.TabIndex = 1;
+            this.cbVar.SelectedIndexChanged += new System.EventHandler(this.CBChanged);
+            // 
+            // txtVarUsage
+            // 
+            this.txtVarUsage.AutoSize = true;
+            this.txtVarUsage.Location = new System.Drawing.Point(10, 115);
+            this.txtVarUsage.Name = "txtVarUsage";
+            this.txtVarUsage.Size = new System.Drawing.Size(59, 12);
+            this.txtVarUsage.TabIndex = 24;
+            this.txtVarUsage.Text = "比較変数: ";
             // 
             // MakeSingleValCond
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(305, 117);
+            this.ClientSize = new System.Drawing.Size(305, 131);
             this.ControlBox = false;
+            this.Controls.Add(this.txtVarUsage);
             this.Controls.Add(this.cbVar);
             this.Controls.Add(this.chkInv);
             this.Controls.Add(this.BtnCancel);
@@ -196,5 +208,6 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chkInv;
         private System.Windows.Forms.ComboBox cbVar;
+        private System.Windows.Forms.Label txtVarUsage;
     }
 }

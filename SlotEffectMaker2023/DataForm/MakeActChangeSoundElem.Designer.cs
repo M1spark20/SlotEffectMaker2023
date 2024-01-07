@@ -45,6 +45,7 @@ namespace SlotEffectMaker2023.DataForm
             this.label4 = new System.Windows.Forms.Label();
             this.tbDataName = new System.Windows.Forms.TextBox();
             this.tbUsage = new System.Windows.Forms.TextBox();
+            this.txtVarUsage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShow)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,6 +105,7 @@ namespace SlotEffectMaker2023.DataForm
             this.cbVar.Name = "cbVar";
             this.cbVar.Size = new System.Drawing.Size(121, 20);
             this.cbVar.TabIndex = 3;
+            this.cbVar.SelectedIndexChanged += new System.EventHandler(this.CBChanged);
             // 
             // btnSeekDn
             // 
@@ -203,13 +205,23 @@ namespace SlotEffectMaker2023.DataForm
             this.tbUsage.Size = new System.Drawing.Size(121, 19);
             this.tbUsage.TabIndex = 1;
             // 
+            // txtVarUsage
+            // 
+            this.txtVarUsage.AutoSize = true;
+            this.txtVarUsage.Location = new System.Drawing.Point(10, 255);
+            this.txtVarUsage.Name = "txtVarUsage";
+            this.txtVarUsage.Size = new System.Drawing.Size(59, 12);
+            this.txtVarUsage.TabIndex = 23;
+            this.txtVarUsage.Text = "制御変数: ";
+            // 
             // MakeActChangeSoundElem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(444, 261);
+            this.ClientSize = new System.Drawing.Size(444, 272);
             this.ControlBox = false;
+            this.Controls.Add(this.txtVarUsage);
             this.Controls.Add(this.tbUsage);
             this.Controls.Add(this.tbDataName);
             this.Controls.Add(this.dgvShow);
@@ -256,5 +268,6 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbDataName;
         private System.Windows.Forms.TextBox tbUsage;
+        private System.Windows.Forms.Label txtVarUsage;
     }
 }

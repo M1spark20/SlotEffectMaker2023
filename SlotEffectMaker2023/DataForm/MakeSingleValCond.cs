@@ -37,6 +37,7 @@ namespace SlotEffectMaker2023.DataForm
             numRange2.Maximum = int.MaxValue;
             numRange2.Minimum = int.MinValue;
             chkInv.Checked = vc.invFlag;
+            CBChanged(null, null);
         }
         public bool SetData(Data.EfValCond vc)
         {
@@ -58,6 +59,12 @@ namespace SlotEffectMaker2023.DataForm
         protected override void BtnCancel_Click(object sender, EventArgs e)
         {
             base.BtnCancel_Click(sender, e);
+        }
+        private void CBChanged(object sender, EventArgs e)
+        {
+            var baseData = Singleton.EffectDataManagerSingleton.GetInstance();
+            string va = "比較変数: " + baseData.VarList.GetData(cbVar.Text)?.usage;
+            txtVarUsage.Text = va;
         }
     }
 }

@@ -24,6 +24,7 @@ namespace SlotEffectMaker2023.DataForm
             rbTrue.Checked = ct.cdEnable;
             rbFalse.Checked = !ct.cdEnable;
             pnCond.Enabled = !condHold;
+            CBChanged(null, null);
         }
         public bool SetData(Data.EfCondTrig ct)
         {
@@ -43,6 +44,12 @@ namespace SlotEffectMaker2023.DataForm
         protected override void BtnCancel_Click(object sender, EventArgs e)
         {
             base.BtnCancel_Click(sender, e);
+        }
+        private void CBChanged(object sender, EventArgs e)
+        {
+            var baseData = Singleton.EffectDataManagerSingleton.GetInstance();
+            string va = "アクション: " + baseData.Timeline.GetActionFromName(cbActName.Text)?.usage;
+            txtActUsage.Text = va;
         }
     }
 }

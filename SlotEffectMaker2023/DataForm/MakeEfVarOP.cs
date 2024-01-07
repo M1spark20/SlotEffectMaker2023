@@ -25,6 +25,7 @@ namespace SlotEffectMaker2023.DataForm
             rbFix.Checked = !rbVar.Checked;
             numFixVal.Value = op.fixVal;
             CheckedChanged(null, null);
+            CBChanged(null, null);
 
             string[] opName = { "ADD(+)", "SUB(-)", "MUL(*)", "DIV(/)", "MOD(%)" };
             cbOperand.Items.AddRange(opName);
@@ -62,6 +63,12 @@ namespace SlotEffectMaker2023.DataForm
         {
             cbVarName.Enabled = rbVar.Checked;
             numFixVal.Enabled = rbFix.Checked;
+        }
+        private void CBChanged(object sender, EventArgs e)
+        {
+            var baseData = Singleton.EffectDataManagerSingleton.GetInstance();
+            string va = "右辺データ: : " + baseData.VarList.GetData(cbVarName.Text)?.usage;
+            txtVarUsage.Text = va;
         }
     }
 }

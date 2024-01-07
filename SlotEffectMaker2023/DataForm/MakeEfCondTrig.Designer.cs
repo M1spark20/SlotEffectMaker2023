@@ -37,6 +37,7 @@ namespace SlotEffectMaker2023.DataForm
             this.pnCond = new System.Windows.Forms.Panel();
             this.rbFalse = new System.Windows.Forms.RadioButton();
             this.rbTrue = new System.Windows.Forms.RadioButton();
+            this.txtActUsage = new System.Windows.Forms.Label();
             this.pnCond.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,6 +88,7 @@ namespace SlotEffectMaker2023.DataForm
             this.cbActName.Name = "cbActName";
             this.cbActName.Size = new System.Drawing.Size(150, 20);
             this.cbActName.TabIndex = 5;
+            this.cbActName.SelectedIndexChanged += new System.EventHandler(this.CBChanged);
             // 
             // pnCond
             // 
@@ -119,13 +121,23 @@ namespace SlotEffectMaker2023.DataForm
             this.rbTrue.Text = "TRUE";
             this.rbTrue.UseVisualStyleBackColor = true;
             // 
+            // txtActUsage
+            // 
+            this.txtActUsage.AutoSize = true;
+            this.txtActUsage.Location = new System.Drawing.Point(10, 90);
+            this.txtActUsage.Name = "txtActUsage";
+            this.txtActUsage.Size = new System.Drawing.Size(53, 12);
+            this.txtActUsage.TabIndex = 24;
+            this.txtActUsage.Text = "アクション: ";
+            // 
             // MakeEfCondTrig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(305, 94);
+            this.ClientSize = new System.Drawing.Size(305, 108);
             this.ControlBox = false;
+            this.Controls.Add(this.txtActUsage);
             this.Controls.Add(this.pnCond);
             this.Controls.Add(this.cbActName);
             this.Controls.Add(this.BtnCancel);
@@ -155,5 +167,6 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.Panel pnCond;
         private System.Windows.Forms.RadioButton rbFalse;
         private System.Windows.Forms.RadioButton rbTrue;
+        private System.Windows.Forms.Label txtActUsage;
     }
 }

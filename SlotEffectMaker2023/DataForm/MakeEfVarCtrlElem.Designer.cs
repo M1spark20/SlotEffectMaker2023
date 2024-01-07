@@ -43,6 +43,7 @@ namespace SlotEffectMaker2023.DataForm
             this.btnAddAc = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cbVarExport = new System.Windows.Forms.ComboBox();
+            this.txtVarUsage = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowAc)).BeginInit();
             this.SuspendLayout();
             // 
@@ -181,14 +182,25 @@ namespace SlotEffectMaker2023.DataForm
             this.cbVarExport.Name = "cbVarExport";
             this.cbVarExport.Size = new System.Drawing.Size(121, 20);
             this.cbVarExport.TabIndex = 2;
+            this.cbVarExport.SelectedIndexChanged += new System.EventHandler(this.CBChanged);
+            // 
+            // txtVarUsage
+            // 
+            this.txtVarUsage.AutoSize = true;
+            this.txtVarUsage.Location = new System.Drawing.Point(10, 255);
+            this.txtVarUsage.Name = "txtVarUsage";
+            this.txtVarUsage.Size = new System.Drawing.Size(71, 12);
+            this.txtVarUsage.TabIndex = 102;
+            this.txtVarUsage.Text = "代入先変数: ";
             // 
             // MakeEfVarCtrlElem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(443, 259);
+            this.ClientSize = new System.Drawing.Size(443, 272);
             this.ControlBox = false;
+            this.Controls.Add(this.txtVarUsage);
             this.Controls.Add(this.cbVarExport);
             this.Controls.Add(this.dgvShowAc);
             this.Controls.Add(this.btnSeekDnAc);
@@ -231,5 +243,6 @@ namespace SlotEffectMaker2023.DataForm
         protected System.Windows.Forms.Button btnAddAc;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbVarExport;
+        private System.Windows.Forms.Label txtVarUsage;
     }
 }

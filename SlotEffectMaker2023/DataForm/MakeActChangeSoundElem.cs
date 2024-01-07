@@ -35,6 +35,7 @@ namespace SlotEffectMaker2023.DataForm
             cbVar.Items.AddRange(data.VarList.GetVariableNameList());
             cbVar.Text = si.variableRef;
             switcher = si.switcher;
+            CBChanged(null, null);
 
             // dgv初期化
             builder = new DataBuilder.SoundSWBuilder(btnAdd, btnMod, btnDel, btnSeekUp, btnSeekDn, dgvShow, switcher);
@@ -83,6 +84,12 @@ namespace SlotEffectMaker2023.DataForm
         private void OK(object sender, EventArgs e)
         {
             BtnOK_Click(sender, e);
+        }
+        private void CBChanged(object sender, EventArgs e)
+        {
+            var baseData = Singleton.EffectDataManagerSingleton.GetInstance();
+            string va = "制御変数: " + baseData.VarList.GetData(cbVar.Text)?.usage;
+            txtVarUsage.Text = va;
         }
     }
 }
