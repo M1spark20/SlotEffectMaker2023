@@ -339,9 +339,9 @@ namespace SlotEffectMaker2023.DataBuilder
             // データが存在しない場合赤背景にする
             DataGridView dgv = (DataGridView)sender;
             var ef = Singleton.EffectDataManagerSingleton.GetInstance();
-            if (e.ColumnIndex == 2 && ef.GetSoundID(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+            if (e.ColumnIndex == 0 && ef.GetSoundPlayer(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
                 e.CellStyle.BackColor = Color.Red;
-            if (e.ColumnIndex == 3 && ef.VarList.GetData(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+            if (e.ColumnIndex == 1 && ef.VarList.GetData(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
                 e.CellStyle.BackColor = Color.Red;
         }
     }
