@@ -161,6 +161,7 @@ namespace SlotEffectMaker2023.Data
         {
             conds = new List<List<EfValCond>>();
             actionList = new List<EfCondTrig>();
+            usage = "[変数条件]";
         }
         public override void Action()
         {
@@ -242,6 +243,7 @@ namespace SlotEffectMaker2023.Data
         {
             cond = new EfTimeCond();
             action = new List<EfCondTrig>();
+            usage = "[トリガ]";
         }
         public override void Action()
         {
@@ -296,6 +298,7 @@ namespace SlotEffectMaker2023.Data
             defName = string.Empty;
             setActivate = true;
             forceReset = false;
+            usage = "[タイマ制御]";
         }
         public override void Action()
         {   // タイマの有効化/無効化を行う: defName[arrValName::val]
@@ -374,6 +377,7 @@ namespace SlotEffectMaker2023.Data
         {
             valInputFor = string.Empty;
             operands = new List<OP>();
+            usage = "[変数演算]";
         }
         public override bool StoreData(ref BinaryWriter fs, int version)
         {
@@ -448,6 +452,7 @@ namespace SlotEffectMaker2023.Data
             playDataName = string.Empty;
             variableRef = string.Empty;
             switcher = new List<EfActionSwitch>();
+            usage = "[鳴り分け]";
         }
         public override void Action()
         {
