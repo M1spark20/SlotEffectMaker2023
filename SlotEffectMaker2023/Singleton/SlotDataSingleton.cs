@@ -10,7 +10,7 @@ namespace SlotEffectMaker2023.Singleton {
 		// エフェクト用変数
 		public Action.SlotValManager		valManager { get; set; }
 		// 音源データ
-		public Action.SoundDataManager			soundData { get; set; }
+		public Action.SoundDataManager		soundData { get; set; }
 	
 		// Singletonインスタンス
 		private static SlotDataSingleton ins = new SlotDataSingleton();
@@ -78,6 +78,13 @@ namespace SlotEffectMaker2023.Singleton {
 			valManager.GetVariable("_RTGameCount")		.val = basicData.RTGameCount;
 			valManager.GetVariable("_flagID")			.val = basicData.castFlag;
 			valManager.GetVariable("_bonusID")			.val = basicData.bonusFlag;
+			valManager.GetVariable("_castBonusID")		.val = basicData.castBonusID;
+
+			for (int i = 0; i < SlotMaker2022.LocalDataSet.REEL_MAX; ++i)
+            {
+				valManager.GetVariable("_reelPushPos[" + i + "]").val = reelData[i].pushPos;
+				valManager.GetVariable("_reelStopPos[" + i + "]").val = reelData[i].stopPos;
+            }
 
 			// タイムラインを運用する
 			var timeline = EffectDataManagerSingleton.GetInstance().Timeline.timerData;
