@@ -70,13 +70,23 @@ namespace SlotEffectMaker2023.Data
             VData = new List<SlotVariable>
             {
                 // システムデータ入力
+				new SlotVariable("_slotSetting", 0),
+				new SlotVariable("_inCount", 0),
+				new SlotVariable("_outCount", 0),
                 new SlotVariable("_betCount", 0),
                 new SlotVariable("_creditCount", 0),
                 new SlotVariable("_payoutCount", 0),
+                new SlotVariable("_isBetLatched", 0),
                 new SlotVariable("_isReplay", 0),
+                new SlotVariable("_gameMode", 0),
+                new SlotVariable("_modeGameCount", 0),
+                new SlotVariable("_modeJacCount", 0),
+                new SlotVariable("_modeMedalCount", 0),
+                new SlotVariable("_RTMode", 0),
+                new SlotVariable("_RTOverride", 0),
+                new SlotVariable("_RTGameCount", 0),
 				new SlotVariable("_flagID", 0),
 				new SlotVariable("_bonusID", 0),
-				new SlotVariable("_gameMode", 0)
             };
         }
 		public bool StoreData(ref BinaryWriter fs, int version)
