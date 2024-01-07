@@ -7,7 +7,7 @@ namespace SlotEffectMaker2023.Data
 	// 計算式オペランド
 	public enum ECalcOperand { eAdd, eSub, eMul, eDiv, eMod, eNone }
 
-	public class SlotVariable : SlotMaker2022.ILocalDataInterface
+	public class SlotVariable : IEffectNameInterface
 	{	// 変数要素データ(Sys/Sav)(valは直接アクセスすることが可能)
 		public string name { get; set; } // 変数名
 		public int val { get; set; }     // 変数値(Sysでは初期値)
@@ -46,6 +46,7 @@ namespace SlotEffectMaker2023.Data
 			usage = fs.ReadString();
 			return true;
 		}
+		public void Rename(EChangeNameType type, string src, string dst) { }
 
 		// valの高度計算あれこれ
 		// bool値設定
@@ -60,7 +61,7 @@ namespace SlotEffectMaker2023.Data
 	}
 
 	// 変数一覧管理クラス(Sys)
-	public class VarList : SlotMaker2022.ILocalDataInterface 
+	public class VarList : IEffectNameInterface
 	{
 		// 生成変数一覧
 		public List<SlotVariable> VData { get; set; }
@@ -104,6 +105,10 @@ namespace SlotEffectMaker2023.Data
 			}
 			return true;
 		}
+		public void Rename(EChangeNameType type, string src, string dst)
+        {
+			foreach (var item in VData) item.Rename(type, src, dst);
+        }
 
 		public SlotVariable GetData(string pName)
         {

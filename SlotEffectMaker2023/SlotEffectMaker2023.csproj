@@ -165,6 +165,7 @@
     <Compile Include="Data\ColorMaps.cs" />
     <Compile Include="Data\DataList.cs" />
     <Compile Include="Data\ILocalDataInterface.cs" />
+    <Compile Include="Data\IEffectNameInterface.cs" />
     <Compile Include="Data\LocalDataSet.cs" />
     <Compile Include="Action\ReelBasicData.cs" />
     <Compile Include="Action\SlotBasicData.cs" />

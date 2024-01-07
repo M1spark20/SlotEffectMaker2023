@@ -8,7 +8,7 @@ using System.IO;
 namespace SlotEffectMaker2023.Data
 {
     // ゲームを動かすためのインプットデータを入れる
-    public class EfValCond : SlotMaker2022.ILocalDataInterface
+    public class EfValCond : IEffectNameInterface
     {   // 変数に関する条件を記載する(単体)
         public string valName { get; set; }
         public int min { get; set; }
@@ -38,8 +38,12 @@ namespace SlotEffectMaker2023.Data
             invFlag = fs.ReadBoolean();
             return true;
         }
+        public void Rename(EChangeNameType type, string src, string dst)
+        {
+            if (type == EChangeNameType.Var && valName.Equals(src)) valName = dst;
+        }
     }
-    public class EfTimeCond : SlotMaker2022.ILocalDataInterface
+    public class EfTimeCond : IEffectNameInterface
     {   // 時間に関する条件を記載する
         public string timerName { get; set; }
         public int elapsed { get; set; }
@@ -65,15 +69,22 @@ namespace SlotEffectMaker2023.Data
             trigHold = fs.ReadBoolean();
             return true;
         }
+        public void Rename(EChangeNameType type, string src, string dst)
+        {
+            if (type == EChangeNameType.Timer && timerName.Equals(src)) timerName = dst;
+        }
     }
-    public class EfActionSwitch : SlotMaker2022.ILocalDataInterface
+    public class EfActionSwitch : IEffectNameInterface
     {
+        private EChangeNameType useType;
+
         public int condVal { get; set; }
         public string actName { get; set; }
         public EfActionSwitch()
         {
             actName = string.Empty;
             condVal = 0;
+            useType = EChangeNameType.None;
         }
         public bool StoreData(ref BinaryWriter fs, int version)
         {
@@ -87,8 +98,15 @@ namespace SlotEffectMaker2023.Data
             actName = fs.ReadString();
             return true;
         }
+        public void Rename(EChangeNameType type, string src, string dst)
+        {
+            if (type == useType && actName.Equals(src)) actName = dst;
+        }
+
+        // 独自関数
+        public void SetRenameType(EChangeNameType type) { useType = type; }
     }
-    public class EfCondTrig : SlotMaker2022.ILocalDataInterface
+    public class EfCondTrig : IEffectNameInterface
     {
         public string actName { get; set; } // 実行データ名
         public bool cdEnable { get; set; }  // 条件成立or不成立で実行性格付け
@@ -109,10 +127,14 @@ namespace SlotEffectMaker2023.Data
             cdEnable = fs.ReadBoolean();
             return true;
         }
+        public void Rename(EChangeNameType type, string src, string dst)
+        {
+            if (type == EChangeNameType.Timeline && actName.Equals(src)) actName = dst;
+        }
     }
 
     //// タイムライン用IF ////
-    public abstract class IEfAct : SlotMaker2022.ILocalDataInterface
+    public abstract class IEfAct : IEffectNameInterface
     {
         public string dataName { get; set; }
         public string usage { get; set; }
@@ -129,6 +151,7 @@ namespace SlotEffectMaker2023.Data
             usage = fs.ReadString();
             return true;
         }
+        public abstract void Rename(EChangeNameType type, string src, string dst);
     }
     public class EfActValCond : IEfAct
     {   // 変数による条件分岐を行う
@@ -202,6 +225,14 @@ namespace SlotEffectMaker2023.Data
             }
             return true;
         }
+        public override void Rename(EChangeNameType type, string src, string dst)
+        {
+            foreach (var condAnd in conds)
+            {
+                foreach (var condOr in condAnd) condOr.Rename(type, src, dst);
+            }
+            foreach (var act in actionList) act.Rename(type, src, dst);
+        }
     }
     public class EfActTimerCond : IEfAct
     {   // タイマによる条件分岐を行う
@@ -249,6 +280,11 @@ namespace SlotEffectMaker2023.Data
             }
             return true;
         }
+        public override void Rename(EChangeNameType type, string src, string dst)
+        {
+            cond.Rename(type, src, dst);
+            foreach (var act in action) act.Rename(type, src, dst);
+        }
     }
     public class EfActCtrlTimer : IEfAct
     {
@@ -295,10 +331,14 @@ namespace SlotEffectMaker2023.Data
             forceReset = fs.ReadBoolean();
             return true;
         }
+        public override void Rename(EChangeNameType type, string src, string dst)
+        {
+            if (type == EChangeNameType.Timer && defName.Equals(src)) defName = dst;
+        }
     }
     public class EfActCtrlVal : IEfAct
     {
-        public class OP : SlotMaker2022.ILocalDataInterface
+        public class OP : IEffectNameInterface
         {
             public string varName;  // emptyで数字を参照
             public int fixVal;
@@ -322,6 +362,10 @@ namespace SlotEffectMaker2023.Data
                 fixVal = fs.ReadInt32();
                 op = (ECalcOperand)fs.ReadByte();
                 return true;
+            }
+            public void Rename(EChangeNameType type, string src, string dst)
+            {
+                if (type == EChangeNameType.Var && varName.Equals(src)) varName = dst;
             }
         }
         public string valInputFor { get; set; }
@@ -364,6 +408,11 @@ namespace SlotEffectMaker2023.Data
             int ans = 0;
             foreach (var op in operands) ans = Operate(op, ans);
             inData.val = ans;
+        }
+        public override void Rename(EChangeNameType type, string src, string dst)
+        {
+            if (type == EChangeNameType.Var && valInputFor.Equals(src)) valInputFor = dst;
+            foreach (var item in operands) item.Rename(type, src, dst);
         }
         private int Operate(OP operand, int opLeft)
         {   // 単体の計算処理
@@ -438,10 +487,17 @@ namespace SlotEffectMaker2023.Data
             for (int i = 0; i < size; ++i)
             {
                 EfActionSwitch sw = new EfActionSwitch();
+                sw.SetRenameType(EChangeNameType.SoundID);
                 if(!sw.ReadData(ref fs, version)) return false;
                 switcher.Add(sw);
             }
             return true;
+        }
+        public override void Rename(EChangeNameType type, string src, string dst)
+        {
+            if (type == EChangeNameType.SoundPlayer && playDataName.Equals(src)) playDataName = dst;
+            if (type == EChangeNameType.Var && variableRef.Equals(src)) variableRef = dst;
+            foreach (var sw in switcher) sw.Rename(type, src, dst);
         }
     }
 }

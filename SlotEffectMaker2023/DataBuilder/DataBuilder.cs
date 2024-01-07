@@ -33,10 +33,17 @@ namespace SlotEffectMaker2023.DataBuilder
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
                 if (Data[row.Index].name.StartsWith("_")) { ModifyDeny(); return; }
+
+                string srcVarName = Data[row.Index].name;
                 DataForm.MakeVariableElem form = new DataForm.MakeVariableElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Var, srcVarName, Data[modIndex].name);
+                }
                 form.Dispose();
             }
         }
@@ -89,10 +96,17 @@ namespace SlotEffectMaker2023.DataBuilder
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
                 if (!Data[row.Index].UserTimerName.StartsWith("$")) { ModifyDeny(); return; }
+
+                string srcVarName = Data[row.Index].UserTimerName;
                 DataForm.MakeTimerElem form = new DataForm.MakeTimerElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timer, srcVarName, Data[modIndex].UserTimerName);
+                }
                 form.Dispose();
             }
         }
@@ -144,10 +158,16 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
+                string srcVarName = Data[row.Index].DataName;
                 DataForm.MakeSoundIDElem form = new DataForm.MakeSoundIDElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.SoundID, srcVarName, Data[modIndex].DataName);
+                }
                 form.Dispose();
             }
         }
@@ -194,10 +214,23 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
+                string srcVarName = Data[row.Index].PlayerName;
+                string srcShotTimer = Data[row.Index].GetShotTimerName();
+                string srcLoopTimer = Data[row.Index].GetLoopTimerName();
+
                 DataForm.MakeSoundPlayElem form = new DataForm.MakeSoundPlayElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    var sg = Singleton.EffectDataManagerSingleton.GetInstance();
+                    sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.SoundPlayer, srcVarName, Data[modIndex].PlayerName);
+                    // 自動生成タイマ名も更新する
+                    sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.Timer, srcShotTimer, Data[modIndex].GetShotTimerName());
+                    sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.Timer, srcLoopTimer, Data[modIndex].GetLoopTimerName());
+                }
                 form.Dispose();
             }
         }
@@ -243,7 +276,7 @@ namespace SlotEffectMaker2023.DataBuilder
         protected override void StartAdd(object sender, EventArgs e)
         {
             var data = Singleton.EffectDataManagerSingleton.GetInstance();
-            DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(null, data.GetSoundIDNameList);
+            DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(null, data.GetSoundIDNameList, SlotEffectMaker2023.Data.EChangeNameType.SoundID);
             DialogResult res = form.ShowDialog();
 
             if (res == DialogResult.OK) SetData(-1, form.SetData);
@@ -254,7 +287,7 @@ namespace SlotEffectMaker2023.DataBuilder
             var data = Singleton.EffectDataManagerSingleton.GetInstance();
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
-                DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(Data[row.Index], data.GetSoundIDNameList);
+                DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(Data[row.Index], data.GetSoundIDNameList, SlotEffectMaker2023.Data.EChangeNameType.SoundID);
                 DialogResult res = form.ShowDialog();
 
                 if (res == DialogResult.OK) SetData(row.Index, form.SetData);
@@ -309,10 +342,16 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
+                string srcVarName = Data[row.Index].dataName;
                 DataForm.MakeActChangeSoundElem form = new DataForm.MakeActChangeSoundElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
                 form.Dispose();
             }
         }
@@ -469,10 +508,16 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
+                string srcVarName = Data[row.Index].dataName;
                 DataForm.MakeActValCondElem form = new DataForm.MakeActValCondElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
                 form.Dispose();
             }
         }
@@ -578,10 +623,16 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
+                string srcVarName = Data[row.Index].dataName;
                 DataForm.MakeActTimerCondElem form = new DataForm.MakeActTimerCondElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
                 form.Dispose();
             }
         }
@@ -688,10 +739,16 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
+                string srcVarName = Data[row.Index].dataName;
                 DataForm.MakeEfVarCtrlElem form = new DataForm.MakeEfVarCtrlElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
                 form.Dispose();
             }
         }
@@ -738,10 +795,16 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
+                string srcVarName = Data[row.Index].dataName;
                 DataForm.MakeEfCtrlTimerElem form = new DataForm.MakeEfCtrlTimerElem(Data[row.Index]);
                 DialogResult res = form.ShowDialog();
 
-                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
                 form.Dispose();
             }
         }
