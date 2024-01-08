@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\FreezeManager.cs" />
     <Compile Include="DataBuilder\DataBuilder.cs" />
     <Compile Include="DataBuilder\DataIndicator.cs" />
     <Compile Include="DataBuilder\GeneralDataBuilder.cs">
