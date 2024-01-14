@@ -111,8 +111,8 @@ namespace SlotEffectMaker2023.Action
         // 抽選処理・データ生成を行う
         private void Apply(LocalDataSet.FreezeControlData item, List<LocalDataSet.FreezeTimeData> ft)
         {
-            // Rand抽選(Unityではコメントを外す)
-            int randVal = 0; // UnityEngine.Random.Range(0, item.RandVal);
+            // Rand抽選
+            int randVal = UnityEngine.Random.Range(0, item.RandVal);
             if (randVal != 0) return;
 
             if (item.Timing == LocalDataSet.FreezeControlData.FreezeTiming.AddGames)
