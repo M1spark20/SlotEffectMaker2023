@@ -138,6 +138,11 @@ namespace SlotEffectMaker2023.Data
     {
         public string dataName { get; set; }
         public string usage { get; set; }
+        public IEfAct()
+        {
+            dataName = string.Empty;
+            usage = string.Empty;
+        }
         public abstract void Action();
         public virtual bool StoreData(ref BinaryWriter fs, int version)
         {

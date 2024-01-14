@@ -16,6 +16,10 @@ namespace SlotEffectMaker2023.DataForm
         public MakeSingleValCond(Data.EfValCond vc)
         {
             InitializeComponent();
+            numRange1.Maximum = int.MaxValue;
+            numRange1.Minimum = int.MinValue;
+            numRange2.Maximum = int.MaxValue;
+            numRange2.Minimum = int.MinValue;
             if (vc == null)
             {
                 vc = new Data.EfValCond();
@@ -32,10 +36,6 @@ namespace SlotEffectMaker2023.DataForm
             var vl = Singleton.EffectDataManagerSingleton.GetInstance().VarList;
             cbVar.Items.AddRange(vl.GetVariableNameList());
             cbVar.Text = vc.valName;
-            numRange1.Maximum = int.MaxValue;
-            numRange1.Minimum = int.MinValue;
-            numRange2.Maximum = int.MaxValue;
-            numRange2.Minimum = int.MinValue;
             chkInv.Checked = vc.invFlag;
             CBChanged(null, null);
         }
