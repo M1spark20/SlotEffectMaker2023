@@ -78,5 +78,15 @@ namespace SlotEffectMaker2023
             DataForm.MakeEfCtrlTimer form = new DataForm.MakeEfCtrlTimer();
             form.ShowDialog();
         }
+        private void StartModActRandData(object sender, EventArgs e)
+        {
+            DataForm.MakeActRandVal form = new DataForm.MakeActRandVal();
+            form.ShowDialog();
+        }
+        private void StartModActMultiVarSet(object sender, EventArgs e)
+        {
+            DataForm.MakeActMultiVarSet form = new DataForm.MakeActMultiVarSet();
+            form.ShowDialog();
+        }
     }
 }

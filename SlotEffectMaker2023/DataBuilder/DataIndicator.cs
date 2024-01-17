@@ -12,7 +12,7 @@ namespace SlotEffectMaker2023.DataBuilder
         public int DefValue { get; set; }
         public string DataUsage { get; set; }
     }
-     class InfoTimer
+    class InfoTimer
     {
         public string DataName { get; set; }
         public bool SaveFlag { get; set; }
@@ -92,5 +92,20 @@ namespace SlotEffectMaker2023.DataBuilder
         public string Timer { get; set; }
         public string Action { get; set; }
         public string ForceReset { get; set; }
+    }
+    class InfoRandTable
+    {
+        public int DecValue { get; set; }
+        public int ApplyValue { get; set; }
+    }
+    class InfoActRandVal : InfoActBase
+    {
+        public string InputFor { get; set; }
+        public int RandMax { get; set; }
+        public int ElemSize { get; set; }
+    }
+    class InfoActMultiVar : InfoActBase
+    {
+        public int ElemSize { get; set; }
     }
 }

@@ -38,6 +38,8 @@ namespace SlotEffectMaker2023
             this.btnTL_ValCtrl = new System.Windows.Forms.Button();
             this.btnTL_TimerCtrl = new System.Windows.Forms.Button();
             this.btnTL_SoundChange = new System.Windows.Forms.Button();
+            this.btnTL_RandData = new System.Windows.Forms.Button();
+            this.btnTL_MultiVarSet = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -130,12 +132,34 @@ namespace SlotEffectMaker2023
             this.btnTL_SoundChange.UseVisualStyleBackColor = true;
             this.btnTL_SoundChange.Click += new System.EventHandler(this.StartModActChangeSound);
             // 
+            // btnTL_RandData
+            // 
+            this.btnTL_RandData.Location = new System.Drawing.Point(310, 50);
+            this.btnTL_RandData.Name = "btnTL_RandData";
+            this.btnTL_RandData.Size = new System.Drawing.Size(140, 30);
+            this.btnTL_RandData.TabIndex = 4;
+            this.btnTL_RandData.Text = "[TL]乱数抽選設定";
+            this.btnTL_RandData.UseVisualStyleBackColor = true;
+            this.btnTL_RandData.Click += new System.EventHandler(this.StartModActRandData);
+            // 
+            // btnTL_MultiVarSet
+            // 
+            this.btnTL_MultiVarSet.Location = new System.Drawing.Point(310, 90);
+            this.btnTL_MultiVarSet.Name = "btnTL_MultiVarSet";
+            this.btnTL_MultiVarSet.Size = new System.Drawing.Size(140, 30);
+            this.btnTL_MultiVarSet.TabIndex = 5;
+            this.btnTL_MultiVarSet.Text = "[TL]複数変数代入設定";
+            this.btnTL_MultiVarSet.UseVisualStyleBackColor = true;
+            this.btnTL_MultiVarSet.Click += new System.EventHandler(this.StartModActMultiVarSet);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(549, 261);
+            this.Controls.Add(this.btnTL_MultiVarSet);
+            this.Controls.Add(this.btnTL_RandData);
             this.Controls.Add(this.btnSoundPlayData);
             this.Controls.Add(this.btnSoundID);
             this.Controls.Add(this.btnUserTimer);
@@ -165,6 +189,8 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button btnTL_ValCtrl;
         private System.Windows.Forms.Button btnTL_TimerCtrl;
         private System.Windows.Forms.Button btnTL_SoundChange;
+        private System.Windows.Forms.Button btnTL_RandData;
+        private System.Windows.Forms.Button btnTL_MultiVarSet;
     }
 }
 

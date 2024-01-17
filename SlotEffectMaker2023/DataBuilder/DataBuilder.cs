@@ -830,4 +830,216 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
+    class ActRandTableBuilder : ListBuilderBase<Data.EfRandTable, InfoRandTable>
+    {
+        public ActRandTableBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfRandTable> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "DecVal";
+            DGView.Columns[1].HeaderText = "ApplyVal";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeEfRandTable form = new DataForm.MakeEfRandTable(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeEfRandTable form = new DataForm.MakeEfRandTable(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoRandTable info = new InfoRandTable
+                {
+                    DecValue = item.decValue,
+                    ApplyValue = item.applyValue
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+        public List<Data.EfRandTable> GetData() { return Data; }
+    }
+    class ActRandValBuilder : ListBuilderBase<Data.EfActRandVal, InfoActRandVal>
+    {
+        public ActRandValBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActRandVal> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "InputFor";
+            DGView.Columns[1].HeaderText = "RandMax";
+            DGView.Columns[2].HeaderText = "ElemSize";
+            DGView.Columns[3].HeaderText = "EffectName";
+            DGView.Columns[4].HeaderText = "Usage";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeEfRandValElem form = new DataForm.MakeEfRandValElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                string srcVarName = Data[row.Index].dataName;
+                DataForm.MakeEfRandValElem form = new DataForm.MakeEfRandValElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActRandVal info = new InfoActRandVal
+                {
+                    DataName = item.dataName,
+                    DataUsage = item.usage,
+                    InputFor = item.inputFor,
+                    RandMax = item.randMax,
+                    ElemSize = item.randData.Count
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+    }
+    class MultiVarSetBuilder : ListBuilderBase<Data.EfActionSwitch, InfoActionSwitch>
+    {
+        const string numName = "設定値";
+        const string actName = "設定先変数";
+        public MultiVarSetBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActionSwitch> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "Value";
+            DGView.Columns[1].HeaderText = "InputFor";
+            DGView.CellFormatting += Format;
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(null, data.VarList.GetUserVariableNameList, SlotEffectMaker2023.Data.EChangeNameType.Var, numName, actName);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(Data[row.Index], data.VarList.GetUserVariableNameList, SlotEffectMaker2023.Data.EChangeNameType.Var, numName, actName);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActionSwitch info = new InfoActionSwitch
+                {
+                    CondVal = item.condVal,
+                    ActName = item.actName
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+        private void Format(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // データが存在しない場合赤背景にする
+            DataGridView dgv = (DataGridView)sender;
+            var ef = Singleton.EffectDataManagerSingleton.GetInstance();
+            if (e.ColumnIndex == 1 && ef.VarList.GetData(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+                e.CellStyle.BackColor = Color.Red;
+        }
+    }
+    class ActMultiVarBuilder : ListBuilderBase<Data.EfActMultiVarSet, InfoActMultiVar>
+    {
+        public ActMultiVarBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActMultiVarSet> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "DataNum";
+            DGView.Columns[1].HeaderText = "EffectName";
+            DGView.Columns[2].HeaderText = "Usage";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeActMultiVarSetElem form = new DataForm.MakeActMultiVarSetElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                string srcVarName = Data[row.Index].dataName;
+                DataForm.MakeActMultiVarSetElem form = new DataForm.MakeActMultiVarSetElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActMultiVar info = new InfoActMultiVar
+                {
+                    DataName = item.dataName,
+                    DataUsage = item.usage,
+                    ElemSize = item.setData.Count
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+    }
 }
