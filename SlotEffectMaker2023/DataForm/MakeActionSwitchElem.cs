@@ -12,12 +12,14 @@ namespace SlotEffectMaker2023.DataForm
 {
     public partial class MakeActionSwitchElem : SlotMaker2022.UserControl.FormElemDecide
     {
-        public MakeActionSwitchElem(Data.EfActionSwitch sw, Func<string[]> txtFeeder, Data.EChangeNameType nameType)
+        public MakeActionSwitchElem(Data.EfActionSwitch sw, Func<string[]> txtFeeder, Data.EChangeNameType nameType, string numName, string actName)
         {
             InitializeComponent();
             if (sw == null) sw = new Data.EfActionSwitch();
             sw.SetRenameType(nameType);
             // コントロール初期化
+            labelNum.Text = numName;
+            labelAct.Text = actName;
             numCheckVal.Minimum = int.MinValue;
             numCheckVal.Maximum = int.MaxValue;
             numCheckVal.Value = sw.condVal;

@@ -265,6 +265,8 @@ namespace SlotEffectMaker2023.DataBuilder
     }
     class SoundSWBuilder : ListBuilderBase<Data.EfActionSwitch, InfoActionSwitch>
     {
+        const string numName = "変数条件";
+        const string actName = "鳴り分けデータ";
         public SoundSWBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActionSwitch> pData)
             : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
         {
@@ -276,7 +278,7 @@ namespace SlotEffectMaker2023.DataBuilder
         protected override void StartAdd(object sender, EventArgs e)
         {
             var data = Singleton.EffectDataManagerSingleton.GetInstance();
-            DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(null, data.GetSoundIDNameList, SlotEffectMaker2023.Data.EChangeNameType.SoundID);
+            DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(null, data.GetSoundIDNameList, SlotEffectMaker2023.Data.EChangeNameType.SoundID, numName, actName);
             DialogResult res = form.ShowDialog();
 
             if (res == DialogResult.OK) SetData(-1, form.SetData);
@@ -287,7 +289,7 @@ namespace SlotEffectMaker2023.DataBuilder
             var data = Singleton.EffectDataManagerSingleton.GetInstance();
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
-                DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(Data[row.Index], data.GetSoundIDNameList, SlotEffectMaker2023.Data.EChangeNameType.SoundID);
+                DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(Data[row.Index], data.GetSoundIDNameList, SlotEffectMaker2023.Data.EChangeNameType.SoundID, numName, actName);
                 DialogResult res = form.ShowDialog();
 
                 if (res == DialogResult.OK) SetData(row.Index, form.SetData);

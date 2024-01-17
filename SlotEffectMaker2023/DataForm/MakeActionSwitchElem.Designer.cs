@@ -29,23 +29,23 @@ namespace SlotEffectMaker2023.DataForm
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelNum = new System.Windows.Forms.Label();
             this.numCheckVal = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             this.BtnOK = new System.Windows.Forms.Button();
             this.BtnCancel = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelAct = new System.Windows.Forms.Label();
             this.cbActName = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.numCheckVal)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // labelNum
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 12);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "変数値";
+            this.labelNum.AutoSize = true;
+            this.labelNum.Location = new System.Drawing.Point(10, 13);
+            this.labelNum.Name = "labelNum";
+            this.labelNum.Size = new System.Drawing.Size(41, 12);
+            this.labelNum.TabIndex = 0;
+            this.labelNum.Text = "変数値";
             // 
             // numCheckVal
             // 
@@ -85,14 +85,14 @@ namespace SlotEffectMaker2023.DataForm
             this.BtnCancel.UseVisualStyleBackColor = true;
             this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
-            // label2
+            // labelAct
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(10, 38);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(83, 12);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "合致時アクション";
+            this.labelAct.AutoSize = true;
+            this.labelAct.Location = new System.Drawing.Point(10, 38);
+            this.labelAct.Name = "labelAct";
+            this.labelAct.Size = new System.Drawing.Size(83, 12);
+            this.labelAct.TabIndex = 0;
+            this.labelAct.Text = "合致時アクション";
             // 
             // cbActName
             // 
@@ -115,8 +115,8 @@ namespace SlotEffectMaker2023.DataForm
             this.Controls.Add(this.BtnCancel);
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.numCheckVal);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelAct);
+            this.Controls.Add(this.labelNum);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -131,11 +131,11 @@ namespace SlotEffectMaker2023.DataForm
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelNum;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numCheckVal;
         private System.Windows.Forms.Button BtnOK;
         private System.Windows.Forms.Button BtnCancel;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelAct;
         private System.Windows.Forms.ComboBox cbActName;
     }
 }
