@@ -12,11 +12,12 @@ namespace SlotEffectMaker2023.DataForm
 {
     public partial class MakeActionSwitchElem : SlotMaker2022.UserControl.FormElemDecide
     {
+        Data.EChangeNameType type;
         public MakeActionSwitchElem(Data.EfActionSwitch sw, Func<string[]> txtFeeder, Data.EChangeNameType nameType, string numName, string actName)
         {
             InitializeComponent();
             if (sw == null) sw = new Data.EfActionSwitch();
-            sw.SetRenameType(nameType);
+            type = nameType;
             // コントロール初期化
             labelNum.Text = numName;
             labelAct.Text = actName;
@@ -31,6 +32,7 @@ namespace SlotEffectMaker2023.DataForm
         {
             sw.condVal = decimal.ToInt32(numCheckVal.Value);
             sw.actName = cbActName.Text;
+            sw.SetRenameType(type);
             return true;
         }
         protected override void BtnOK_Click(object sender, EventArgs e)

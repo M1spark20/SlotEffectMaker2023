@@ -612,6 +612,7 @@ namespace SlotEffectMaker2023.Data
             for (int i=0; i<sz; ++i)
             {
                 EfActionSwitch ef = new EfActionSwitch();
+                ef.SetRenameType(EChangeNameType.Var);
                 ef.ReadData(ref fs, version);
                 setData.Add(ef);
             }
