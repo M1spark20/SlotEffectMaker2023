@@ -76,12 +76,6 @@
     <Compile Include="DataForm\MakeActChangeSound.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DataForm\MakeEfRandTable.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DataForm\MakeEfRandTable.Designer.cs">
-      <DependentUpon>MakeEfRandTable.cs</DependentUpon>
-    </Compile>
     <Compile Include="DataForm\MakeEfCtrlTimer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,9 +218,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeActChangeSoundElem.resx">
       <DependentUpon>MakeActChangeSoundElem.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DataForm\MakeEfRandTable.resx">
-      <DependentUpon>MakeEfRandTable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeEfRandValElem.resx">
       <DependentUpon>MakeEfRandValElem.cs</DependentUpon>

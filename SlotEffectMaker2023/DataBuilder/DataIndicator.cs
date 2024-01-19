@@ -96,11 +96,10 @@ namespace SlotEffectMaker2023.DataBuilder
     class InfoRandTable
     {
         public int DecValue { get; set; }
-        public int ApplyValue { get; set; }
+        public string Action { get; set; }
     }
     class InfoActRandVal : InfoActBase
     {
-        public string InputFor { get; set; }
         public int RandMax { get; set; }
         public int ElemSize { get; set; }
     }

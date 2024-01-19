@@ -830,18 +830,19 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
-    class ActRandTableBuilder : ListBuilderBase<Data.EfRandTable, InfoRandTable>
+    class ActRandTableBuilder : ListBuilderBase<Data.EfActionSwitch, InfoRandTable>
     {
-        public ActRandTableBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfRandTable> pData)
+        public ActRandTableBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActionSwitch> pData)
             : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
         {
             DGView.Columns[0].HeaderText = "DecVal";
-            DGView.Columns[1].HeaderText = "ApplyVal";
+            DGView.Columns[1].HeaderText = "Action";
             UpdateIndicator(0);
         }
         protected override void StartAdd(object sender, EventArgs e)
         {
-            DataForm.MakeEfRandTable form = new DataForm.MakeEfRandTable(null);
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(null, data.Timeline.GetAllActName, SlotEffectMaker2023.Data.EChangeNameType.Timeline, "減算値", "当選時Action");
             DialogResult res = form.ShowDialog();
 
             if (res == DialogResult.OK) SetData(-1, form.SetData);
@@ -849,10 +850,12 @@ namespace SlotEffectMaker2023.DataBuilder
         }
         protected override void StartMod(object sender, EventArgs e)
         {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
-                DataForm.MakeEfRandTable form = new DataForm.MakeEfRandTable(Data[row.Index]);
+                DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(Data[row.Index], data.Timeline.GetAllActName, SlotEffectMaker2023.Data.EChangeNameType.Timeline, "減算値", "当選時Action");
                 DialogResult res = form.ShowDialog();
+
                 if (res == DialogResult.OK) SetData(row.Index, form.SetData);
                 form.Dispose();
             }
@@ -865,26 +868,25 @@ namespace SlotEffectMaker2023.DataBuilder
             {
                 InfoRandTable info = new InfoRandTable
                 {
-                    DecValue = item.decValue,
-                    ApplyValue = item.applyValue
+                    DecValue = item.condVal,
+                    Action = item.actName
                 };
                 Indicator.Add(info);
             }
 
             FinalizeIndicator(indexShift);
         }
-        public List<Data.EfRandTable> GetData() { return Data; }
+        public List<Data.EfActionSwitch> GetData() { return Data; }
     }
     class ActRandValBuilder : ListBuilderBase<Data.EfActRandVal, InfoActRandVal>
     {
         public ActRandValBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActRandVal> pData)
             : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
         {
-            DGView.Columns[0].HeaderText = "InputFor";
-            DGView.Columns[1].HeaderText = "RandMax";
-            DGView.Columns[2].HeaderText = "ElemSize";
-            DGView.Columns[3].HeaderText = "EffectName";
-            DGView.Columns[4].HeaderText = "Usage";
+            DGView.Columns[0].HeaderText = "RandMax";
+            DGView.Columns[1].HeaderText = "ElemSize";
+            DGView.Columns[2].HeaderText = "EffectName";
+            DGView.Columns[3].HeaderText = "Usage";
             UpdateIndicator(0);
         }
         protected override void StartAdd(object sender, EventArgs e)
@@ -922,7 +924,6 @@ namespace SlotEffectMaker2023.DataBuilder
                 {
                     DataName = item.dataName,
                     DataUsage = item.usage,
-                    InputFor = item.inputFor,
                     RandMax = item.randMax,
                     ElemSize = item.randData.Count
                 };

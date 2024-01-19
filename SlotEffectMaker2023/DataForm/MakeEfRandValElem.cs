@@ -25,18 +25,13 @@ namespace SlotEffectMaker2023.DataForm
             // コントロール初期化
             defDataName = rv.dataName;
             tbUsage.Text = rv.usage;
-            var tList = Singleton.EffectDataManagerSingleton.GetInstance().VarList;
-            cbVarExport.Items.AddRange(tList.GetUserVariableNameList());
-            cbVarExport.Text = rv.inputFor;
             numRandMax.Value = rv.randMax;
             builderAction = new DataBuilder.ActRandTableBuilder(btnAddAc, btnModAc, btnDelAc, btnSeekUpAc, btnSeekDnAc, dgvShowAc, rv.randData);
-            CBChanged(null, null);
         }
         public bool SetData(Data.EfActRandVal rv)
         {
             rv.dataName = tbDataName.Text;
             rv.usage = tbUsage.Text;
-            rv.inputFor = cbVarExport.Text;
             rv.randMax = decimal.ToInt32(numRandMax.Value);
             rv.randData = builderAction.GetData();
             return true;
@@ -54,11 +49,6 @@ namespace SlotEffectMaker2023.DataForm
                 MessageBox.Show("データ名が他のデータと重複しています。\n他の名前を指定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (cbVarExport.SelectedIndex < 0)
-            {
-                MessageBox.Show("演算結果代入先変数を設定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
             base.BtnOK_Click(sender, e);
         }
 
@@ -69,12 +59,6 @@ namespace SlotEffectMaker2023.DataForm
         private void OK(object sender, EventArgs e)
         {
             BtnOK_Click(sender, e);
-        }
-        private void CBChanged(object sender, EventArgs e)
-        {
-            var baseData = Singleton.EffectDataManagerSingleton.GetInstance();
-            string va = "代入先変数: " + baseData.VarList.GetData(cbVarExport.Text)?.usage;
-            txtVarUsage.Text = va;
         }
     }
 }

@@ -41,9 +41,6 @@ namespace SlotEffectMaker2023.DataForm
             this.btnDelAc = new System.Windows.Forms.Button();
             this.btnModAc = new System.Windows.Forms.Button();
             this.btnAddAc = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbVarExport = new System.Windows.Forms.ComboBox();
-            this.txtVarUsage = new System.Windows.Forms.Label();
             this.numRandMax = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowAc)).BeginInit();
@@ -168,37 +165,9 @@ namespace SlotEffectMaker2023.DataForm
             this.btnAddAc.Text = "抽選追加";
             this.btnAddAc.UseVisualStyleBackColor = true;
             // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 100);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(113, 12);
-            this.label3.TabIndex = 17;
-            this.label3.Text = "演算結果代入先変数";
-            // 
-            // cbVarExport
-            // 
-            this.cbVarExport.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbVarExport.FormattingEnabled = true;
-            this.cbVarExport.Location = new System.Drawing.Point(10, 115);
-            this.cbVarExport.Name = "cbVarExport";
-            this.cbVarExport.Size = new System.Drawing.Size(121, 20);
-            this.cbVarExport.TabIndex = 2;
-            this.cbVarExport.SelectedIndexChanged += new System.EventHandler(this.CBChanged);
-            // 
-            // txtVarUsage
-            // 
-            this.txtVarUsage.AutoSize = true;
-            this.txtVarUsage.Location = new System.Drawing.Point(10, 255);
-            this.txtVarUsage.Name = "txtVarUsage";
-            this.txtVarUsage.Size = new System.Drawing.Size(71, 12);
-            this.txtVarUsage.TabIndex = 102;
-            this.txtVarUsage.Text = "代入先変数: ";
-            // 
             // numRandMax
             // 
-            this.numRandMax.Location = new System.Drawing.Point(10, 160);
+            this.numRandMax.Location = new System.Drawing.Point(10, 115);
             this.numRandMax.Maximum = new decimal(new int[] {
             65536,
             0,
@@ -211,7 +180,7 @@ namespace SlotEffectMaker2023.DataForm
             0});
             this.numRandMax.Name = "numRandMax";
             this.numRandMax.Size = new System.Drawing.Size(121, 19);
-            this.numRandMax.TabIndex = 3;
+            this.numRandMax.TabIndex = 2;
             this.numRandMax.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numRandMax.Value = new decimal(new int[] {
             256,
@@ -222,7 +191,7 @@ namespace SlotEffectMaker2023.DataForm
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(10, 145);
+            this.label4.Location = new System.Drawing.Point(10, 100);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(65, 12);
             this.label4.TabIndex = 103;
@@ -233,12 +202,10 @@ namespace SlotEffectMaker2023.DataForm
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(443, 272);
+            this.ClientSize = new System.Drawing.Size(443, 256);
             this.ControlBox = false;
             this.Controls.Add(this.label4);
             this.Controls.Add(this.numRandMax);
-            this.Controls.Add(this.txtVarUsage);
-            this.Controls.Add(this.cbVarExport);
             this.Controls.Add(this.dgvShowAc);
             this.Controls.Add(this.btnSeekDnAc);
             this.Controls.Add(this.btnSeekUpAc);
@@ -247,7 +214,6 @@ namespace SlotEffectMaker2023.DataForm
             this.Controls.Add(this.btnAddAc);
             this.Controls.Add(this.tbUsage);
             this.Controls.Add(this.tbDataName);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.BtnCancel);
@@ -279,9 +245,6 @@ namespace SlotEffectMaker2023.DataForm
         protected System.Windows.Forms.Button btnDelAc;
         protected System.Windows.Forms.Button btnModAc;
         protected System.Windows.Forms.Button btnAddAc;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox cbVarExport;
-        private System.Windows.Forms.Label txtVarUsage;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numRandMax;
         private System.Windows.Forms.Label label4;
     }
