@@ -23,6 +23,8 @@ namespace SlotEffectMaker2023.DataForm
             cbVarName.Text = op.varName;
             rbVar.Checked = op.varName != string.Empty;
             rbFix.Checked = !rbVar.Checked;
+            numFixVal.Maximum = int.MaxValue;
+            numFixVal.Minimum = int.MinValue;
             numFixVal.Value = op.fixVal;
             CheckedChanged(null, null);
             CBChanged(null, null);
