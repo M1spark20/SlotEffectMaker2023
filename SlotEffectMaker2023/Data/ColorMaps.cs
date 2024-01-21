@@ -116,11 +116,11 @@ namespace SlotEffectMaker2023.Data
 
 		public List<ColorMap> elemData { get; set; }	// カラーマップアニメーションまとめ
 
-		public ColorMapList(uint w, uint h)
+		public ColorMapList()
 		{
 			dataName = string.Empty;
-			sizeW = w;
-			sizeH = h;
+			sizeW = 0;
+			sizeH = 0;
 			useTimerName = string.Empty;
 			loopTime = -1;
 		}
