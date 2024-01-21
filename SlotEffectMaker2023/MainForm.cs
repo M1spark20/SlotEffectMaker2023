@@ -88,5 +88,10 @@ namespace SlotEffectMaker2023
             DataForm.MakeActMultiVarSet form = new DataForm.MakeActMultiVarSet();
             form.ShowDialog();
         }
+        private void Test(object sender, EventArgs e)
+        {
+            DataForm.MakeColorMap ts = new DataForm.MakeColorMap(null, 68, 12);
+            ts.ShowDialog();
+        }
     }
 }

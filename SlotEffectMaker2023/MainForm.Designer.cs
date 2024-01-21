@@ -40,6 +40,7 @@ namespace SlotEffectMaker2023
             this.btnTL_SoundChange = new System.Windows.Forms.Button();
             this.btnTL_RandData = new System.Windows.Forms.Button();
             this.btnTL_MultiVarSet = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -152,12 +153,23 @@ namespace SlotEffectMaker2023
             this.btnTL_MultiVarSet.UseVisualStyleBackColor = true;
             this.btnTL_MultiVarSet.Click += new System.EventHandler(this.StartModActMultiVarSet);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(10, 170);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(140, 30);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "テスト";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Test);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(549, 261);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.btnTL_MultiVarSet);
             this.Controls.Add(this.btnTL_RandData);
             this.Controls.Add(this.btnSoundPlayData);
@@ -191,6 +203,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button btnTL_SoundChange;
         private System.Windows.Forms.Button btnTL_RandData;
         private System.Windows.Forms.Button btnTL_MultiVarSet;
+        private System.Windows.Forms.Button button1;
     }
 }
 
