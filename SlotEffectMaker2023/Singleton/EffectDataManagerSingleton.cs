@@ -111,7 +111,7 @@ namespace SlotEffectMaker2023.Singleton
         public string[] GetSoundPlayerNameList()
         {
             string[] ans = new string[SoundPlayList.Count];
-            for (int i = 0; i < ans.Length; ++i) ans[i] = SoundPlayList[i].PlayerName;
+            for (int i = 0; i < ans.Length; ++i) ans[i] = SoundPlayList[i].ShifterName;
             return ans;
         }
         public Data.SoundID GetSoundID(string pSoundIDName)
@@ -123,7 +123,7 @@ namespace SlotEffectMaker2023.Singleton
         public Data.SoundPlayData GetSoundPlayer(string pPlayerName)
         {
             foreach (var item in SoundPlayList)
-                if (item.PlayerName.Equals(pPlayerName)) return item;
+                if (item.ShifterName.Equals(pPlayerName)) return item;
             return null;
         }
     }

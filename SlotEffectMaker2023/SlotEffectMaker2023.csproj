@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="Data\ColorMaps.cs" />
     <Compile Include="Data\DataList.cs" />
+    <Compile Include="Data\DataShifterBase.cs" />
     <Compile Include="Data\ILocalDataInterface.cs" />
     <Compile Include="Data\IEffectNameInterface.cs" />
     <Compile Include="Data\LocalDataSet.cs" />

@@ -22,21 +22,21 @@ namespace SlotEffectMaker2023.DataForm
             cbDefSound.Items.AddRange(ed.GetSoundIDNameList());
             numStartTime.Maximum = int.MaxValue;
             numStopTime.Maximum = int.MaxValue;
-            defDataName = sp.PlayerName;
+            defDataName = sp.ShifterName;
             // コントロール初期化
-            tbPlayerName.Text = sp.PlayerName;
+            tbPlayerName.Text = sp.ShifterName;
             if (ed.TimerList.CheckTimerExist(sp.UseTimerName)) cbUseTimer.SelectedItem = sp.UseTimerName;
             numStartTime.Value = sp.BeginTime;
             numStopTime.Value = sp.StopTime;
-            if (ed.GetSoundID(sp.DefaultSoundID) != null) cbDefSound.SelectedItem = sp.DefaultSoundID;
+            if (ed.GetSoundID(sp.DefaultElemID) != null) cbDefSound.SelectedItem = sp.DefaultElemID;
         }
         public bool SetData(Data.SoundPlayData sp)
         {
-            sp.PlayerName = tbPlayerName.Text;
+            sp.ShifterName = tbPlayerName.Text;
             sp.UseTimerName = cbUseTimer.SelectedItem.ToString();
             sp.BeginTime = decimal.ToInt32(numStartTime.Value);
             sp.StopTime = decimal.ToInt32(numStopTime.Value);
-            sp.DefaultSoundID = cbDefSound.SelectedItem.ToString();
+            sp.DefaultElemID = cbDefSound.SelectedItem.ToString();
             return true;
         }
         protected override void BtnOK_Click(object sender, EventArgs e)

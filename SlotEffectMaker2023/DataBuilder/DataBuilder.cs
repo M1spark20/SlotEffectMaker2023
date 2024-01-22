@@ -214,7 +214,7 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
-                string srcVarName = Data[row.Index].PlayerName;
+                string srcVarName = Data[row.Index].ShifterName;
                 string srcShotTimer = Data[row.Index].GetShotTimerName();
                 string srcLoopTimer = Data[row.Index].GetLoopTimerName();
 
@@ -226,7 +226,7 @@ namespace SlotEffectMaker2023.DataBuilder
                     int modIndex = row.Index;
                     SetData(row.Index, form.SetData);
                     var sg = Singleton.EffectDataManagerSingleton.GetInstance();
-                    sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.SoundPlayer, srcVarName, Data[modIndex].PlayerName);
+                    sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.SoundPlayer, srcVarName, Data[modIndex].ShifterName);
                     // 自動生成タイマ名も更新する
                     sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.Timer, srcShotTimer, Data[modIndex].GetShotTimerName());
                     sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.Timer, srcLoopTimer, Data[modIndex].GetLoopTimerName());
@@ -242,11 +242,11 @@ namespace SlotEffectMaker2023.DataBuilder
             {
                 InfoSoundPlayData info = new InfoSoundPlayData
                 {
-                    playerName = item.PlayerName,
+                    playerName = item.ShifterName,
                     timerName = item.UseTimerName,
                     start = item.BeginTime,
                     stop = item.StopTime,
-                    defSID = item.DefaultSoundID
+                    defSID = item.DefaultElemID
                 };
                 Indicator.Add(info);
             }
