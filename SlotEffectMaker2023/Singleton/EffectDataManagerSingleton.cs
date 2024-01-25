@@ -20,6 +20,7 @@ namespace SlotEffectMaker2023.Singleton
         public Data.VarList             VarList       { get; set; } // 生成変数一覧
         public Data.TimerList           TimerList     { get; set; } // 生成タイマ一覧
         public Data.SlotTimeline        Timeline      { get; set; } // サブ基板処理内容
+        public Data.ColorMapDataManager ColorMap      { get; set; } // 演出色マップ
 
         private EffectDataManagerSingleton()
         {
@@ -29,6 +30,7 @@ namespace SlotEffectMaker2023.Singleton
             VarList       = new Data.VarList();
             TimerList     = new Data.TimerList();
             Timeline      = new Data.SlotTimeline();
+            ColorMap      = new Data.ColorMapDataManager();
         }
         public static EffectDataManagerSingleton GetInstance()
         {

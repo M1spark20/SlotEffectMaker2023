@@ -90,8 +90,8 @@ namespace SlotEffectMaker2023
         }
         private void Test(object sender, EventArgs e)
         {
-            DataForm.MakeColorMap ts = new DataForm.MakeColorMap(null, 68, 12);
-            ts.ShowDialog();
+            DataForm.MakeColorMapList cml = new DataForm.MakeColorMapList();
+            cml.ShowDialog();
         }
     }
 }

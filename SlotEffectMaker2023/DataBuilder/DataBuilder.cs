@@ -320,6 +320,121 @@ namespace SlotEffectMaker2023.DataBuilder
                 e.CellStyle.BackColor = Color.Red;
         }
     }
+    class ColorMapBuilder : ListBuilderBase<Data.ColorMap, InfoColorMap>
+    {
+        uint sizeW, sizeH;
+
+        public ColorMapBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.ColorMap> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "Cards";
+            DGView.Columns[1].HeaderText = "BeginTime";
+            DGView.Columns[2].HeaderText = "LoopNum";
+            DGView.Columns[3].HeaderText = "FadeFlag";
+            DGView.Columns[4].HeaderText = "Speed";
+            UpdateIndicator(0);
+            sizeW = 0; sizeH = 0;
+        }
+        public void SetSize(uint w, uint h) { sizeW = w; sizeH = h; }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeColorMap form = new DataForm.MakeColorMap(null, sizeW, sizeH);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeColorMap form = new DataForm.MakeColorMap(Data[row.Index], sizeW, sizeH);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+            string[] speedName = new string[] { "Steady", "Acc", "Dec", "---" };
+
+            foreach (var item in Data)
+            {
+                InfoColorMap info = new InfoColorMap
+                {
+                    CardNum = item.cardNum,
+                    FadeFlag = item.fadeFlag ? "TRUE" : "FALSE",
+                    BeginTime = item.beginTime,
+                    LoopNum = item.loopCount,
+                    Speed = speedName[(int)item.speed]
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+        public List<Data.ColorMap> GetData() { return Data; }
+    }
+    class ColorMapListElemBuilder : ListBuilderBase<Data.ColorMapList, InfoColorMapList>
+    {
+        public ColorMapListElemBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.ColorMapList> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "DataName";
+            DGView.Columns[1].HeaderText = "Size(x,y)";
+            DGView.Columns[2].HeaderText = "UseTimer";
+            DGView.Columns[3].HeaderText = "LoopTime";
+            DGView.Columns[4].HeaderText = "Maps";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeColorMapListElem form = new DataForm.MakeColorMapListElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                string srcVarName = Data[row.Index].dataName;
+                DataForm.MakeColorMapListElem form = new DataForm.MakeColorMapListElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.ColorMap, srcVarName, Data[modIndex].dataName);
+                }
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+            string[] speedName = new string[] { "Steady", "Acc", "Dec", "---" };
+
+            foreach (var item in Data)
+            {
+                InfoColorMapList info = new InfoColorMapList
+                {
+                    DataName = item.dataName,
+                    Size = "(" + item.sizeW.ToString() + ", " + item.sizeH.ToString() + ")",
+                    UseTimerName = item.useTimerName,
+                    LoopTime = item.loopTime,
+                    ElemCount = item.elemData.Count
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+    }
     class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeSound>
     {
         public ActChangeSoundBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActChangeSound> pData)

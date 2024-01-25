@@ -111,18 +111,19 @@ namespace SlotEffectMaker2023.Data
 		public string dataName { get; set; }	 // カラーマップの名前
 		public string useTimerName { get; set; } // 制御に使用するタイマ名
 		public int loopTime { get; set; }        // ループ時間[ms]
-		public uint sizeW { get; private set; }  // カラーマップのWサイズ
-		public uint sizeH { get; private set; }  // カラーマップのHサイズ
+		public uint sizeW { get; set; }			 // カラーマップのWサイズ
+		public uint sizeH { get; set; }			 // カラーマップのHサイズ
 
 		public List<ColorMap> elemData { get; set; }	// カラーマップアニメーションまとめ
 
 		public ColorMapList()
 		{
 			dataName = string.Empty;
-			sizeW = 0;
-			sizeH = 0;
+			sizeW = 1;
+			sizeH = 1;
 			useTimerName = string.Empty;
 			loopTime = -1;
+			elemData = new List<ColorMap>();
 		}
 
 		public bool StoreData(ref BinaryWriter fs, int version)
@@ -160,6 +161,83 @@ namespace SlotEffectMaker2023.Data
         {
 			if (type == EChangeNameType.Timer && useTimerName.Equals(src)) useTimerName = dst;
 			foreach (var cm in elemData) cm.Rename(type, src, dst);
+        }
+	}
+
+	public class ColorMapShifter : DataShifterBase
+    {
+        protected override EChangeNameType GetMyType() { return EChangeNameType.ColorMap; }
+    }
+
+	public class ColorMapDataManager : IEffectNameInterface 
+	{
+		// 変数
+		public List<ColorMapList> mapList { get; set; }
+		public List<ColorMapShifter> shifter { get; set; }
+
+        public ColorMapDataManager()
+        {
+			mapList = new List<ColorMapList>();
+			shifter = new List<ColorMapShifter>();
+        }
+		public bool StoreData(ref BinaryWriter fs, int version)
+        {
+			fs.Write(mapList.Count);
+			for (int i = 0; i < mapList.Count; ++i) mapList[i].StoreData(ref fs, version);
+			fs.Write(shifter.Count);
+			for (int i = 0; i < shifter.Count; ++i) shifter[i].StoreData(ref fs, version);
+			return true;
+        }
+		public bool ReadData(ref BinaryReader fs, int version)
+        {
+			int sz = fs.ReadInt32();
+			for(int i=0; i<sz; ++i)
+            {
+				ColorMapList cm = new ColorMapList();
+				cm.ReadData(ref fs, version);
+				mapList.Add(cm);
+            }
+			sz = fs.ReadInt32();
+			for(int i=0; i<sz; ++i)
+            {
+				ColorMapShifter sf = new ColorMapShifter();
+				sf.ReadData(ref fs, version);
+				shifter.Add(sf);
+            }
+			return true;
+        }
+		public void Rename(EChangeNameType type, string src, string dst)
+        {
+			for (int i = 0; i < mapList.Count; ++i) mapList[i].Rename(type, src, dst);
+			for (int i = 0; i < shifter.Count; ++i) shifter[i].Rename(type, src, dst);
+        }
+
+		// 一覧取得
+		public string[] GetMapListName()
+        {
+			List<string> ans = new List<string>();
+			foreach (var item in mapList) ans.Add(item.dataName);
+			return ans.ToArray();
+        }
+		public string[] GetShifterName()
+        {
+			List<string> ans = new List<string>();
+			foreach (var item in shifter) ans.Add(item.ShifterName);
+			return ans.ToArray();
+        }
+
+		// 名前からデータ取得
+		public ColorMapList GetMapList(string name)
+        {
+			foreach (var item in mapList)
+				if (item.dataName.Equals(name)) return item;
+			return null;
+        }
+		public ColorMapShifter GetShifter(string name)
+        {
+			foreach (var item in shifter)
+				if (item.ShifterName.Equals(name)) return item;
+			return null;
         }
 	}
 }

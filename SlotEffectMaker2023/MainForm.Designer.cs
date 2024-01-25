@@ -40,7 +40,7 @@ namespace SlotEffectMaker2023
             this.btnTL_SoundChange = new System.Windows.Forms.Button();
             this.btnTL_RandData = new System.Windows.Forms.Button();
             this.btnTL_MultiVarSet = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnMakeColorMap = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -88,7 +88,7 @@ namespace SlotEffectMaker2023
             this.btnTL_ValCond.Location = new System.Drawing.Point(160, 10);
             this.btnTL_ValCond.Name = "btnTL_ValCond";
             this.btnTL_ValCond.Size = new System.Drawing.Size(140, 30);
-            this.btnTL_ValCond.TabIndex = 0;
+            this.btnTL_ValCond.TabIndex = 10;
             this.btnTL_ValCond.Text = "[TL]変数演算";
             this.btnTL_ValCond.UseVisualStyleBackColor = true;
             this.btnTL_ValCond.Click += new System.EventHandler(this.StartModActValCtrl);
@@ -98,7 +98,7 @@ namespace SlotEffectMaker2023
             this.btnTL_TimerCond.Location = new System.Drawing.Point(160, 50);
             this.btnTL_TimerCond.Name = "btnTL_TimerCond";
             this.btnTL_TimerCond.Size = new System.Drawing.Size(140, 30);
-            this.btnTL_TimerCond.TabIndex = 0;
+            this.btnTL_TimerCond.TabIndex = 11;
             this.btnTL_TimerCond.Text = "[TL]タイマ動作・停止";
             this.btnTL_TimerCond.UseVisualStyleBackColor = true;
             this.btnTL_TimerCond.Click += new System.EventHandler(this.StartModActCtrlTimer);
@@ -108,7 +108,7 @@ namespace SlotEffectMaker2023
             this.btnTL_ValCtrl.Location = new System.Drawing.Point(160, 90);
             this.btnTL_ValCtrl.Name = "btnTL_ValCtrl";
             this.btnTL_ValCtrl.Size = new System.Drawing.Size(140, 30);
-            this.btnTL_ValCtrl.TabIndex = 0;
+            this.btnTL_ValCtrl.TabIndex = 12;
             this.btnTL_ValCtrl.Text = "[TL]変数条件設定";
             this.btnTL_ValCtrl.UseVisualStyleBackColor = true;
             this.btnTL_ValCtrl.Click += new System.EventHandler(this.StartModActValCond);
@@ -118,7 +118,7 @@ namespace SlotEffectMaker2023
             this.btnTL_TimerCtrl.Location = new System.Drawing.Point(160, 130);
             this.btnTL_TimerCtrl.Name = "btnTL_TimerCtrl";
             this.btnTL_TimerCtrl.Size = new System.Drawing.Size(140, 30);
-            this.btnTL_TimerCtrl.TabIndex = 0;
+            this.btnTL_TimerCtrl.TabIndex = 13;
             this.btnTL_TimerCtrl.Text = "[TL]トリガ条件設定";
             this.btnTL_TimerCtrl.UseVisualStyleBackColor = true;
             this.btnTL_TimerCtrl.Click += new System.EventHandler(this.StartModActTimerCond);
@@ -128,7 +128,7 @@ namespace SlotEffectMaker2023
             this.btnTL_SoundChange.Location = new System.Drawing.Point(310, 10);
             this.btnTL_SoundChange.Name = "btnTL_SoundChange";
             this.btnTL_SoundChange.Size = new System.Drawing.Size(140, 30);
-            this.btnTL_SoundChange.TabIndex = 0;
+            this.btnTL_SoundChange.TabIndex = 20;
             this.btnTL_SoundChange.Text = "[TL]音データ鳴り分け設定";
             this.btnTL_SoundChange.UseVisualStyleBackColor = true;
             this.btnTL_SoundChange.Click += new System.EventHandler(this.StartModActChangeSound);
@@ -138,7 +138,7 @@ namespace SlotEffectMaker2023
             this.btnTL_RandData.Location = new System.Drawing.Point(310, 50);
             this.btnTL_RandData.Name = "btnTL_RandData";
             this.btnTL_RandData.Size = new System.Drawing.Size(140, 30);
-            this.btnTL_RandData.TabIndex = 4;
+            this.btnTL_RandData.TabIndex = 21;
             this.btnTL_RandData.Text = "[TL]乱数抽選設定";
             this.btnTL_RandData.UseVisualStyleBackColor = true;
             this.btnTL_RandData.Click += new System.EventHandler(this.StartModActRandData);
@@ -148,20 +148,20 @@ namespace SlotEffectMaker2023
             this.btnTL_MultiVarSet.Location = new System.Drawing.Point(310, 90);
             this.btnTL_MultiVarSet.Name = "btnTL_MultiVarSet";
             this.btnTL_MultiVarSet.Size = new System.Drawing.Size(140, 30);
-            this.btnTL_MultiVarSet.TabIndex = 5;
+            this.btnTL_MultiVarSet.TabIndex = 22;
             this.btnTL_MultiVarSet.Text = "[TL]複数変数代入設定";
             this.btnTL_MultiVarSet.UseVisualStyleBackColor = true;
             this.btnTL_MultiVarSet.Click += new System.EventHandler(this.StartModActMultiVarSet);
             // 
-            // button1
+            // btnMakeColorMap
             // 
-            this.button1.Location = new System.Drawing.Point(10, 170);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(140, 30);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "テスト";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Test);
+            this.btnMakeColorMap.Location = new System.Drawing.Point(10, 170);
+            this.btnMakeColorMap.Name = "btnMakeColorMap";
+            this.btnMakeColorMap.Size = new System.Drawing.Size(140, 30);
+            this.btnMakeColorMap.TabIndex = 4;
+            this.btnMakeColorMap.Text = "カラーマップ設定";
+            this.btnMakeColorMap.UseVisualStyleBackColor = true;
+            this.btnMakeColorMap.Click += new System.EventHandler(this.Test);
             // 
             // MainForm
             // 
@@ -169,7 +169,7 @@ namespace SlotEffectMaker2023
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(549, 261);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnMakeColorMap);
             this.Controls.Add(this.btnTL_MultiVarSet);
             this.Controls.Add(this.btnTL_RandData);
             this.Controls.Add(this.btnSoundPlayData);
@@ -203,7 +203,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button btnTL_SoundChange;
         private System.Windows.Forms.Button btnTL_RandData;
         private System.Windows.Forms.Button btnTL_MultiVarSet;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnMakeColorMap;
     }
 }
 
