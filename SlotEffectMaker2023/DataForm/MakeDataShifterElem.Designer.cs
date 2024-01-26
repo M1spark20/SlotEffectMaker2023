@@ -1,7 +1,7 @@
 ﻿
 namespace SlotEffectMaker2023.DataForm
 {
-    partial class MakeSoundPlayElem
+    partial class MakeDataShifterElem
     {
         /// <summary>
         /// Required designer variable.
@@ -29,11 +29,11 @@ namespace SlotEffectMaker2023.DataForm
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
+            this.txtPlName = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.txtDefName = new System.Windows.Forms.Label();
             this.tbPlayerName = new System.Windows.Forms.TextBox();
             this.cbUseTimer = new System.Windows.Forms.ComboBox();
             this.numStartTime = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
@@ -45,14 +45,14 @@ namespace SlotEffectMaker2023.DataForm
             ((System.ComponentModel.ISupportInitialize)(this.numStopTime)).BeginInit();
             this.SuspendLayout();
             // 
-            // label1
+            // txtPlName
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 12);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "プレイヤー名";
+            this.txtPlName.AutoSize = true;
+            this.txtPlName.Location = new System.Drawing.Point(10, 13);
+            this.txtPlName.Name = "txtPlName";
+            this.txtPlName.Size = new System.Drawing.Size(64, 12);
+            this.txtPlName.TabIndex = 1;
+            this.txtPlName.Text = "プレイヤー名";
             // 
             // label2
             // 
@@ -81,14 +81,14 @@ namespace SlotEffectMaker2023.DataForm
             this.label4.TabIndex = 1;
             this.label4.Text = "再生終了時間";
             // 
-            // label5
+            // txtDefName
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 124);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(73, 12);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "デフォルト音源";
+            this.txtDefName.AutoSize = true;
+            this.txtDefName.Location = new System.Drawing.Point(10, 124);
+            this.txtDefName.Name = "txtDefName";
+            this.txtDefName.Size = new System.Drawing.Size(73, 12);
+            this.txtDefName.TabIndex = 1;
+            this.txtDefName.Text = "デフォルト音源";
             // 
             // tbPlayerName
             // 
@@ -195,11 +195,11 @@ namespace SlotEffectMaker2023.DataForm
             this.Controls.Add(this.cbDefSound);
             this.Controls.Add(this.cbUseTimer);
             this.Controls.Add(this.tbPlayerName);
-            this.Controls.Add(this.label5);
+            this.Controls.Add(this.txtDefName);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.txtPlName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -215,11 +215,11 @@ namespace SlotEffectMaker2023.DataForm
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label txtPlName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label txtDefName;
         private System.Windows.Forms.TextBox tbPlayerName;
         private System.Windows.Forms.ComboBox cbUseTimer;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numStartTime;

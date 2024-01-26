@@ -41,6 +41,7 @@ namespace SlotEffectMaker2023
             this.btnTL_RandData = new System.Windows.Forms.Button();
             this.btnTL_MultiVarSet = new System.Windows.Forms.Button();
             this.btnMakeColorMap = new System.Windows.Forms.Button();
+            this.btnMakeColorMapPlay = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -161,7 +162,17 @@ namespace SlotEffectMaker2023
             this.btnMakeColorMap.TabIndex = 4;
             this.btnMakeColorMap.Text = "カラーマップ設定";
             this.btnMakeColorMap.UseVisualStyleBackColor = true;
-            this.btnMakeColorMap.Click += new System.EventHandler(this.Test);
+            this.btnMakeColorMap.Click += new System.EventHandler(this.StartModColorMapData);
+            // 
+            // btnMakeColorMapPlay
+            // 
+            this.btnMakeColorMapPlay.Location = new System.Drawing.Point(10, 210);
+            this.btnMakeColorMapPlay.Name = "btnMakeColorMapPlay";
+            this.btnMakeColorMapPlay.Size = new System.Drawing.Size(140, 30);
+            this.btnMakeColorMapPlay.TabIndex = 5;
+            this.btnMakeColorMapPlay.Text = "MAPプレイヤー設定";
+            this.btnMakeColorMapPlay.UseVisualStyleBackColor = true;
+            this.btnMakeColorMapPlay.Click += new System.EventHandler(this.StartModColorMapShifter);
             // 
             // MainForm
             // 
@@ -169,6 +180,7 @@ namespace SlotEffectMaker2023
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(549, 261);
+            this.Controls.Add(this.btnMakeColorMapPlay);
             this.Controls.Add(this.btnMakeColorMap);
             this.Controls.Add(this.btnTL_MultiVarSet);
             this.Controls.Add(this.btnTL_RandData);
@@ -204,6 +216,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button btnTL_RandData;
         private System.Windows.Forms.Button btnTL_MultiVarSet;
         private System.Windows.Forms.Button btnMakeColorMap;
+        private System.Windows.Forms.Button btnMakeColorMapPlay;
     }
 }
 

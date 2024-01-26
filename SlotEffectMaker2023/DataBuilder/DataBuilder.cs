@@ -189,7 +189,7 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
-    class SoundPlayerBuilder : ListBuilderBase<Data.SoundPlayData, InfoSoundPlayData>
+    class SoundPlayerBuilder : ListBuilderBase<Data.SoundPlayData, InfoDataShifter>
     {
         public SoundPlayerBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.SoundPlayData> pData)
             : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
@@ -204,7 +204,8 @@ namespace SlotEffectMaker2023.DataBuilder
         }
         protected override void StartAdd(object sender, EventArgs e)
         {
-            DataForm.MakeSoundPlayElem form = new DataForm.MakeSoundPlayElem(null);
+            var sg = Singleton.EffectDataManagerSingleton.GetInstance();
+            DataForm.MakeDataShifterElem form = new DataForm.MakeDataShifterElem(null, "プレイヤー名", "デフォルト音源", sg.GetSoundIDNameList());
             DialogResult res = form.ShowDialog();
 
             if (res == DialogResult.OK) SetData(-1, form.SetData);
@@ -212,20 +213,20 @@ namespace SlotEffectMaker2023.DataBuilder
         }
         protected override void StartMod(object sender, EventArgs e)
         {
+            var sg = Singleton.EffectDataManagerSingleton.GetInstance();
             foreach (DataGridViewRow row in DGView.SelectedRows)
             {
                 string srcVarName = Data[row.Index].ShifterName;
                 string srcShotTimer = Data[row.Index].GetShotTimerName();
                 string srcLoopTimer = Data[row.Index].GetLoopTimerName();
 
-                DataForm.MakeSoundPlayElem form = new DataForm.MakeSoundPlayElem(Data[row.Index]);
+                DataForm.MakeDataShifterElem form = new DataForm.MakeDataShifterElem(Data[row.Index], "プレイヤー名", "デフォルト音源", sg.GetSoundIDNameList());
                 DialogResult res = form.ShowDialog();
 
                 if (res == DialogResult.OK)
                 {
                     int modIndex = row.Index;
                     SetData(row.Index, form.SetData);
-                    var sg = Singleton.EffectDataManagerSingleton.GetInstance();
                     sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.SoundPlayer, srcVarName, Data[modIndex].ShifterName);
                     // 自動生成タイマ名も更新する
                     sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.Timer, srcShotTimer, Data[modIndex].GetShotTimerName());
@@ -240,7 +241,7 @@ namespace SlotEffectMaker2023.DataBuilder
 
             foreach (var item in Data)
             {
-                InfoSoundPlayData info = new InfoSoundPlayData
+                InfoDataShifter info = new InfoDataShifter
                 {
                     playerName = item.ShifterName,
                     timerName = item.UseTimerName,
@@ -433,6 +434,76 @@ namespace SlotEffectMaker2023.DataBuilder
                 Indicator.Add(info);
             }
             FinalizeIndicator(indexShift);
+        }
+    }
+    class ColorMapShifterBuilder : ListBuilderBase<Data.ColorMapShifter, InfoDataShifter>
+    {
+        public ColorMapShifterBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.ColorMapShifter> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "PlayerName";
+            DGView.Columns[1].HeaderText = "UseTimer";
+            DGView.Columns[2].HeaderText = "Start[ms]";
+            DGView.Columns[3].HeaderText = "Stop[ms]";
+            DGView.Columns[4].HeaderText = "DefMapID";
+            DGView.CellFormatting += Format;
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            var sg = Singleton.EffectDataManagerSingleton.GetInstance();
+            DataForm.MakeDataShifterElem form = new DataForm.MakeDataShifterElem(null, "プレイヤー名", "デフォルトMap", sg.ColorMap.GetMapListName());
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            var sg = Singleton.EffectDataManagerSingleton.GetInstance();
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                string srcVarName = Data[row.Index].ShifterName;
+
+                DataForm.MakeDataShifterElem form = new DataForm.MakeDataShifterElem(Data[row.Index], "プレイヤー名", "デフォルトMap", sg.ColorMap.GetMapListName());
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    sg.Rename(SlotEffectMaker2023.Data.EChangeNameType.MapPlayer, srcVarName, Data[modIndex].ShifterName);
+                }
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoDataShifter info = new InfoDataShifter
+                {
+                    playerName = item.ShifterName,
+                    timerName = item.UseTimerName,
+                    start = item.BeginTime,
+                    stop = item.StopTime,
+                    defSID = item.DefaultElemID
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+        private void Format(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // データが存在しない場合赤背景にする
+            DataGridView dgv = (DataGridView)sender;
+            var ef = Singleton.EffectDataManagerSingleton.GetInstance();
+            if (e.ColumnIndex == 1 && !ef.TimerList.CheckTimerExist(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()))
+                e.CellStyle.BackColor = Color.Red;
+            if (e.ColumnIndex == 4 && ef.GetSoundID(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+                e.CellStyle.BackColor = Color.Red;
         }
     }
     class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeSound>

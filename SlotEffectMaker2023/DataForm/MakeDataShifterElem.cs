@@ -10,33 +10,35 @@ using System.Windows.Forms;
 
 namespace SlotEffectMaker2023.DataForm
 {
-    public partial class MakeSoundPlayElem : SlotMaker2022.UserControl.FormElemDecide
+    public partial class MakeDataShifterElem : SlotMaker2022.UserControl.FormElemDecide
     {
         string defDataName;
-        public MakeSoundPlayElem(Data.SoundPlayData sp)
+        public MakeDataShifterElem(Data.DataShifterBase ds, string plName, string defName, string[] cbDataList)
         {
             InitializeComponent();
-            if (sp == null) sp = new Data.SoundPlayData();
+            if (ds == null) ds = new Data.SoundPlayData();
             var ed = Singleton.EffectDataManagerSingleton.GetInstance();
             cbUseTimer.Items.AddRange(ed.TimerList.GetTimerNameList());
-            cbDefSound.Items.AddRange(ed.GetSoundIDNameList());
+            cbDefSound.Items.AddRange(cbDataList);
             numStartTime.Maximum = int.MaxValue;
             numStopTime.Maximum = int.MaxValue;
-            defDataName = sp.ShifterName;
+            defDataName = ds.ShifterName;
             // コントロール初期化
-            tbPlayerName.Text = sp.ShifterName;
-            if (ed.TimerList.CheckTimerExist(sp.UseTimerName)) cbUseTimer.SelectedItem = sp.UseTimerName;
-            numStartTime.Value = sp.BeginTime;
-            numStopTime.Value = sp.StopTime;
-            if (ed.GetSoundID(sp.DefaultElemID) != null) cbDefSound.SelectedItem = sp.DefaultElemID;
+            txtPlName.Text = plName;
+            txtDefName.Text = defName;
+            tbPlayerName.Text = ds.ShifterName;
+            cbUseTimer.Text = ds.UseTimerName;
+            numStartTime.Value = ds.BeginTime;
+            numStopTime.Value = ds.StopTime;
+            cbDefSound.Text = ds.DefaultElemID;
         }
-        public bool SetData(Data.SoundPlayData sp)
+        public bool SetData(Data.DataShifterBase ds)
         {
-            sp.ShifterName = tbPlayerName.Text;
-            sp.UseTimerName = cbUseTimer.SelectedItem.ToString();
-            sp.BeginTime = decimal.ToInt32(numStartTime.Value);
-            sp.StopTime = decimal.ToInt32(numStopTime.Value);
-            sp.DefaultElemID = cbDefSound.SelectedItem.ToString();
+            ds.ShifterName = tbPlayerName.Text;
+            ds.UseTimerName = cbUseTimer.SelectedItem.ToString();
+            ds.BeginTime = decimal.ToInt32(numStartTime.Value);
+            ds.StopTime = decimal.ToInt32(numStopTime.Value);
+            ds.DefaultElemID = cbDefSound.SelectedItem.ToString();
             return true;
         }
         protected override void BtnOK_Click(object sender, EventArgs e)

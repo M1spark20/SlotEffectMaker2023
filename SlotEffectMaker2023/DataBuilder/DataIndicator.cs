@@ -25,7 +25,7 @@ namespace SlotEffectMaker2023.DataBuilder
         public string Loop { get; set; }
         public int LoopBegin { get; set; }
     }
-    class InfoSoundPlayData 
+    class InfoDataShifter 
     { 
         public string playerName { get; set; }
         public string timerName { get; set; }
