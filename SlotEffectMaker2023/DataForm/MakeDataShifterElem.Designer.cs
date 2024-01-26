@@ -38,7 +38,7 @@ namespace SlotEffectMaker2023.DataForm
             this.cbUseTimer = new System.Windows.Forms.ComboBox();
             this.numStartTime = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             this.numStopTime = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
-            this.cbDefSound = new System.Windows.Forms.ComboBox();
+            this.cbDefElem = new System.Windows.Forms.ComboBox();
             this.BtnCancel = new System.Windows.Forms.Button();
             this.BtnOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numStartTime)).BeginInit();
@@ -154,12 +154,12 @@ namespace SlotEffectMaker2023.DataForm
             // 
             // cbDefSound
             // 
-            this.cbDefSound.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbDefSound.FormattingEnabled = true;
-            this.cbDefSound.Location = new System.Drawing.Point(90, 120);
-            this.cbDefSound.Name = "cbDefSound";
-            this.cbDefSound.Size = new System.Drawing.Size(150, 20);
-            this.cbDefSound.TabIndex = 3;
+            this.cbDefElem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbDefElem.FormattingEnabled = true;
+            this.cbDefElem.Location = new System.Drawing.Point(90, 120);
+            this.cbDefElem.Name = "cbDefSound";
+            this.cbDefElem.Size = new System.Drawing.Size(150, 20);
+            this.cbDefElem.TabIndex = 3;
             // 
             // BtnCancel
             // 
@@ -192,7 +192,7 @@ namespace SlotEffectMaker2023.DataForm
             this.Controls.Add(this.BtnOK);
             this.Controls.Add(this.numStopTime);
             this.Controls.Add(this.numStartTime);
-            this.Controls.Add(this.cbDefSound);
+            this.Controls.Add(this.cbDefElem);
             this.Controls.Add(this.cbUseTimer);
             this.Controls.Add(this.tbPlayerName);
             this.Controls.Add(this.txtDefName);
@@ -224,7 +224,7 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.ComboBox cbUseTimer;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numStartTime;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numStopTime;
-        private System.Windows.Forms.ComboBox cbDefSound;
+        private System.Windows.Forms.ComboBox cbDefElem;
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.Button BtnOK;
     }

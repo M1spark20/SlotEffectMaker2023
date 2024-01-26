@@ -19,7 +19,7 @@ namespace SlotEffectMaker2023.DataForm
             if (ds == null) ds = new Data.SoundPlayData();
             var ed = Singleton.EffectDataManagerSingleton.GetInstance();
             cbUseTimer.Items.AddRange(ed.TimerList.GetTimerNameList());
-            cbDefSound.Items.AddRange(cbDataList);
+            cbDefElem.Items.AddRange(cbDataList);
             numStartTime.Maximum = int.MaxValue;
             numStopTime.Maximum = int.MaxValue;
             defDataName = ds.ShifterName;
@@ -30,7 +30,7 @@ namespace SlotEffectMaker2023.DataForm
             cbUseTimer.Text = ds.UseTimerName;
             numStartTime.Value = ds.BeginTime;
             numStopTime.Value = ds.StopTime;
-            cbDefSound.Text = ds.DefaultElemID;
+            cbDefElem.Text = ds.DefaultElemID;
         }
         public bool SetData(Data.DataShifterBase ds)
         {
@@ -38,20 +38,20 @@ namespace SlotEffectMaker2023.DataForm
             ds.UseTimerName = cbUseTimer.SelectedItem.ToString();
             ds.BeginTime = decimal.ToInt32(numStartTime.Value);
             ds.StopTime = decimal.ToInt32(numStopTime.Value);
-            ds.DefaultElemID = cbDefSound.SelectedItem.ToString();
+            ds.DefaultElemID = cbDefElem.SelectedItem.ToString();
             return true;
         }
         protected override void BtnOK_Click(object sender, EventArgs e)
         {
             if (tbPlayerName.Text.Equals(string.Empty))
             {
-                MessageBox.Show("プレイヤー名を設定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(txtPlName.Text + "を設定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             var ed = Singleton.EffectDataManagerSingleton.GetInstance();
             if (ed.GetSoundPlayer(tbPlayerName.Text) != null && !defDataName.Equals(tbPlayerName.Text))
             {
-                MessageBox.Show("プレイヤー名が他のデータと重複しています。\n他の名前を指定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(txtPlName.Text + "が他のデータと重複しています。\n他の名前を指定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (cbUseTimer.SelectedIndex < 0)
@@ -59,9 +59,9 @@ namespace SlotEffectMaker2023.DataForm
                 MessageBox.Show("使用タイマを選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (cbDefSound.SelectedIndex < 0)
+            if (cbDefElem.SelectedIndex < 0)
             {
-                MessageBox.Show("デフォルト音源を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(txtDefName.Text + "を選択してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             base.BtnOK_Click(sender, e);
