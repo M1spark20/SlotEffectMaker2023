@@ -103,6 +103,7 @@ namespace SlotEffectMaker2023.Singleton
             VarList.Rename(type, src, dst);
             TimerList.Rename(type, src, dst);
             Timeline.Rename(type, src, dst);
+            ColorMap.Rename(type, src, dst);
         }
 
         /* プログラム内共通機能(全体での共有事項をここで定義) */

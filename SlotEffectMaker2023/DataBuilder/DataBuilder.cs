@@ -502,10 +502,68 @@ namespace SlotEffectMaker2023.DataBuilder
             var ef = Singleton.EffectDataManagerSingleton.GetInstance();
             if (e.ColumnIndex == 1 && !ef.TimerList.CheckTimerExist(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()))
                 e.CellStyle.BackColor = Color.Red;
-            if (e.ColumnIndex == 4 && ef.GetSoundID(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+            if (e.ColumnIndex == 4 && ef.ColorMap.GetMapList(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
                 e.CellStyle.BackColor = Color.Red;
         }
     }
+    class MapSWBuilder : ListBuilderBase<Data.EfActionSwitch, InfoActionSwitch>
+    {
+        const string numName = "変数条件";
+        const string actName = "適用MAPデータ";
+        public MapSWBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActionSwitch> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "Value";
+            DGView.Columns[1].HeaderText = "ActName";
+            DGView.CellFormatting += Format;
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(null, data.ColorMap.GetMapListName, SlotEffectMaker2023.Data.EChangeNameType.ColorMap, numName, actName);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeActionSwitchElem form = new DataForm.MakeActionSwitchElem(Data[row.Index], data.ColorMap.GetMapListName, SlotEffectMaker2023.Data.EChangeNameType.ColorMap, numName, actName);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActionSwitch info = new InfoActionSwitch
+                {
+                    CondVal = item.condVal,
+                    ActName = item.actName
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+        private void Format(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // データが存在しない場合赤背景にする
+            DataGridView dgv = (DataGridView)sender;
+            var ef = Singleton.EffectDataManagerSingleton.GetInstance().ColorMap;
+            if (e.ColumnIndex == 1 && ef.GetMapList(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+                e.CellStyle.BackColor = Color.Red;
+        }
+    }
+
     class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeElem>
     {
         public ActChangeSoundBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActChangeSound> pData)
@@ -632,7 +690,7 @@ namespace SlotEffectMaker2023.DataBuilder
             // データが存在しない場合赤背景にする
             DataGridView dgv = (DataGridView)sender;
             var ef = Singleton.EffectDataManagerSingleton.GetInstance();
-            if (e.ColumnIndex == 0 && ef.GetSoundPlayer(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+            if (e.ColumnIndex == 0 && ef.ColorMap.GetShifter(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
                 e.CellStyle.BackColor = Color.Red;
             if (e.ColumnIndex == 1 && ef.VarList.GetData(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
                 e.CellStyle.BackColor = Color.Red;

@@ -13,7 +13,7 @@ namespace SlotEffectMaker2023.DataForm
     public partial class MakeActChangeMapElem : SlotMaker2022.UserControl.FormElemDecide
     {
         private static string dataNameHead = "ActMP";
-        private DataBuilder.SoundSWBuilder builder;
+        private DataBuilder.MapSWBuilder builder;
         private List<Data.EfActionSwitch> switcher;
         string defDataName;
 
@@ -38,7 +38,7 @@ namespace SlotEffectMaker2023.DataForm
             CBChanged(null, null);
 
             // dgv初期化
-            builder = new DataBuilder.SoundSWBuilder(btnAdd, btnMod, btnDel, btnSeekUp, btnSeekDn, dgvShow, switcher);
+            builder = new DataBuilder.MapSWBuilder(btnAdd, btnMod, btnDel, btnSeekUp, btnSeekDn, dgvShow, switcher);
         }
         public bool SetData(Data.EfActChangeMap cm)
         {

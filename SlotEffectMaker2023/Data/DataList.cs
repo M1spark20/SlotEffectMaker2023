@@ -547,7 +547,7 @@ namespace SlotEffectMaker2023.Data
         }
         public override void Rename(EChangeNameType type, string src, string dst)
         {
-            if (type == EChangeNameType.SoundPlayer && switcherName.Equals(src)) switcherName = dst;
+            if (type == EChangeNameType.MapPlayer && switcherName.Equals(src)) switcherName = dst;
             if (type == EChangeNameType.Var && variableRef.Equals(src)) variableRef = dst;
             foreach (var sw in switcher) sw.Rename(type, src, dst);
         }
