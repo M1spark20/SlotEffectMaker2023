@@ -213,7 +213,7 @@
     <Compile Include="Action\SlotValManager.cs" />
     <Compile Include="Data\SlotVariable.cs" />
     <Compile Include="DataBuilder\ListBuilderBase.cs" />
-    <Compile Include="Action\SoundDataManager.cs" />
+    <Compile Include="Action\DataShifterManager.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

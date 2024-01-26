@@ -477,7 +477,7 @@ namespace SlotEffectMaker2023.Data
             }
 
             var soundData = actData.soundData;
-            soundData.ChangeSoundID(playDataName, soundID);
+            soundData.ChangeElem(playDataName, soundID);
         }
         public override bool StoreData(ref BinaryWriter fs, int version)
         {
