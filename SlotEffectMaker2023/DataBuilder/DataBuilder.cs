@@ -553,7 +553,7 @@ namespace SlotEffectMaker2023.DataBuilder
                 {
                     DataName = item.dataName,
                     DataUsage = item.usage,
-                    SoundPlayDataName = item.playDataName,
+                    SoundPlayDataName = item.switcherName,
                     VarRef = item.variableRef
                 };
                 Indicator.Add(info);

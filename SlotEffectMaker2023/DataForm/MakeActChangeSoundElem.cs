@@ -31,7 +31,7 @@ namespace SlotEffectMaker2023.DataForm
 
             // cb初期化
             cbPlay.Items.AddRange(data.GetSoundPlayerNameList());
-            cbPlay.Text = si.playDataName;
+            cbPlay.Text = si.switcherName;
             cbVar.Items.AddRange(data.VarList.GetVariableNameList());
             cbVar.Text = si.variableRef;
             switcher = si.switcher;
@@ -44,7 +44,7 @@ namespace SlotEffectMaker2023.DataForm
         {
             si.dataName = tbDataName.Text;
             si.usage = tbUsage.Text;
-            si.playDataName = cbPlay.SelectedItem.ToString();
+            si.switcherName = cbPlay.SelectedItem.ToString();
             if (cbVar.SelectedIndex < 0) si.variableRef = string.Empty;
             else si.variableRef = cbVar.SelectedItem.ToString();
             si.switcher = switcher;
