@@ -49,6 +49,7 @@ namespace SlotEffectMaker2023.Singleton
                 if (!rd.ReadData(VarList)) return false;
                 if (!rd.ReadData(TimerList)) return false;
                 if (!rd.ReadData(Timeline)) return false;
+                if (!rd.ReadData(ColorMap)) return false;
                 rd.Close();
 
                 // バックアップ生成(Unity側では削除すること)
@@ -90,6 +91,7 @@ namespace SlotEffectMaker2023.Singleton
             sw.WriteData(VarList);
             sw.WriteData(TimerList);
             sw.WriteData(Timeline);
+            sw.WriteData(ColorMap);
             return true;
         }
 

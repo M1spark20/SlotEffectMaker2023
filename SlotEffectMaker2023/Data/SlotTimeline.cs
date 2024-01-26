@@ -52,6 +52,9 @@ namespace SlotEffectMaker2023.Data
 			fs.Write(multiSetData.Count);
 			foreach (var item in multiSetData) 
 				if (!item.StoreData(ref fs, version)) return false;
+			fs.Write(changeMap.Count);
+			foreach (var item in changeMap) 
+				if (!item.StoreData(ref fs, version)) return false;
 			return true;
 		}
 		public bool ReadData(ref BinaryReader fs, int version)
@@ -104,6 +107,13 @@ namespace SlotEffectMaker2023.Data
 				EfActMultiVarSet mv = new EfActMultiVarSet();
 				if (!mv.ReadData(ref fs, version)) return false;
 				multiSetData.Add(mv);
+			}
+			dataCount = fs.ReadInt32();
+			for (int i = 0; i < dataCount; ++i)
+			{
+				EfActChangeMap cm = new EfActChangeMap();
+				if (!cm.ReadData(ref fs, version)) return false;
+				changeMap.Add(cm);
 			}
 			return true;
 		}
