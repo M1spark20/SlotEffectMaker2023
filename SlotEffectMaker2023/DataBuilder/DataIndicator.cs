@@ -59,7 +59,7 @@ namespace SlotEffectMaker2023.DataBuilder
         public int CondVal { get; set; }
         public string ActName { get; set; }
     }
-    class InfoActChangeSound : InfoActBase
+    class InfoActChangeElem : InfoActBase
     {
         public string SoundPlayDataName { get; set; }
         public string VarRef { get; set; }

@@ -55,6 +55,15 @@
     <Compile Include="DataBuilder\GeneralDataBuilder.Designer.cs">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\MakeActChangeMapElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeActChangeMapElem.Designer.cs">
+      <DependentUpon>MakeActChangeMapElem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\MakeActChangeMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataForm\MakeColorMapList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +240,9 @@
     <Compile Include="UserControl.cs" />
     <EmbeddedResource Include="DataBuilder\GeneralDataBuilder.resx">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeActChangeMapElem.resx">
+      <DependentUpon>MakeActChangeMapElem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeColorMapListElem.resx">
       <DependentUpon>MakeColorMapListElem.cs</DependentUpon>

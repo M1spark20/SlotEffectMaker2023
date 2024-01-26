@@ -98,5 +98,10 @@ namespace SlotEffectMaker2023
             DataForm.MakeMapPlay mp = new DataForm.MakeMapPlay();
             mp.ShowDialog();
         }
+        private void StartModActMapChange(object sender, EventArgs e)
+        {
+            DataForm.MakeActChangeMap mp = new DataForm.MakeActChangeMap();
+            mp.ShowDialog();
+        }
     }
 }

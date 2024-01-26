@@ -506,7 +506,7 @@ namespace SlotEffectMaker2023.DataBuilder
                 e.CellStyle.BackColor = Color.Red;
         }
     }
-    class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeSound>
+    class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeElem>
     {
         public ActChangeSoundBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActChangeSound> pData)
             : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
@@ -549,7 +549,73 @@ namespace SlotEffectMaker2023.DataBuilder
 
             foreach (var item in Data)
             {
-                InfoActChangeSound info = new InfoActChangeSound
+                InfoActChangeElem info = new InfoActChangeElem
+                {
+                    DataName = item.dataName,
+                    DataUsage = item.usage,
+                    SoundPlayDataName = item.switcherName,
+                    VarRef = item.variableRef
+                };
+                Indicator.Add(info);
+            }
+
+            FinalizeIndicator(indexShift);
+        }
+        private void Format(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // データが存在しない場合赤背景にする
+            DataGridView dgv = (DataGridView)sender;
+            var ef = Singleton.EffectDataManagerSingleton.GetInstance();
+            if (e.ColumnIndex == 0 && ef.GetSoundPlayer(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+                e.CellStyle.BackColor = Color.Red;
+            if (e.ColumnIndex == 1 && ef.VarList.GetData(dgv[e.ColumnIndex, e.RowIndex].Value.ToString()) == null)
+                e.CellStyle.BackColor = Color.Red;
+        }
+    }
+    class ActChangeMapBuilder : ListBuilderBase<Data.EfActChangeMap, InfoActChangeElem>
+    {
+        public ActChangeMapBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.EfActChangeMap> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "MapPlayID";
+            DGView.Columns[1].HeaderText = "VariableRef";
+            DGView.Columns[2].HeaderText = "EffectName";
+            DGView.Columns[3].HeaderText = "Usage";
+            DGView.CellFormatting += Format;
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeActChangeMapElem form = new DataForm.MakeActChangeMapElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                string srcVarName = Data[row.Index].dataName;
+                DataForm.MakeActChangeMapElem form = new DataForm.MakeActChangeMapElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.Timeline, srcVarName, Data[modIndex].dataName);
+                }
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoActChangeElem info = new InfoActChangeElem
                 {
                     DataName = item.dataName,
                     DataUsage = item.usage,
