@@ -12,4 +12,8 @@ namespace UnityEngine
     {
         public static int Range(int min, int max) { return 0; }
     }
+    class Mathf
+    {
+        public static float Pow(float f, float p) { return 0f; }
+    }
 }

@@ -35,6 +35,7 @@ namespace SlotEffectMaker2023.DataForm
             numTrigTime.Maximum = int.MaxValue;
             numTrigTime.Value = cm.beginTime;
             numLoopCnt.Value = cm.loopCount;
+            numFactor.Value = (decimal)cm.scaleFactor;
             cbAnimType.SelectedIndex = (int)cm.speed;
             chkFade.Checked = cm.fadeFlag;
             cbReadDirection.SelectedIndex = 0;
@@ -47,6 +48,7 @@ namespace SlotEffectMaker2023.DataForm
             cm.fadeFlag = chkFade.Checked;
             cm.loopCount = decimal.ToUInt32(numLoopCnt.Value);
             cm.beginTime = decimal.ToInt32(numTrigTime.Value);
+            cm.scaleFactor = decimal.ToSingle(numFactor.Value);
             cm.speed = (Data.ColorMapAccelation)cbAnimType.SelectedIndex;
             cm.AddMapData(nowImage);
             return true;

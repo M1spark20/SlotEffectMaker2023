@@ -21,6 +21,7 @@ namespace SlotEffectMaker2023.Data
 		public bool fadeFlag { get; set; }        // フェードアニメーション有無
 		public uint loopCount { get; set; }       // 繰り返し回数
 		public int  beginTime { get; set; }       // 再生開始時間[ms]
+		public float scaleFactor { get; set; }    // 加速度制御値a [acc: t^a, dec: 1-(1-t)^a]
 		public ColorMapAccelation speed { get; set; }	// アニメーション速度種類
 
 		public List<int> mapData { get; private set; } // マップデータ本体(x + y*sizeW + card*sizeW*sizeH)
@@ -33,6 +34,7 @@ namespace SlotEffectMaker2023.Data
 			fadeFlag = false;
 			loopCount = 1;
 			beginTime = 0;
+			scaleFactor = 2f;
 			speed = ColorMapAccelation.Steady;
 			mapData = new List<int>();
 		}
@@ -46,6 +48,7 @@ namespace SlotEffectMaker2023.Data
 			fs.Write(fadeFlag);
 			fs.Write(loopCount);
 			fs.Write(beginTime);
+			fs.Write(scaleFactor);
 			fs.Write((byte)speed);
 
 			int mapSize = mapData.Count;
@@ -61,6 +64,7 @@ namespace SlotEffectMaker2023.Data
 			fadeFlag = fs.ReadBoolean();
 			loopCount = fs.ReadUInt32();
 			beginTime = fs.ReadInt32();
+			scaleFactor = fs.ReadSingle();
 			speed = (ColorMapAccelation)fs.ReadByte();
 
 			int mapSize = fs.ReadInt32();
@@ -98,6 +102,19 @@ namespace SlotEffectMaker2023.Data
 			int map = GetMapData(card, y, x);
 			return (byte)(map >> (8 * (int)color) & 0xFF);
 		}
+		public float GetCardF(float timeEqualized)	// 正規化した進捗を引数に取る
+        {
+			// 数値チェック
+			if (timeEqualized < 0f || timeEqualized > 1f) return 0f;
+			// 定速
+			if (speed == ColorMapAccelation.Steady) return cardNum * timeEqualized;
+			// 加速
+			if (speed == ColorMapAccelation.Acc) return cardNum * UnityEngine.Mathf.Pow(timeEqualized, scaleFactor);
+			// 減速
+			if (speed == ColorMapAccelation.Dec) return cardNum * (1f - UnityEngine.Mathf.Pow(1f - timeEqualized, scaleFactor));
+
+			return 0f;
+        }
 		public void ClearMapData()
 		{
 			mapData.Clear();

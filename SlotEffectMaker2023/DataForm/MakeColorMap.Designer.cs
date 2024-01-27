@@ -51,10 +51,12 @@ namespace SlotEffectMaker2023.DataForm
             this.label6 = new System.Windows.Forms.Label();
             this.cbAnimType = new System.Windows.Forms.ComboBox();
             this.fdSaveMap = new System.Windows.Forms.SaveFileDialog();
+            this.numFactor = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             ((System.ComponentModel.ISupportInitialize)(this.numTrigTime)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numLoopCnt)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCardImg)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExtRate)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFactor)).BeginInit();
             this.SuspendLayout();
             // 
             // BtnOK
@@ -123,7 +125,7 @@ namespace SlotEffectMaker2023.DataForm
             this.chkFade.Location = new System.Drawing.Point(10, 150);
             this.chkFade.Name = "chkFade";
             this.chkFade.Size = new System.Drawing.Size(58, 16);
-            this.chkFade.TabIndex = 3;
+            this.chkFade.TabIndex = 4;
             this.chkFade.Text = "フェード";
             this.chkFade.UseVisualStyleBackColor = true;
             // 
@@ -149,7 +151,7 @@ namespace SlotEffectMaker2023.DataForm
             this.btnReadImage.Location = new System.Drawing.Point(10, 175);
             this.btnReadImage.Name = "btnReadImage";
             this.btnReadImage.Size = new System.Drawing.Size(55, 23);
-            this.btnReadImage.TabIndex = 4;
+            this.btnReadImage.TabIndex = 5;
             this.btnReadImage.Text = "読込";
             this.btnReadImage.UseVisualStyleBackColor = true;
             this.btnReadImage.Click += new System.EventHandler(this.ReadImage);
@@ -159,7 +161,7 @@ namespace SlotEffectMaker2023.DataForm
             this.btnExportImage.Location = new System.Drawing.Point(76, 175);
             this.btnExportImage.Name = "btnExportImage";
             this.btnExportImage.Size = new System.Drawing.Size(55, 23);
-            this.btnExportImage.TabIndex = 5;
+            this.btnExportImage.TabIndex = 6;
             this.btnExportImage.Text = "取得";
             this.btnExportImage.UseVisualStyleBackColor = true;
             this.btnExportImage.Click += new System.EventHandler(this.ExportImage);
@@ -169,7 +171,7 @@ namespace SlotEffectMaker2023.DataForm
             this.btnShiftLeft.Location = new System.Drawing.Point(10, 235);
             this.btnShiftLeft.Name = "btnShiftLeft";
             this.btnShiftLeft.Size = new System.Drawing.Size(23, 23);
-            this.btnShiftLeft.TabIndex = 7;
+            this.btnShiftLeft.TabIndex = 8;
             this.btnShiftLeft.Text = "＜";
             this.btnShiftLeft.UseVisualStyleBackColor = true;
             this.btnShiftLeft.Click += new System.EventHandler(this.MinusCard);
@@ -179,7 +181,7 @@ namespace SlotEffectMaker2023.DataForm
             this.btnShiftRight.Location = new System.Drawing.Point(108, 235);
             this.btnShiftRight.Name = "btnShiftRight";
             this.btnShiftRight.Size = new System.Drawing.Size(23, 23);
-            this.btnShiftRight.TabIndex = 8;
+            this.btnShiftRight.TabIndex = 9;
             this.btnShiftRight.Text = "＞";
             this.btnShiftRight.UseVisualStyleBackColor = true;
             this.btnShiftRight.Click += new System.EventHandler(this.PlusCard);
@@ -216,7 +218,7 @@ namespace SlotEffectMaker2023.DataForm
             this.cbReadDirection.Location = new System.Drawing.Point(76, 205);
             this.cbReadDirection.Name = "cbReadDirection";
             this.cbReadDirection.Size = new System.Drawing.Size(55, 20);
-            this.cbReadDirection.TabIndex = 6;
+            this.cbReadDirection.TabIndex = 7;
             // 
             // label5
             // 
@@ -242,7 +244,7 @@ namespace SlotEffectMaker2023.DataForm
             0});
             this.numExtRate.Name = "numExtRate";
             this.numExtRate.Size = new System.Drawing.Size(55, 19);
-            this.numExtRate.TabIndex = 9;
+            this.numExtRate.TabIndex = 10;
             this.numExtRate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.numExtRate.Value = new decimal(new int[] {
             1,
@@ -265,9 +267,9 @@ namespace SlotEffectMaker2023.DataForm
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(12, 100);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(92, 12);
+            this.label6.Size = new System.Drawing.Size(109, 12);
             this.label6.TabIndex = 38;
-            this.label6.Text = "アニメーションタイプ";
+            this.label6.Text = "加速度 / ファクタ(t^a)";
             // 
             // cbAnimType
             // 
@@ -279,12 +281,41 @@ namespace SlotEffectMaker2023.DataForm
             "減速"});
             this.cbAnimType.Location = new System.Drawing.Point(10, 115);
             this.cbAnimType.Name = "cbAnimType";
-            this.cbAnimType.Size = new System.Drawing.Size(121, 20);
+            this.cbAnimType.Size = new System.Drawing.Size(55, 20);
             this.cbAnimType.TabIndex = 2;
             // 
             // fdSaveMap
             // 
             this.fdSaveMap.RestoreDirectory = true;
+            // 
+            // numFactor
+            // 
+            this.numFactor.DecimalPlaces = 2;
+            this.numFactor.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numFactor.Location = new System.Drawing.Point(76, 116);
+            this.numFactor.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.numFactor.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numFactor.Name = "numFactor";
+            this.numFactor.Size = new System.Drawing.Size(55, 19);
+            this.numFactor.TabIndex = 3;
+            this.numFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numFactor.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
             // 
             // MakeColorMap
             // 
@@ -293,6 +324,7 @@ namespace SlotEffectMaker2023.DataForm
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(397, 303);
             this.ControlBox = false;
+            this.Controls.Add(this.numFactor);
             this.Controls.Add(this.cbAnimType);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.numExtRate);
@@ -323,6 +355,7 @@ namespace SlotEffectMaker2023.DataForm
             ((System.ComponentModel.ISupportInitialize)(this.numLoopCnt)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCardImg)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numExtRate)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numFactor)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -352,5 +385,6 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox cbAnimType;
         private System.Windows.Forms.SaveFileDialog fdSaveMap;
+        private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numFactor;
     }
 }
