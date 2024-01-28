@@ -87,31 +87,28 @@ namespace SlotEffectMaker2023.Data
 		}
 		public int GetMapData(uint card, uint y, uint x)
 		{
-			if (card >= cardNum) return 0;
+			if (card >= cardNum * loopCount) return 0;
 			if (y >= sizeH) return 0;
 			if (x >= sizeW) return 0;
 
 			// indexを計算して書き出し
 			uint index = x;
 			index += y * sizeW;
-			index += card * sizeH * sizeW;
+			index += (card % loopCount) * sizeH * sizeW;
 			return mapData[(int)index];
 		}
-		public byte GetMapDataElem(uint card, uint y, uint x, ColorMapElem color)
-		{
-			int map = GetMapData(card, y, x);
-			return (byte)(map >> (8 * (int)color) & 0xFF);
-		}
-		public float GetCardF(float timeEqualized)	// 正規化した進捗を引数に取る
-        {
+		public float GetCardF(float timeEqualized)
+        {	// 正規化した進捗を引数に取る
 			// 数値チェック
 			if (timeEqualized < 0f || timeEqualized > 1f) return 0f;
+
+			uint cardTotal = cardNum * loopCount;
 			// 定速
-			if (speed == ColorMapAccelation.Steady) return cardNum * timeEqualized;
+			if (speed == ColorMapAccelation.Steady) return cardTotal * timeEqualized;
 			// 加速
-			if (speed == ColorMapAccelation.Acc) return cardNum * UnityEngine.Mathf.Pow(timeEqualized, scaleFactor);
+			if (speed == ColorMapAccelation.Acc) return cardTotal * UnityEngine.Mathf.Pow(timeEqualized, scaleFactor);
 			// 減速
-			if (speed == ColorMapAccelation.Dec) return cardNum * (1f - UnityEngine.Mathf.Pow(1f - timeEqualized, scaleFactor));
+			if (speed == ColorMapAccelation.Dec) return cardTotal * (1f - UnityEngine.Mathf.Pow(1f - timeEqualized, scaleFactor));
 
 			return 0f;
         }
@@ -129,7 +126,13 @@ namespace SlotEffectMaker2023.Data
 		public string useTimerName { get; set; } // 制御に使用するタイマ名
 		public int loopTime { get; set; }        // ループ時間[ms]
 		public uint sizeW { get; set; }			 // カラーマップのWサイズ
-		public uint sizeH { get; set; }			 // カラーマップのHサイズ
+		public uint sizeH { get; set; }          // カラーマップのHサイズ
+
+		// データ出力用関数(一時変数のため保存しない)
+		private int   mRefDataIdx;	// 次の参照データ(参照なし時-1)
+		private float mProgress;	// 現在のデータの進捗(0<=val<=1) val>0で次データあり確定
+		private float mCardIDFloat;	// 現在表示するカードID
+		private const float divMS = 1000f;
 
 		public List<ColorMap> elemData { get; set; }	// カラーマップアニメーションまとめ
 
@@ -141,6 +144,10 @@ namespace SlotEffectMaker2023.Data
 			useTimerName = string.Empty;
 			loopTime = -1;
 			elemData = new List<ColorMap>();
+			// プライベートメンバ
+			mRefDataIdx = -1;
+			mProgress = 0;
+			mCardIDFloat = 0;
 		}
 
 		public bool StoreData(ref BinaryWriter fs, int version)
@@ -179,6 +186,89 @@ namespace SlotEffectMaker2023.Data
 			if (type == EChangeNameType.Timer && useTimerName.Equals(src)) useTimerName = dst;
 			foreach (var cm in elemData) cm.Rename(type, src, dst);
         }
+
+		// データ取得に必要な時間の計算を行って内部に保存する。(色取り出し前に呼び出すことで制御)
+		public void SetCard(float currentTime)
+        {	// 参照時間により取り出すカードの選択を行う
+			// データ初期化
+			mRefDataIdx = -1;
+			mProgress = 0f;
+			mCardIDFloat = 0f;
+			if (elemData.Count == 0) return;
+
+			// 計算時間算出
+			float calcTime = currentTime;
+			float loopTimeF = loopTime / divMS;
+			int lastDataTime = elemData[elemData.Count - 1].beginTime;
+			if (currentTime > lastDataTime / divMS)
+            {
+				if (loopTime < 0) return;
+				else if (loopTime >= lastDataTime) calcTime = loopTimeF;
+				else
+				{
+					float loopSize = (lastDataTime - loopTime) / divMS;
+					calcTime = ((currentTime - loopTimeF) % loopSize) + loopTimeF;
+				}
+            }
+
+			// 使用データ算出(mRefDataIdx - 0から走査)
+			if (calcTime < 0f || calcTime < elemData[0].beginTime / divMS) return;
+			for (mRefDataIdx = 0; mRefDataIdx < elemData.Count; ++mRefDataIdx)
+				if (calcTime >= elemData[mRefDataIdx].beginTime / divMS) break;
+
+			// 使用カード算出(次のカードがない場合はmProgress, mCardIDFloatとも0)
+			if (mRefDataIdx + 1 < elemData.Count)
+            {
+				float begTimeF = elemData[mRefDataIdx].beginTime / divMS;
+				float nextTimeF = elemData[mRefDataIdx + 1].beginTime / divMS;
+				mProgress = (calcTime - begTimeF) / (nextTimeF - begTimeF);    // テーブル進捗[0,1]
+				mCardIDFloat = elemData[mRefDataIdx].GetCardF(mProgress);
+			}
+        }
+		// 時間を引数に当該データの色を得る(AARRGGBB)
+		public int GetColor(uint getX, uint getY)
+        {   // 使用する定義の取り出しを行う
+			// データが空 or 初期定義未達で0を返す
+			if (elemData.Count == 0 || mRefDataIdx < 0) return 0;
+
+			// 色情報の抽出を行う | 初期データ -> 最終データ時処理: 1枚目のデータのみを表示する
+			int ans = elemData[mRefDataIdx].GetMapData(0, getY, getX);
+			if (mProgress > 0f)
+            {   // 初期・中間データの処理: 時間によって参照位置を変える
+				// 選択カードの色を取り出す(fadeなしの場合)
+				uint card = (uint)mCardIDFloat;
+				ans = elemData[mRefDataIdx].GetMapData(card, getY, getX);
+
+				if (elemData[mRefDataIdx].fadeFlag)
+                {	// フェードありの処理を行う
+					int nextC = elemData[mRefDataIdx + 1].GetMapData(0, getY, getX);  // 初期データ: 次データの頭
+					// 現在データに次データがある場合は当該要素を読み込む
+					if (card + 1 < elemData[mRefDataIdx].cardNum * elemData[mRefDataIdx].loopCount)
+						nextC = elemData[mRefDataIdx + 1].GetMapData(card + 1, getY, getX);
+					ans = GetMediumColor(ans, nextC, mCardIDFloat % 1f);
+				}
+			}
+
+			return ans;
+        }
+
+		// 色の比率から中間色を生成する
+		private int GetMediumColor(int nowColor, int nextColor, float progress)
+        {
+			float progInv = 1f - progress;
+			int ans = 0;
+			for (int c = 0; c < (int)ColorMapElem.IdxMax; ++c)
+            {
+				float cf = GetColorElem(nextColor, (ColorMapElem)c) * progress + GetColorElem(nowColor, (ColorMapElem)c) * progInv;
+				ans |= (byte)cf >> (8 * c);
+            }
+			return 0;
+        }
+		// int型カラーから特定の色を抽出する(クラス名で呼出し可)
+		public static byte GetColorElem(int color, ColorMapElem type)
+        {
+			return (byte)(color >> (8 * (int)type) & 0xFF);
+		}
 	}
 
 	public class ColorMapShifter : DataShifterBase
