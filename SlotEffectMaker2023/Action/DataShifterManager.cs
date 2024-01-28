@@ -5,7 +5,7 @@ using SlotEffectMaker2023.Data;
 namespace SlotEffectMaker2023.Action
 {
     // データシフト管理クラス(Sav)
-    public class DataShifterManager : SlotMaker2022.ILocalDataInterface
+    public class DataShifterManager<T> : SlotMaker2022.ILocalDataInterface where T : DataShifterBase
 	{
 		// 変数
 		List<(string shifterName, string elemName)> SoundData { get; set; }	// 鳴り分けデータ(PlayList, IDList)
@@ -15,7 +15,7 @@ namespace SlotEffectMaker2023.Action
 			SoundData = new List<(string, string)>();
 		}
 		// 最初に鳴り分け要素を作成しておく
-		public void Init(List<Data.DataShifterBase> pShiftData)
+		public void Init(List<T> pShiftData)
         {
 			foreach (var item in pShiftData)
 				SoundData.Add( (item.ShifterName, item.DefaultElemID) );
