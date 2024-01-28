@@ -385,9 +385,8 @@ namespace SlotEffectMaker2023.DataBuilder
         {
             DGView.Columns[0].HeaderText = "DataName";
             DGView.Columns[1].HeaderText = "Size(x,y)";
-            DGView.Columns[2].HeaderText = "UseTimer";
-            DGView.Columns[3].HeaderText = "LoopTime";
-            DGView.Columns[4].HeaderText = "Maps";
+            DGView.Columns[2].HeaderText = "LoopTime";
+            DGView.Columns[3].HeaderText = "Maps";
             UpdateIndicator(0);
         }
         protected override void StartAdd(object sender, EventArgs e)
@@ -427,7 +426,6 @@ namespace SlotEffectMaker2023.DataBuilder
                 {
                     DataName = item.dataName,
                     Size = "(" + item.sizeW.ToString() + ", " + item.sizeH.ToString() + ")",
-                    UseTimerName = item.useTimerName,
                     LoopTime = item.loopTime,
                     ElemCount = item.elemData.Count
                 };

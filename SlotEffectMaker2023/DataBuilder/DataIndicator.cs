@@ -45,7 +45,6 @@ namespace SlotEffectMaker2023.DataBuilder
     {
         public string DataName { get; set; }     // カラーマップの名前
         public string Size { get; set; }         // サイズ(x,y)
-        public string UseTimerName { get; set; } // 制御に使用するタイマ名
         public int LoopTime { get; set; }        // ループ時間[ms]
         public int ElemCount { get; set; }       // 要素数
     }

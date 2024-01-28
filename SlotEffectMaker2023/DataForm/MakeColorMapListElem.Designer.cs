@@ -45,8 +45,6 @@ namespace SlotEffectMaker2023.DataForm
             this.label4 = new System.Windows.Forms.Label();
             this.numY = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbUseTimer = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.numLoopTime = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShow)).BeginInit();
@@ -231,28 +229,10 @@ namespace SlotEffectMaker2023.DataForm
             this.label5.TabIndex = 26;
             this.label5.Text = "※Map生成後変更不可";
             // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(10, 145);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(55, 12);
-            this.label6.TabIndex = 27;
-            this.label6.Text = "使用タイマ";
-            // 
-            // cbUseTimer
-            // 
-            this.cbUseTimer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbUseTimer.FormattingEnabled = true;
-            this.cbUseTimer.Location = new System.Drawing.Point(10, 160);
-            this.cbUseTimer.Name = "cbUseTimer";
-            this.cbUseTimer.Size = new System.Drawing.Size(121, 20);
-            this.cbUseTimer.TabIndex = 3;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(10, 190);
+            this.label7.Location = new System.Drawing.Point(10, 145);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(81, 12);
             this.label7.TabIndex = 29;
@@ -260,7 +240,7 @@ namespace SlotEffectMaker2023.DataForm
             // 
             // numLoopTime
             // 
-            this.numLoopTime.Location = new System.Drawing.Point(10, 205);
+            this.numLoopTime.Location = new System.Drawing.Point(10, 160);
             this.numLoopTime.Minimum = new decimal(new int[] {
             1,
             0,
@@ -280,8 +260,6 @@ namespace SlotEffectMaker2023.DataForm
             this.ControlBox = false;
             this.Controls.Add(this.numLoopTime);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.cbUseTimer);
-            this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.numY);
@@ -331,8 +309,6 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.Label label4;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numY;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox cbUseTimer;
         private System.Windows.Forms.Label label7;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numLoopTime;
     }

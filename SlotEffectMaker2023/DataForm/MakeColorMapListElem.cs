@@ -19,7 +19,6 @@ namespace SlotEffectMaker2023.DataForm
         public MakeColorMapListElem(Data.ColorMapList cm)
         {
             InitializeComponent();
-            var timer = Singleton.EffectDataManagerSingleton.GetInstance().TimerList;
             if (cm == null) cm = new Data.ColorMapList();
             defName = cm.dataName;
 
@@ -34,8 +33,6 @@ namespace SlotEffectMaker2023.DataForm
             numY.Maximum = int.MaxValue;
             numX.Value = cm.sizeW;
             numY.Value = cm.sizeH;
-            cbUseTimer.Items.AddRange(timer.GetTimerNameList());
-            cbUseTimer.Text = cm.useTimerName;
             numLoopTime.Maximum = int.MaxValue;
             numLoopTime.Value = cm.loopTime;
         }
@@ -44,7 +41,6 @@ namespace SlotEffectMaker2023.DataForm
             cm.dataName = tbDataName.Text;
             cm.sizeW = decimal.ToUInt32(numX.Value);
             cm.sizeH = decimal.ToUInt32(numY.Value);
-            cm.useTimerName = cbUseTimer.Text;
             cm.loopTime = decimal.ToInt32(numLoopTime.Value);
             cm.elemData = builder.GetData();
             return true;
@@ -60,11 +56,6 @@ namespace SlotEffectMaker2023.DataForm
             if (baseData.GetMapList(tbDataName.Text) != null && !defName.Equals(tbDataName.Text))
             {
                 MessageBox.Show("データ名が他のデータと重複しています。\n他の名前を指定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (cbUseTimer.SelectedIndex < 0)
-            {
-                MessageBox.Show("使用タイマを指定してください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             base.BtnOK_Click(sender, e);
