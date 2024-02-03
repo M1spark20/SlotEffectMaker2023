@@ -88,6 +88,7 @@ namespace SlotEffectMaker2023.DataForm
             if (bitmap.Width % sizeW > 0 || bitmap.Height % sizeH > 0)
             {
                 MessageBox.Show("読込画像サイズがMapサイズに合致しません。", "情報", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                bitmap.Dispose();
                 return;
             }
             uint mapSize = (uint)(bitmap.Width * bitmap.Height);

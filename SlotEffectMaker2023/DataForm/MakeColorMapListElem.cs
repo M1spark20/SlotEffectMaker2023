@@ -35,6 +35,8 @@ namespace SlotEffectMaker2023.DataForm
             numY.Value = cm.sizeH;
             numLoopTime.Maximum = int.MaxValue;
             numLoopTime.Value = cm.loopTime;
+
+            SetMapSize(null, null);
         }
         public bool SetData(Data.ColorMapList cm)
         {
