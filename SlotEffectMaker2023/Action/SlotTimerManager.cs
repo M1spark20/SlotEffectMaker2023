@@ -73,10 +73,8 @@ namespace SlotEffectMaker2023.Action
 		public bool GetActionFlag(float judgeTime, bool trigHold)
         {
 			if (!isActivate) return false;
-			if (!(judgeTime > 0f)) judgeTime = 0.001f;
 			// 比較演算子を揃えることで2回Trueになることがないようにする
-			// 完全な==時に遅延が生じるが許容する
-			return elapsedTime > judgeTime && (!(lastElapsed > judgeTime) || trigHold);
+			return elapsedTime >= judgeTime && (!(lastElapsed >= judgeTime) || trigHold);
         }
 
 		// タイマの保存条件「タイマが稼働しており、保存フラグが有効か」を確認する
