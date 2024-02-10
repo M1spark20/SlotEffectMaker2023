@@ -58,6 +58,7 @@ namespace SlotEffectMaker2023.DataBuilder
             // 
             // btnSeekUp
             // 
+            this.btnSeekUp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSeekUp.Location = new System.Drawing.Point(367, 10);
             this.btnSeekUp.Name = "btnSeekUp";
             this.btnSeekUp.Size = new System.Drawing.Size(23, 23);
@@ -67,6 +68,7 @@ namespace SlotEffectMaker2023.DataBuilder
             // 
             // btnSeekDn
             // 
+            this.btnSeekDn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnSeekDn.Location = new System.Drawing.Point(396, 10);
             this.btnSeekDn.Name = "btnSeekDn";
             this.btnSeekDn.Size = new System.Drawing.Size(23, 23);
@@ -76,6 +78,7 @@ namespace SlotEffectMaker2023.DataBuilder
             // 
             // btnDel
             // 
+            this.btnDel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDel.Location = new System.Drawing.Point(425, 10);
             this.btnDel.Name = "btnDel";
             this.btnDel.Size = new System.Drawing.Size(125, 23);
@@ -89,6 +92,9 @@ namespace SlotEffectMaker2023.DataBuilder
             this.dgvShow.AllowUserToDeleteRows = false;
             this.dgvShow.AllowUserToResizeColumns = false;
             this.dgvShow.AllowUserToResizeRows = false;
+            this.dgvShow.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvShow.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dgvShow.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.AllCells;
             this.dgvShow.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -116,9 +122,9 @@ namespace SlotEffectMaker2023.DataBuilder
             this.Controls.Add(this.btnDel);
             this.Controls.Add(this.btnMod);
             this.Controls.Add(this.btnAdd);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(576, 391);
             this.Name = "GeneralDataBuilder";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "GeneralDataBuilder";
