@@ -40,22 +40,32 @@ namespace SlotEffectMaker2023.Singleton
         {
            // ファイルから読み込み処理を行う(Unityでは処理内容を変更する)
             var rd = new SlotMaker2022.ProgressRead();
-            bool ans = false;
-            if (rd.OpenFile("Effect.bytes"))
-            {
-                ans = true;
-                if (!rd.ReadData(SoundIDList)) return false;
-                if (!rd.ReadData(SoundPlayList)) return false;
-                if (!rd.ReadData(VarList)) return false;
-                if (!rd.ReadData(TimerList)) return false;
-                if (!rd.ReadData(Timeline)) return false;
-                if (!rd.ReadData(ColorMap)) return false;
-                rd.Close();
+            if (!rd.OpenFile("Effect.bytes")) return false;
+            if (!ReadAction(rd)) return false;
+            rd.Close();
 
-                // バックアップ生成(Unity側では削除すること)
-                BackupData();
-            }
-            return ans;
+            BackupData();
+            return true;
+        }
+        public bool ReadData(UnityEngine.TextAsset data)
+        {   // Unity用
+            var rd = new SlotMaker2022.ProgressRead();
+            if (!rd.OpenFile(data.bytes)) return false;
+            if (!ReadAction(rd)) return false;
+            rd.Close();
+
+            BackupData();
+            return true;
+        }
+        private bool ReadAction(SlotMaker2022.ProgressRead rd)
+        {
+            if (!rd.ReadData(SoundIDList)) return false;
+            if (!rd.ReadData(SoundPlayList)) return false;
+            if (!rd.ReadData(VarList)) return false;
+            if (!rd.ReadData(TimerList)) return false;
+            if (!rd.ReadData(Timeline)) return false;
+            if (!rd.ReadData(ColorMap)) return false;
+            return true;
         }
         public bool SaveData()
         {

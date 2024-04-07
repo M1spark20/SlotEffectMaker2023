@@ -16,4 +16,7 @@ namespace UnityEngine
     {
         public static float Pow(float f, float p) { return 0f; }
     }
+    public class TextAsset {
+        public byte[] bytes;
+    }
 }
