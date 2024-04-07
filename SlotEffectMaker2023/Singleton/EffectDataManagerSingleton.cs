@@ -53,8 +53,6 @@ namespace SlotEffectMaker2023.Singleton
             if (!rd.OpenFile(data.bytes)) return false;
             if (!ReadAction(rd)) return false;
             rd.Close();
-
-            BackupData();
             return true;
         }
         private bool ReadAction(SlotMaker2022.ProgressRead rd)
