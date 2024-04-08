@@ -103,5 +103,12 @@ namespace SlotEffectMaker2023
             DataForm.MakeActChangeMap mp = new DataForm.MakeActChangeMap();
             mp.ShowDialog();
         }
+        private void StartModHistoryConfig(object sender, EventArgs e)
+        {
+            DataForm.MakeHistoryConfig hc = new DataForm.MakeHistoryConfig(effect.HistoryConf, effect.VarList.GetUserVariableNameList);
+            DialogResult res = hc.ShowDialog();
+            if (res == DialogResult.OK) hc.SetData(effect.HistoryConf);
+            hc.Dispose();
+        }
     }
 }

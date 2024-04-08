@@ -48,6 +48,12 @@ namespace SlotEffectMaker2023.DataBuilder
         public int LoopTime { get; set; }        // ループ時間[ms]
         public int ElemCount { get; set; }       // 要素数
     }
+    class InfoBonusConfig
+    {
+        public int BonusID { get; set; }
+        public int SymbolID { get; set; }
+        public int TypeID { get; set; }
+    }
     class InfoActBase
     {
         public string DataName { get; set; }

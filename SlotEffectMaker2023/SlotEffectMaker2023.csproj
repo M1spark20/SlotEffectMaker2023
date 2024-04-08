@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\HistoryManager.cs" />
     <Compile Include="Action\FreezeManager.cs" />
     <Compile Include="DataBuilder\DataBuilder.cs" />
     <Compile Include="DataBuilder\DataIndicator.cs" />
@@ -55,6 +56,12 @@
     <Compile Include="DataBuilder\GeneralDataBuilder.Designer.cs">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\MakeHistoryConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeHistoryConfig.Designer.cs">
+      <DependentUpon>MakeHistoryConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataForm\MakeActChangeMapElem.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +70,12 @@
     </Compile>
     <Compile Include="DataForm\MakeActChangeMap.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeBonusConfigElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeBonusConfigElem.Designer.cs">
+      <DependentUpon>MakeBonusConfigElem.cs</DependentUpon>
     </Compile>
     <Compile Include="DataForm\MakeColorMapList.cs">
       <SubType>Form</SubType>
@@ -208,6 +221,7 @@
     <Compile Include="DataForm\MakeDataShifterElem.Designer.cs">
       <DependentUpon>MakeDataShifterElem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\HistoryConfig.cs" />
     <Compile Include="Data\ColorMaps.cs" />
     <Compile Include="Data\DataList.cs" />
     <Compile Include="Data\DataShifterBase.cs" />
@@ -241,8 +255,14 @@
     <EmbeddedResource Include="DataBuilder\GeneralDataBuilder.resx">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeHistoryConfig.resx">
+      <DependentUpon>MakeHistoryConfig.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeActChangeMapElem.resx">
       <DependentUpon>MakeActChangeMapElem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeBonusConfigElem.resx">
+      <DependentUpon>MakeBonusConfigElem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeColorMapListElem.resx">
       <DependentUpon>MakeColorMapListElem.cs</DependentUpon>

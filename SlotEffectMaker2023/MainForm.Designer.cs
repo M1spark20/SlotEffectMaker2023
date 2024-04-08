@@ -43,6 +43,7 @@ namespace SlotEffectMaker2023
             this.btnMakeColorMap = new System.Windows.Forms.Button();
             this.btnMakeColorMapPlay = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.btnHistoryConf = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -185,12 +186,23 @@ namespace SlotEffectMaker2023
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.StartModActMapChange);
             // 
+            // btnHistoryConf
+            // 
+            this.btnHistoryConf.Location = new System.Drawing.Point(10, 250);
+            this.btnHistoryConf.Name = "btnHistoryConf";
+            this.btnHistoryConf.Size = new System.Drawing.Size(140, 30);
+            this.btnHistoryConf.TabIndex = 24;
+            this.btnHistoryConf.Text = "データ履歴設定";
+            this.btnHistoryConf.UseVisualStyleBackColor = true;
+            this.btnHistoryConf.Click += new System.EventHandler(this.StartModHistoryConfig);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(549, 261);
+            this.ClientSize = new System.Drawing.Size(549, 291);
+            this.Controls.Add(this.btnHistoryConf);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnMakeColorMapPlay);
             this.Controls.Add(this.btnMakeColorMap);
@@ -230,6 +242,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button btnMakeColorMap;
         private System.Windows.Forms.Button btnMakeColorMapPlay;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnHistoryConf;
     }
 }
 

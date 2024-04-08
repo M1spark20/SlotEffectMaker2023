@@ -561,6 +561,54 @@ namespace SlotEffectMaker2023.DataBuilder
                 e.CellStyle.BackColor = Color.Red;
         }
     }
+    class BonusConfigBuilder : ListBuilderBase<Data.BonusConfig, InfoBonusConfig>
+    {
+        public BonusConfigBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.BonusConfig> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "BonusID";
+            DGView.Columns[1].HeaderText = "SymbolID";
+            DGView.Columns[2].HeaderText = "TypeID";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            DataForm.MakeBonusConfigElem form = new DataForm.MakeBonusConfigElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeBonusConfigElem form = new DataForm.MakeBonusConfigElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoBonusConfig info = new InfoBonusConfig
+                {
+                    BonusID = item.BonusID,
+                    SymbolID = item.ComaID,
+                    TypeID = item.BonusType
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+    }
 
     class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeElem>
     {
