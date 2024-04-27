@@ -56,6 +56,12 @@
     <Compile Include="DataBuilder\GeneralDataBuilder.Designer.cs">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\MakeCollectionDataElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeCollectionDataElem.Designer.cs">
+      <DependentUpon>MakeCollectionDataElem.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataForm\MakeHistoryConfig.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +227,7 @@
     <Compile Include="DataForm\MakeDataShifterElem.Designer.cs">
       <DependentUpon>MakeDataShifterElem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\CollectionData.cs" />
     <Compile Include="Data\HistoryConfig.cs" />
     <Compile Include="Data\ColorMaps.cs" />
     <Compile Include="Data\DataList.cs" />
@@ -254,6 +261,9 @@
     <Compile Include="UserControl.cs" />
     <EmbeddedResource Include="DataBuilder\GeneralDataBuilder.resx">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeCollectionDataElem.resx">
+      <DependentUpon>MakeCollectionDataElem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeHistoryConfig.resx">
       <DependentUpon>MakeHistoryConfig.cs</DependentUpon>
