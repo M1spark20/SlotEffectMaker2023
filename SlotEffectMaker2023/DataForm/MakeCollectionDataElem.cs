@@ -98,17 +98,17 @@ namespace SlotEffectMaker2023.DataForm
                         info[i][j] = new Label()
                         {
                             AutoSize = txtSymbol.AutoSize,
-                            Location = new Point(txtSymbol.Location.X + 100 * i, txtSymbol.Location.Y + 40 * j),
+                            Location = new Point(txtSymbol.Location.X + 100 * i, txtSymbol.Location.Y - 40 * j),
                             Text = txtSymbol.Text
                         };
                         symbolID[i][j] = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect
                         {
-                            Location = new Point(numSymbolID.Location.X + 100 * i, numSymbolID.Location.Y + 40 * j),
+                            Location = new Point(numSymbolID.Location.X + 100 * i, numSymbolID.Location.Y - 40 * j),
                             Minimum = numSymbolID.Minimum,
                             Maximum = numSymbolID.Maximum,
                             Size = numSymbolID.Size,
                             TextAlign = numSymbolID.TextAlign,
-                            TabIndex = numSymbolID.TabIndex + 100 * i + j
+                            TabIndex = numSymbolID.TabIndex + 100 * i - j
                         };
                         this.Controls.Add(info[i][j]);
                         this.Controls.Add(symbolID[i][j]);

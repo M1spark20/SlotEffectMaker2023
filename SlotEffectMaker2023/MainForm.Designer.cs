@@ -44,6 +44,7 @@ namespace SlotEffectMaker2023
             this.btnMakeColorMapPlay = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnHistoryConf = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -196,12 +197,23 @@ namespace SlotEffectMaker2023
             this.btnHistoryConf.UseVisualStyleBackColor = true;
             this.btnHistoryConf.Click += new System.EventHandler(this.StartModHistoryConfig);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(10, 290);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(140, 30);
+            this.button2.TabIndex = 24;
+            this.button2.Text = "リーチ目コレクション設定";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.StartModCollection);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.ClientSize = new System.Drawing.Size(549, 291);
+            this.ClientSize = new System.Drawing.Size(549, 331);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.btnHistoryConf);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnMakeColorMapPlay);
@@ -243,6 +255,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button btnMakeColorMapPlay;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnHistoryConf;
+        private System.Windows.Forms.Button button2;
     }
 }
 

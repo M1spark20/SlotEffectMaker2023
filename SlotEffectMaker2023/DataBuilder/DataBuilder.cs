@@ -609,6 +609,69 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
+    class CollectionBuilder : ListBuilderBase<Data.CollectionDataElem, InfoCollection>
+    {
+        public CollectionBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.CollectionDataElem> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "No.";
+            DGView.Columns[1].HeaderText = "Level";
+            DGView.Columns[2].HeaderText = "ComaID-L";
+            DGView.Columns[3].HeaderText = "SymbolID-L";
+            DGView.Columns[4].HeaderText = "ComaID-C";
+            DGView.Columns[5].HeaderText = "SymbolID-C";
+            DGView.Columns[6].HeaderText = "ComaID-R";
+            DGView.Columns[7].HeaderText = "SymbolID-R";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeCollectionDataElem form = new DataForm.MakeCollectionDataElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            var data = Singleton.EffectDataManagerSingleton.GetInstance();
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeCollectionDataElem form = new DataForm.MakeCollectionDataElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK) SetData(row.Index, form.SetData);
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            int count = 1;
+            foreach (var item in Data)
+            {
+                string[] comaShow = { "---", "---", "ANY", "回転中", "はずれ", "?" };
+                InfoCollection info = new InfoCollection
+                {
+                    No = count++,
+                    Level = item.Level,
+                    ComaID_L = item.CollectionElem[0].Pattern == SlotEffectMaker2023.Data.CollectionReelPattern.eReelPos ? item.CollectionElem[0].ReelPos.ToString() : comaShow[(int)item.CollectionElem[0].Pattern],
+                    ComaID_C = item.CollectionElem[1].Pattern == SlotEffectMaker2023.Data.CollectionReelPattern.eReelPos ? item.CollectionElem[1].ReelPos.ToString() : comaShow[(int)item.CollectionElem[1].Pattern],
+                    ComaID_R = item.CollectionElem[2].Pattern == SlotEffectMaker2023.Data.CollectionReelPattern.eReelPos ? item.CollectionElem[2].ReelPos.ToString() : comaShow[(int)item.CollectionElem[2].Pattern],
+                    Symbol_L = item.CollectionElem[0].Pattern == SlotEffectMaker2023.Data.CollectionReelPattern.eComaItem ? 
+                        item.CollectionElem[0].ComaItem[0].ToString() + " : " + item.CollectionElem[0].ComaItem[1].ToString() + " : " + item.CollectionElem[0].ComaItem[2].ToString() : "---",
+                    Symbol_C = item.CollectionElem[1].Pattern == SlotEffectMaker2023.Data.CollectionReelPattern.eComaItem ? 
+                        item.CollectionElem[1].ComaItem[0].ToString() + " : " + item.CollectionElem[1].ComaItem[1].ToString() + " : " + item.CollectionElem[1].ComaItem[2].ToString() : "---",
+                    Symbol_R = item.CollectionElem[2].Pattern == SlotEffectMaker2023.Data.CollectionReelPattern.eComaItem ? 
+                        item.CollectionElem[2].ComaItem[0].ToString() + " : " + item.CollectionElem[2].ComaItem[1].ToString() + " : " + item.CollectionElem[2].ComaItem[2].ToString() : "---",
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+
+    }
 
     class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeElem>
     {

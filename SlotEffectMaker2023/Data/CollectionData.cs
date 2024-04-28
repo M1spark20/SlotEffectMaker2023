@@ -12,7 +12,7 @@ namespace SlotEffectMaker2023.Data
         eReelPos, eComaItem, eAny, eRotating, eHazure, eAiming, eItemMax
     }
 
-    public class CollectionReelElem : SlotMaker2022.ILocalDataInterface 
+    public class CollectionReelElem : IEffectNameInterface
     {
         public CollectionReelPattern Pattern { get; set; }  // データ指定がリール位置か(true:リール位置/false:その他)
         public List<short> ComaItem { get; set; }           // 各コマのアイテム(index下段から)、マイナスで非停止時
@@ -42,9 +42,10 @@ namespace SlotEffectMaker2023.Data
             ReelPos = fs.ReadByte();
             return true;
         }
+        public void Rename(EChangeNameType type, string src, string dst) { }
     }
 
-    public class CollectionDataElem : SlotMaker2022.ILocalDataInterface
+    public class CollectionDataElem : IEffectNameInterface
     {   // データをリール数分まとめたもの
         public List<CollectionReelElem> CollectionElem { get; set; }
         public byte Level { get; set; }
@@ -72,21 +73,33 @@ namespace SlotEffectMaker2023.Data
             Level = fs.ReadByte();
             return true;
         }
+        public void Rename(EChangeNameType type, string src, string dst) {
+            foreach (var item in CollectionElem) item.Rename(type, src, dst);
+        }
     }
 
-    public class CollectionData : SlotMaker2022.ILocalDataInterface 
+    public class CollectionData : IEffectNameInterface
     {
-        public List<CollectionDataElem> Collections { get; set; } // コレクションデータ(要素数、リール)
+        public List<CollectionDataElem> Collections { get; set; }   // コレクションデータ(要素数、リール)
+        public string JudgeCondName { get; set; }                   // 判定を行うフラグ名(変数)
+        public string JudgeHazure { get; set; }                     // はずれ判定を行うフラグ名(変数)
+        public string JudgeAiming { get; set; }                     // ?判定を行うフラグ名(変数)
 
         public CollectionData()
         {
             Collections = new List<CollectionDataElem>();
+            JudgeCondName = string.Empty;
+            JudgeHazure = string.Empty;
+            JudgeAiming = string.Empty;
         }
 		public bool StoreData(ref BinaryWriter fs, int version)
         {
             fs.Write(Collections.Count);
             foreach (var item in Collections) 
                 if (!item.StoreData(ref fs, version)) return false;
+            fs.Write(JudgeCondName);
+            fs.Write(JudgeHazure);
+            fs.Write(JudgeAiming);
             return true;
         }
 		public bool ReadData(ref BinaryReader fs, int version)
@@ -98,7 +111,16 @@ namespace SlotEffectMaker2023.Data
                 if(!data.ReadData(ref fs, version)) return false;
                 Collections.Add(data);
             }
+            JudgeCondName = fs.ReadString();
+            JudgeHazure = fs.ReadString();
+            JudgeAiming = fs.ReadString();
             return true;
+        }
+        public void Rename(EChangeNameType type, string src, string dst) {
+            if (type == EChangeNameType.Var && JudgeCondName.Equals(src)) JudgeCondName = dst;
+            if (type == EChangeNameType.Var && JudgeHazure.Equals(src)) JudgeHazure = dst;
+            if (type == EChangeNameType.Var && JudgeAiming.Equals(src)) JudgeAiming = dst;
+            foreach (var item in Collections) item.Rename(type, src, dst);
         }
     }
 }

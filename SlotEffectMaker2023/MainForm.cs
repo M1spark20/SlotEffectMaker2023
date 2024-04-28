@@ -110,5 +110,12 @@ namespace SlotEffectMaker2023
             if (res == DialogResult.OK) hc.SetData(effect.HistoryConf);
             hc.Dispose();
         }
+        private void StartModCollection(object sender, EventArgs e)
+        {
+            DataForm.MakeCollectionData cd = new DataForm.MakeCollectionData(effect.Collection, effect.VarList.GetUserVariableNameList);
+            DialogResult res = cd.ShowDialog();
+            if (res == DialogResult.OK) cd.SetData(effect.Collection);
+            cd.Dispose();
+        }
     }
 }

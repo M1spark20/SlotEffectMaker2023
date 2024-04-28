@@ -33,11 +33,9 @@ namespace SlotEffectMaker2023.DataForm
             this.BtnCancel = new System.Windows.Forms.Button();
             this.txt1 = new System.Windows.Forms.Label();
             this.numComaID = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
-            this.fdReadMap = new System.Windows.Forms.OpenFileDialog();
             this.txtLv = new System.Windows.Forms.Label();
             this.numLevel = new SlotMaker2022.UserControl.NumericUpDown_AutoSelect();
             this.txt2 = new System.Windows.Forms.Label();
-            this.fdSaveMap = new System.Windows.Forms.SaveFileDialog();
             this.cbPtn = new System.Windows.Forms.ComboBox();
             this.txt3 = new System.Windows.Forms.Label();
             this.txt4 = new System.Windows.Forms.Label();
@@ -92,10 +90,6 @@ namespace SlotEffectMaker2023.DataForm
             this.numComaID.TabIndex = 2;
             this.numComaID.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // fdReadMap
-            // 
-            this.fdReadMap.FileName = "openFileDialog1";
-            // 
             // txtLv
             // 
             this.txtLv.AutoSize = true;
@@ -137,10 +131,6 @@ namespace SlotEffectMaker2023.DataForm
             this.txt2.TabIndex = 24;
             this.txt2.Text = "定義種別";
             // 
-            // fdSaveMap
-            // 
-            this.fdSaveMap.RestoreDirectory = true;
-            // 
             // cbPtn
             // 
             this.cbPtn.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -170,7 +160,7 @@ namespace SlotEffectMaker2023.DataForm
             // 
             // numSymbolID
             // 
-            this.numSymbolID.Location = new System.Drawing.Point(100, 91);
+            this.numSymbolID.Location = new System.Drawing.Point(100, 171);
             this.numSymbolID.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -184,7 +174,7 @@ namespace SlotEffectMaker2023.DataForm
             // txtSymbol
             // 
             this.txtSymbol.AutoSize = true;
-            this.txtSymbol.Location = new System.Drawing.Point(98, 113);
+            this.txtSymbol.Location = new System.Drawing.Point(98, 193);
             this.txtSymbol.Name = "txtSymbol";
             this.txtSymbol.Size = new System.Drawing.Size(65, 12);
             this.txtSymbol.TabIndex = 24;
@@ -229,11 +219,9 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.Button BtnCancel;
         private System.Windows.Forms.Label txt1;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numComaID;
-        private System.Windows.Forms.OpenFileDialog fdReadMap;
         private System.Windows.Forms.Label txtLv;
         private SlotMaker2022.UserControl.NumericUpDown_AutoSelect numLevel;
         private System.Windows.Forms.Label txt2;
-        private System.Windows.Forms.SaveFileDialog fdSaveMap;
         private System.Windows.Forms.ComboBox cbPtn;
         private System.Windows.Forms.Label txt3;
         private System.Windows.Forms.Label txt4;

@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Action\CollectionLogger.cs" />
     <Compile Include="Action\HistoryManager.cs" />
     <Compile Include="Action\FreezeManager.cs" />
     <Compile Include="DataBuilder\DataBuilder.cs" />
@@ -55,6 +56,12 @@
     </Compile>
     <Compile Include="DataBuilder\GeneralDataBuilder.Designer.cs">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\MakeCollectionData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeCollectionData.Designer.cs">
+      <DependentUpon>MakeCollectionData.cs</DependentUpon>
     </Compile>
     <Compile Include="DataForm\MakeCollectionDataElem.cs">
       <SubType>Form</SubType>
@@ -261,6 +268,9 @@
     <Compile Include="UserControl.cs" />
     <EmbeddedResource Include="DataBuilder\GeneralDataBuilder.resx">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeCollectionData.resx">
+      <DependentUpon>MakeCollectionData.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeCollectionDataElem.resx">
       <DependentUpon>MakeCollectionDataElem.cs</DependentUpon>
