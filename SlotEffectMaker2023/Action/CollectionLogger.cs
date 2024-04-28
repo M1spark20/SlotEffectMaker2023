@@ -107,6 +107,13 @@ namespace SlotEffectMaker2023.Action
                 var jd = cd.Collections[id].CollectionElem;
                 for (int reelC = 0; reelC < REEL_NUM; ++reelC)
                 {
+                    // 左回転中以外 かつ 左1st以外なら処理しない
+                    if (reelC == 0)
+                    {
+                        if (jd[reelC].Pattern != Data.CollectionReelPattern.eRotating && rd[reelC].stopOrder != 1)
+                            continue;
+                    }
+                    // 各リール判定処理
                     switch (jd[reelC].Pattern)
                     {
                         case Data.CollectionReelPattern.eAny:
