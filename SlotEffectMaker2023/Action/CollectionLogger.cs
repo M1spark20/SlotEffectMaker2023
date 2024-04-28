@@ -109,10 +109,7 @@ namespace SlotEffectMaker2023.Action
                 {
                     // 左回転中以外 かつ 左1st以外なら処理しない
                     if (reelC == 0)
-                    {
-                        if (jd[reelC].Pattern != Data.CollectionReelPattern.eRotating && rd[reelC].stopOrder != 1)
-                            continue;
-                    }
+                        achieveFlag &= (jd[reelC].Pattern != Data.CollectionReelPattern.eRotating && rd[reelC].stopOrder != 1);
                     // 各リール判定処理
                     switch (jd[reelC].Pattern)
                     {
