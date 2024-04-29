@@ -29,7 +29,7 @@ namespace SlotEffectMaker2023.DataForm
 
             // データ追加・編集
             numComaID.Maximum = SlotMaker2022.LocalDataSet.COMA_MAX - 1;
-            numSymbolID.Maximum = (1 << (SlotMaker2022.LocalDataSet.SYMBOL_MAX - 1)) - 1;
+            numSymbolID.Maximum = (1 << SlotMaker2022.LocalDataSet.SYMBOL_MAX) - 1;
             numSymbolID.Minimum = -numSymbolID.Maximum;
 
             // 内部初期化

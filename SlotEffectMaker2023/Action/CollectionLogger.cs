@@ -174,7 +174,7 @@ namespace SlotEffectMaker2023.Action
 
                 byte comaPos = (byte)((rd.stopPos + showC) % COMA_NUM);
                 // 配列の格納順は反転していることに注意
-                short comaMask = (short)(1 << (ra[COMA_NUM - comaPos - 1].Coma - 1));
+                short comaMask = (short)(1 << (ra[COMA_NUM - comaPos - 1].Coma));
                 bool judge = (checkData & comaMask) != 0 ^ InvFlag;
                 if (!judge) return false;
             }
