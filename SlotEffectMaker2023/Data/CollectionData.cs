@@ -43,6 +43,20 @@ namespace SlotEffectMaker2023.Data
             return true;
         }
         public void Rename(EChangeNameType type, string src, string dst) { }
+        public List<byte> GetItemList(byte pCheckPos)
+        {
+            if (pCheckPos >= ComaItem.Count) return null;
+            var ans = new List<byte>();
+            short mask = Math.Abs(ComaItem[pCheckPos]);
+            byte count = 0;
+            while (mask != 0)
+            {
+                if ((mask & 0x1) == 1) ans.Add(count);
+                mask >>= 1;
+                ++count;
+            }
+            return ans;
+        }
     }
 
     public class CollectionDataElem : IEffectNameInterface
