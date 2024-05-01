@@ -43,6 +43,7 @@ namespace SlotEffectMaker2023.DataForm
             this.cbHazure = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.cbAiming = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShow)).BeginInit();
             this.SuspendLayout();
             // 
@@ -186,6 +187,15 @@ namespace SlotEffectMaker2023.DataForm
             this.cbAiming.Size = new System.Drawing.Size(121, 20);
             this.cbAiming.TabIndex = 1;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(10, 145);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(125, 24);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "※判定条件の前提として\r\n　gameMode = 0がある。";
+            // 
             // MakeCollectionData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -193,6 +203,7 @@ namespace SlotEffectMaker2023.DataForm
             this.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.ClientSize = new System.Drawing.Size(444, 255);
             this.ControlBox = false;
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.cbAiming);
             this.Controls.Add(this.cbHazure);
             this.Controls.Add(this.cbJudge);
@@ -235,5 +246,6 @@ namespace SlotEffectMaker2023.DataForm
         private System.Windows.Forms.ComboBox cbHazure;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbAiming;
+        private System.Windows.Forms.Label label4;
     }
 }
