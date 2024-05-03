@@ -104,6 +104,39 @@ namespace SlotEffectMaker2023.Action
             return InPattern.ReadData(ref fs, version);
         }
     }
+    public class BalanceGraph : SlotMaker2022.ILocalDataInterface
+    {
+        public const int COUNT_INTERVAL = 10;
+        public int GameCounter { get; private set; }
+        public List<int> GraphData { get; private set; }
+
+        public BalanceGraph()
+        {
+            GameCounter = 0;
+            GraphData = new List<int>();
+        }
+        public bool StoreData(ref BinaryWriter fs, int version)
+        {
+            fs.Write(GameCounter);
+            fs.Write(GraphData.Count);
+            foreach (var item in GraphData) fs.Write(item);
+            return true;
+        }
+        public bool ReadData(ref BinaryReader fs, int version)
+        {
+            GameCounter = fs.ReadInt32();
+            int dataSize = fs.ReadInt32();
+            for (int i = 0; i < dataSize; ++i) GraphData.Add(fs.ReadInt32());
+            return true;
+        }
+
+        public void LatchGame(SlotBasicData bs)
+        {
+            if (++GameCounter < COUNT_INTERVAL) return;
+            GameCounter = 0;
+            GraphData.Add((int)bs.outCount - (int)bs.inCount);
+        }
+    }
     public class HistoryManager : SlotMaker2022.ILocalDataInterface
     {	// 各種履歴管理クラス(Sav)
         public const int PATTERN_MAX = 32;
@@ -111,11 +144,13 @@ namespace SlotEffectMaker2023.Action
 
         public List<PatternHistoryElem> PatternHist { get; set; }
         public List<BonusHistoryElem> BonusHist { get; set; }
+        public BalanceGraph Graph { get; set; }
 
         public HistoryManager()
         {
             PatternHist = new List<PatternHistoryElem>();
             BonusHist = new List<BonusHistoryElem>();
+            Graph = new BalanceGraph();
         }
         public bool StoreData(ref BinaryWriter fs, int version)
         {
@@ -123,6 +158,7 @@ namespace SlotEffectMaker2023.Action
             foreach (var item in PatternHist) item.StoreData(ref fs, version);
             fs.Write(BonusHist.Count);
             foreach (var item in BonusHist) item.StoreData(ref fs, version);
+            Graph.StoreData(ref fs, version);
             return true;
         }
         public bool ReadData(ref BinaryReader fs, int version)
@@ -141,6 +177,7 @@ namespace SlotEffectMaker2023.Action
                 bh.ReadData(ref fs, version);
                 BonusHist.Add(bh);
             }
+            if (!Graph.ReadData(ref fs, version)) return false;
             return true;
         }
         public void Process(SlotValManager vm)
@@ -201,8 +238,9 @@ namespace SlotEffectMaker2023.Action
             };
             ShiftAdd(BonusHist, inData, -1);
         }
-        public void AddLossGame()
+        public void ReelStart(SlotBasicData bs)
         {
+            Graph.LatchGame(bs);
             if (BonusHist.Count <= 0) return;
             var mod = BonusHist[0];
             if (mod.IsActivate) return;
