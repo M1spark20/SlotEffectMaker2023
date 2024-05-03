@@ -128,11 +128,12 @@ namespace SlotEffectMaker2023.Action
 			betCount = 0;
 		}
 		// BETを用いてリールを回転させる
-		public void LatchBet()
+		public void LatchBet(HistoryManager hm)
 		{
 			isBetLatched = true;                // BETを消化済みにする
 			inCount += betCount;                // INメダル枚数を加算する
 			if (isReplay) outCount += betCount; // リプレイの場合、OUTメダル枚数も加算する
+			hm.AddLossGame();					// ボーナス成立後G数を更新する
 		}
 		// フラグ設定
 		public void SetCastFlag(byte pBonusFlag, byte pCastFlag, LocalDataSet.CastCommonData cc, LocalDataSet.RTCommonData rtc, SlotTimerManager tm)
