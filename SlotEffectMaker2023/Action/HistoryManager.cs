@@ -238,13 +238,16 @@ namespace SlotEffectMaker2023.Action
             };
             ShiftAdd(BonusHist, inData, -1);
         }
-        public void ReelStart(SlotBasicData bs)
+        public void ReelStart()
         {
-            Graph.LatchGame(bs);
             if (BonusHist.Count <= 0) return;
             var mod = BonusHist[0];
             if (mod.IsActivate) return;
             ++mod.LossGame;
+        }
+        public void OnPayoutEnd(SlotBasicData bs)
+        {
+            Graph.LatchGame(bs);
         }
         public void StartBonus(SlotBasicData bs, SlotValManager vm)
         {
