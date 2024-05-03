@@ -107,17 +107,26 @@ namespace SlotEffectMaker2023.Action
     public class BalanceGraph : SlotMaker2022.ILocalDataInterface
     {
         public const int COUNT_INTERVAL = 10;
-        public int GameCounter { get; private set; }
-        public List<int> GraphData { get; private set; }
+        public const int BUF_MAX = 10000;
+
+        private int GameCounter;
+        private int RingBegin;
+        private List<int> GraphData;    // リングバッファ
 
         public BalanceGraph()
         {
             GameCounter = 0;
+            RingBegin = 0;
             GraphData = new List<int>();
+        }
+        public void Init()
+        {   // ファイル読込後に要素数がない場合は0を初期値に指定する
+            if (GraphData.Count == 0) GraphData.Add(0);
         }
         public bool StoreData(ref BinaryWriter fs, int version)
         {
             fs.Write(GameCounter);
+            fs.Write(RingBegin);
             fs.Write(GraphData.Count);
             foreach (var item in GraphData) fs.Write(item);
             return true;
@@ -125,6 +134,7 @@ namespace SlotEffectMaker2023.Action
         public bool ReadData(ref BinaryReader fs, int version)
         {
             GameCounter = fs.ReadInt32();
+            RingBegin = fs.ReadInt32();
             int dataSize = fs.ReadInt32();
             for (int i = 0; i < dataSize; ++i) GraphData.Add(fs.ReadInt32());
             return true;
@@ -134,7 +144,30 @@ namespace SlotEffectMaker2023.Action
         {
             if (++GameCounter < COUNT_INTERVAL) return;
             GameCounter = 0;
-            GraphData.Add((int)bs.outCount - (int)bs.inCount);
+            if (GraphData.Count < BUF_MAX)
+            {
+                GraphData.Add((int)bs.outCount - (int)bs.inCount);
+            }
+            else
+            {
+                GraphData[RingBegin] = (int)bs.outCount - (int)bs.inCount;
+                RingBegin = (RingBegin + 1) % BUF_MAX;
+            }
+        }
+
+        public float? GetValue(int pos, int size)
+        {   // pos: [0, (size - 1)]
+            // データが範囲外アクセスの場合nullを返す
+            if (pos >= GraphData.Count) return null;
+            // データ数がsizeを超過していない場合要素をそのまま返す
+            if (GraphData.Count <= size) return GraphData[(pos + RingBegin) % GraphData.Count];
+
+            // 超過している場合はデータ数と描画数に応じて計算位置を決定。0とCount-1が出るように調整
+            float referenceF = (GraphData.Count-1) / (float)(size-1) * pos;
+            int ref1 = ((int)referenceF + RingBegin) % GraphData.Count;
+            int ref2 = (ref1 + 1) % GraphData.Count;
+            float ratio = referenceF % 1f;
+            return GraphData[ref1] * (1f - ratio) + GraphData[ref2] * ratio;
         }
     }
     public class HistoryManager : SlotMaker2022.ILocalDataInterface
@@ -151,6 +184,10 @@ namespace SlotEffectMaker2023.Action
             PatternHist = new List<PatternHistoryElem>();
             BonusHist = new List<BonusHistoryElem>();
             Graph = new BalanceGraph();
+        }
+        public void Init()
+        {
+            Graph.Init();
         }
         public bool StoreData(ref BinaryWriter fs, int version)
         {
