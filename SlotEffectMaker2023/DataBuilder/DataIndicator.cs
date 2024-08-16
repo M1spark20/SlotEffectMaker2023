@@ -65,6 +65,14 @@ namespace SlotEffectMaker2023.DataBuilder
         public string ComaID_R { get; set; }
         public string Symbol_R { get; set; }
     }
+    class InfoGameAchievement
+    {
+        public string DataID { get; set; }
+        public string Type { get; set; }
+        public string Reference { get; set; }
+        public string Timing { get; set; }
+    }
+
     class InfoActBase
     {
         public string DataName { get; set; }

@@ -122,6 +122,15 @@ namespace SlotEffectMaker2023.Singleton {
 		/// システム変数を更新します。
 		/// </summary>
 		public void Process(){
+			UpdateSysVar();
+
+			// タイムラインを運用する
+			var timeline = EffectDataManagerSingleton.GetInstance().Timeline.timerData;
+			foreach (var item in timeline) item.Action();
+		}
+
+		public void UpdateSysVar()
+        {
 			valManager.GetVariable("_slotSetting")		.val = basicData.slotSetting;
 			valManager.GetVariable("_inCount")			.val = (int)basicData.inCount;
 			valManager.GetVariable("_outCount")			.val = (int)basicData.outCount;
@@ -141,6 +150,7 @@ namespace SlotEffectMaker2023.Singleton {
 			valManager.GetVariable("_bonusID")			.val = basicData.bonusFlag;
 			valManager.GetVariable("_castBonusID")		.val = basicData.castBonusID;
 			valManager.GetVariable("_payLine")			.val = decimal.ToInt32(basicData.castLines.Export());
+			valManager.GetVariable("_unlockColleNum")	.val = collectionManager.GetAchievedCount();
 
 			for (int i = 0; i < SlotMaker2022.LocalDataSet.REEL_MAX; ++i)
             {
@@ -148,13 +158,12 @@ namespace SlotEffectMaker2023.Singleton {
 				valManager.GetVariable("_reelStopPos[" + i + "]").val = reelData[i].stopPos;
 				valManager.GetVariable("_reelStopOrder[" + i + "]").val = reelData[i].stopOrder;
             }
+			var colleData = EffectDataManagerSingleton.GetInstance().Collection;
+			for (int i = 0; i < Data.CollectionDataElem.COLLECTION_LEVEL_MAX; ++i)
+				valManager.GetVariable("_unlockColleNumLv[" + i + "]").val = collectionManager.GetAchievedCount(colleData, i+1);
 
 			// ボーナス回数を更新する
 			historyManager.Process(valManager);
-
-			// タイムラインを運用する
-			var timeline = EffectDataManagerSingleton.GetInstance().Timeline.timerData;
-			foreach (var item in timeline) item.Action();
-		}
+        }
 	}
 }

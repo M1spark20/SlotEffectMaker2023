@@ -47,6 +47,7 @@ namespace SlotEffectMaker2023
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.btnMakeGameAchievement = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -212,7 +213,7 @@ namespace SlotEffectMaker2023
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(158, 182);
+            this.label1.Location = new System.Drawing.Point(158, 296);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(259, 24);
             this.label1.TabIndex = 25;
@@ -221,11 +222,21 @@ namespace SlotEffectMaker2023
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(158, 170);
+            this.label2.Location = new System.Drawing.Point(158, 284);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(37, 12);
             this.label2.TabIndex = 26;
             this.label2.Text = "[Note]";
+            // 
+            // btnMakeGameAchievement
+            // 
+            this.btnMakeGameAchievement.Location = new System.Drawing.Point(160, 170);
+            this.btnMakeGameAchievement.Name = "btnMakeGameAchievement";
+            this.btnMakeGameAchievement.Size = new System.Drawing.Size(140, 30);
+            this.btnMakeGameAchievement.TabIndex = 13;
+            this.btnMakeGameAchievement.Text = "Steam用実績定義";
+            this.btnMakeGameAchievement.UseVisualStyleBackColor = true;
+            this.btnMakeGameAchievement.Click += new System.EventHandler(this.StartModGameAchievement);
             // 
             // MainForm
             // 
@@ -246,6 +257,7 @@ namespace SlotEffectMaker2023
             this.Controls.Add(this.btnSoundID);
             this.Controls.Add(this.btnUserTimer);
             this.Controls.Add(this.btnTL_SoundChange);
+            this.Controls.Add(this.btnMakeGameAchievement);
             this.Controls.Add(this.btnTL_TimerCtrl);
             this.Controls.Add(this.btnTL_ValCtrl);
             this.Controls.Add(this.btnTL_TimerCond);
@@ -281,6 +293,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button btnMakeGameAchievement;
     }
 }
 

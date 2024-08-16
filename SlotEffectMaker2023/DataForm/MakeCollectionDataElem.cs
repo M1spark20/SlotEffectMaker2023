@@ -21,6 +21,7 @@ namespace SlotEffectMaker2023.DataForm
 
         const int REEL_SIZE = SlotMaker2022.LocalDataSet.REEL_MAX;
         const int SHOW_SIZE = SlotMaker2022.LocalDataSet.SHOW_MAX;
+        const int LEVEL_MAX = Data.CollectionDataElem.COLLECTION_LEVEL_MAX;
 
         public MakeCollectionDataElem(Data.CollectionDataElem de)
         {
@@ -31,6 +32,7 @@ namespace SlotEffectMaker2023.DataForm
             numComaID.Maximum = SlotMaker2022.LocalDataSet.COMA_MAX - 1;
             numSymbolID.Maximum = (1 << SlotMaker2022.LocalDataSet.SYMBOL_MAX) - 1;
             numSymbolID.Minimum = -numSymbolID.Maximum;
+            numLevel.Maximum = LEVEL_MAX;
 
             // 内部初期化
             title = new Label[REEL_SIZE];

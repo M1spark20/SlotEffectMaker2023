@@ -672,6 +672,60 @@ namespace SlotEffectMaker2023.DataBuilder
         }
 
     }
+    class GameAchievementBuilder : ListBuilderBase<Data.GameAchievement, InfoGameAchievement>
+    {   // サウンドID生成フォーム操作
+        public GameAchievementBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.GameAchievement> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "DataName";
+            DGView.Columns[1].HeaderText = "DataType";
+            DGView.Columns[2].HeaderText = "Reference";
+            DGView.Columns[3].HeaderText = "Timing";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeGameAchievementElem form = new DataForm.MakeGameAchievementElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                string srcVarName = Data[row.Index].DataID;
+                DataForm.MakeGameAchievementElem form = new DataForm.MakeGameAchievementElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                    Singleton.EffectDataManagerSingleton.GetInstance().Rename(SlotEffectMaker2023.Data.EChangeNameType.GameAchievement, srcVarName, Data[modIndex].DataID);
+                }
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoGameAchievement info = new InfoGameAchievement
+                {
+                    DataID = item.DataID,
+                    Type = item.Type.ToString(),
+                    Reference = item.RefData,
+                    Timing = item.UpdateOnlyBonusIn ? "BONUS ONLY" : "Anytime"
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+    }
 
     class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeElem>
     {

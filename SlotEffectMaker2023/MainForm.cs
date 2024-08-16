@@ -117,5 +117,10 @@ namespace SlotEffectMaker2023
             if (res == DialogResult.OK) cd.SetData(effect.Collection);
             cd.Dispose();
         }
+        private void StartModGameAchievement(object sender, EventArgs e)
+        {
+            DataForm.MakeGameAchievement ga = new DataForm.MakeGameAchievement();
+            ga.ShowDialog();
+        }
     }
 }

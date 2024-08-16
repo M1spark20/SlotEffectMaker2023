@@ -57,6 +57,9 @@
     <Compile Include="DataBuilder\GeneralDataBuilder.Designer.cs">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\MakeGameAchievement.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataForm\MakeCollectionData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -68,6 +71,12 @@
     </Compile>
     <Compile Include="DataForm\MakeCollectionDataElem.Designer.cs">
       <DependentUpon>MakeCollectionDataElem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\MakeGameAchievementElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeGameAchievementElem.Designer.cs">
+      <DependentUpon>MakeGameAchievementElem.cs</DependentUpon>
     </Compile>
     <Compile Include="DataForm\MakeHistoryConfig.cs">
       <SubType>Form</SubType>
@@ -234,6 +243,7 @@
     <Compile Include="DataForm\MakeDataShifterElem.Designer.cs">
       <DependentUpon>MakeDataShifterElem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\GameAchievement.cs" />
     <Compile Include="Data\CollectionData.cs" />
     <Compile Include="Data\HistoryConfig.cs" />
     <Compile Include="Data\ColorMaps.cs" />
@@ -274,6 +284,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeCollectionDataElem.resx">
       <DependentUpon>MakeCollectionDataElem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeGameAchievementElem.resx">
+      <DependentUpon>MakeGameAchievementElem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeHistoryConfig.resx">
       <DependentUpon>MakeHistoryConfig.cs</DependentUpon>
