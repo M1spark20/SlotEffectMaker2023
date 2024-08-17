@@ -122,5 +122,12 @@ namespace SlotEffectMaker2023
             DataForm.MakeGameAchievement ga = new DataForm.MakeGameAchievement();
             ga.ShowDialog();
         }
+        private void StartModFlagCount(object sender, EventArgs e)
+        {
+            DataForm.MakeFlagCounterSet mf = new DataForm.MakeFlagCounterSet(effect.CounterCond);
+            DialogResult res = mf.ShowDialog();
+            if (res == DialogResult.OK) mf.SetData(effect.CounterCond);
+            mf.Dispose();
+        }
     }
 }

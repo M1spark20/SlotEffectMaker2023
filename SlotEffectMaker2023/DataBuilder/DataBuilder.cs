@@ -726,6 +726,54 @@ namespace SlotEffectMaker2023.DataBuilder
             FinalizeIndicator(indexShift);
         }
     }
+    class FlagCounterCondBuilder : ListBuilderBase<Data.FlagCounterCond, InfoFlagCounterCond>
+    {   // フラグカウントデータ生成
+        public FlagCounterCondBuilder(Button pAdd, Button pMod, Button pDel, Button pUp, Button pDown, DataGridView pIndicator, List<Data.FlagCounterCond> pData)
+            : base(pAdd, pMod, pDel, pUp, pDown, pIndicator, pData)
+        {
+            DGView.Columns[0].HeaderText = "Output";
+            DGView.Columns[1].HeaderText = "FlagRange";
+            UpdateIndicator(0);
+        }
+        protected override void StartAdd(object sender, EventArgs e)
+        {
+            DataForm.MakeFlagCounterElem form = new DataForm.MakeFlagCounterElem(null);
+            DialogResult res = form.ShowDialog();
+
+            if (res == DialogResult.OK) SetData(-1, form.SetData);
+            form.Dispose();
+        }
+        protected override void StartMod(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in DGView.SelectedRows)
+            {
+                DataForm.MakeFlagCounterElem form = new DataForm.MakeFlagCounterElem(Data[row.Index]);
+                DialogResult res = form.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    int modIndex = row.Index;
+                    SetData(row.Index, form.SetData);
+                }
+                form.Dispose();
+            }
+        }
+        protected override void UpdateIndicator(int indexShift)
+        {
+            InitIndicator();
+
+            foreach (var item in Data)
+            {
+                InfoFlagCounterCond info = new InfoFlagCounterCond
+                {
+                    OutFor = item.OutVar,
+                    Range = item.FlagMin.ToString() + " ～ " + item.FlagMax.ToString()
+                };
+                Indicator.Add(info);
+            }
+            FinalizeIndicator(indexShift);
+        }
+    }
 
     class ActChangeSoundBuilder : ListBuilderBase<Data.EfActChangeSound, InfoActChangeElem>
     {

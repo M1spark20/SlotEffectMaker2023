@@ -48,6 +48,7 @@ namespace SlotEffectMaker2023
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btnMakeGameAchievement = new System.Windows.Forms.Button();
+            this.btnSetFlagCounter = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -238,6 +239,16 @@ namespace SlotEffectMaker2023
             this.btnMakeGameAchievement.UseVisualStyleBackColor = true;
             this.btnMakeGameAchievement.Click += new System.EventHandler(this.StartModGameAchievement);
             // 
+            // btnSetFlagCounter
+            // 
+            this.btnSetFlagCounter.Location = new System.Drawing.Point(160, 210);
+            this.btnSetFlagCounter.Name = "btnSetFlagCounter";
+            this.btnSetFlagCounter.Size = new System.Drawing.Size(140, 30);
+            this.btnSetFlagCounter.TabIndex = 13;
+            this.btnSetFlagCounter.Text = "フラグ成立回数カウント";
+            this.btnSetFlagCounter.UseVisualStyleBackColor = true;
+            this.btnSetFlagCounter.Click += new System.EventHandler(this.StartModFlagCount);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -257,6 +268,7 @@ namespace SlotEffectMaker2023
             this.Controls.Add(this.btnSoundID);
             this.Controls.Add(this.btnUserTimer);
             this.Controls.Add(this.btnTL_SoundChange);
+            this.Controls.Add(this.btnSetFlagCounter);
             this.Controls.Add(this.btnMakeGameAchievement);
             this.Controls.Add(this.btnTL_TimerCtrl);
             this.Controls.Add(this.btnTL_ValCtrl);
@@ -294,6 +306,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnMakeGameAchievement;
+        private System.Windows.Forms.Button btnSetFlagCounter;
     }
 }
 

@@ -57,6 +57,18 @@
     <Compile Include="DataBuilder\GeneralDataBuilder.Designer.cs">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataForm\MakeFlagCounterElem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeFlagCounterElem.Designer.cs">
+      <DependentUpon>MakeFlagCounterElem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DataForm\MakeFlagCounterSet.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DataForm\MakeFlagCounterSet.Designer.cs">
+      <DependentUpon>MakeFlagCounterSet.cs</DependentUpon>
+    </Compile>
     <Compile Include="DataForm\MakeGameAchievement.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -243,6 +255,7 @@
     <Compile Include="DataForm\MakeDataShifterElem.Designer.cs">
       <DependentUpon>MakeDataShifterElem.cs</DependentUpon>
     </Compile>
+    <Compile Include="Data\FlagCounterCond.cs" />
     <Compile Include="Data\GameAchievement.cs" />
     <Compile Include="Data\CollectionData.cs" />
     <Compile Include="Data\HistoryConfig.cs" />
@@ -278,6 +291,12 @@
     <Compile Include="UserControl.cs" />
     <EmbeddedResource Include="DataBuilder\GeneralDataBuilder.resx">
       <DependentUpon>GeneralDataBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeFlagCounterElem.resx">
+      <DependentUpon>MakeFlagCounterElem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DataForm\MakeFlagCounterSet.resx">
+      <DependentUpon>MakeFlagCounterSet.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DataForm\MakeCollectionData.resx">
       <DependentUpon>MakeCollectionData.cs</DependentUpon>

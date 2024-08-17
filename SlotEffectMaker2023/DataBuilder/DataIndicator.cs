@@ -72,6 +72,11 @@ namespace SlotEffectMaker2023.DataBuilder
         public string Reference { get; set; }
         public string Timing { get; set; }
     }
+    class InfoFlagCounterCond
+    {
+        public string OutFor { get; set; }
+        public string Range { get; set; }
+    }
 
     class InfoActBase
     {
