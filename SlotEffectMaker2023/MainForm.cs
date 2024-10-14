@@ -14,6 +14,8 @@ namespace SlotEffectMaker2023
     {
         // エフェクトデータインスタンス
         Singleton.EffectDataManagerSingleton effect;
+        // 終了時にデータを保存するか
+        bool saveData;
 
         public MainForm()
         {
@@ -25,12 +27,13 @@ namespace SlotEffectMaker2023
 
             // 終了時に保存処理を入れる
             this.FormClosing += new FormClosingEventHandler(SaveWorkingData);
+            saveData = true;
         }
 
         // 終了時にデータを更新する
         private void SaveWorkingData(object sender, EventArgs e)
         {
-            effect.SaveData();
+            if(saveData) effect.SaveData();
         }
 
         private void StartModVariable(object sender, EventArgs e)
@@ -128,6 +131,15 @@ namespace SlotEffectMaker2023
             DialogResult res = mf.ShowDialog();
             if (res == DialogResult.OK) mf.SetData(effect.CounterCond);
             mf.Dispose();
+        }
+        private void ExitNoSave(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show("データを保存せずに終了してよろしいでしょうか？", "Caution!", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+            if (res == DialogResult.Yes)
+            {
+                saveData = false;
+                Application.Exit();
+            }
         }
     }
 }

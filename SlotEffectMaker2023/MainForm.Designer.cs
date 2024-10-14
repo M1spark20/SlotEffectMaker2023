@@ -49,6 +49,7 @@ namespace SlotEffectMaker2023
             this.label2 = new System.Windows.Forms.Label();
             this.btnMakeGameAchievement = new System.Windows.Forms.Button();
             this.btnSetFlagCounter = new System.Windows.Forms.Button();
+            this.btnExitNoSave = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnValSet
@@ -249,6 +250,16 @@ namespace SlotEffectMaker2023
             this.btnSetFlagCounter.UseVisualStyleBackColor = true;
             this.btnSetFlagCounter.Click += new System.EventHandler(this.StartModFlagCount);
             // 
+            // btnExitNoSave
+            // 
+            this.btnExitNoSave.Location = new System.Drawing.Point(423, 290);
+            this.btnExitNoSave.Name = "btnExitNoSave";
+            this.btnExitNoSave.Size = new System.Drawing.Size(116, 30);
+            this.btnExitNoSave.TabIndex = 23;
+            this.btnExitNoSave.Text = "保存せずに終了";
+            this.btnExitNoSave.UseVisualStyleBackColor = true;
+            this.btnExitNoSave.Click += new System.EventHandler(this.ExitNoSave);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -259,6 +270,7 @@ namespace SlotEffectMaker2023
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnHistoryConf);
+            this.Controls.Add(this.btnExitNoSave);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.btnMakeColorMapPlay);
             this.Controls.Add(this.btnMakeColorMap);
@@ -307,6 +319,7 @@ namespace SlotEffectMaker2023
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnMakeGameAchievement;
         private System.Windows.Forms.Button btnSetFlagCounter;
+        private System.Windows.Forms.Button btnExitNoSave;
     }
 }
 
